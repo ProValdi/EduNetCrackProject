@@ -9,19 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>edu-project-application</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.ncedu</groupId>
-            <artifactId>edu-project-web</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ncedu</groupId>
-            <artifactId>hw-filippov</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <artifactId>hw-filippov</artifactId>
 
 </project>

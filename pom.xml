@@ -47,6 +47,7 @@
     <modules>
         <module>edu-project-application</module>
         <module>edu-project-web</module>
+        <module>hw-filippov</module>
     </modules>
 
 </project>

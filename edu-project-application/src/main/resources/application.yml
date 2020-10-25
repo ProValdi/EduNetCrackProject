@@ -5,4 +5,4 @@ server:
 logging:
   level:
     com:
-      ncedu: ERROR
+      ncedu: INFO

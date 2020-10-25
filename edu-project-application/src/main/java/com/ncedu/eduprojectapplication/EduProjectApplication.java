@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @Slf4j
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.ncedu.eduprojectapplication", "com.ncedu.eduprojectweb"})
+@ComponentScan(basePackages = {"com.ncedu"})
 public class EduProjectApplication {
 
     public static void main(String[] args) {
