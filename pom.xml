@@ -48,6 +48,7 @@
         <module>edu-project-application</module>
         <module>edu-project-web</module>
         <module>hw-filippov</module>
+        <module>hw-prokhorov</module>
     </modules>
 
 </project>

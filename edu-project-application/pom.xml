@@ -22,6 +22,11 @@
             <artifactId>hw-filippov</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.ncedu</groupId>
+            <artifactId>hw-prokhorov</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>
