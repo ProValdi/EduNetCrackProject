@@ -40,15 +40,16 @@
 
 
     <groupId>com.ncedu</groupId>
-    <artifactId>edu-project</artifactId>
+    <artifactId>knownet</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>edu-project-application</module>
-        <module>edu-project-web</module>
+        <module>knownet-application</module>
+        <module>knownet-web</module>
         <module>hw-filippov</module>
         <module>hw-prokhorov</module>
+        <module>knownet-impl</module>
     </modules>
 
 </project>

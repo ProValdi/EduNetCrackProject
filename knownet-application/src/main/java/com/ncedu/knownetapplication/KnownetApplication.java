@@ -1,8 +1,6 @@
-package com.ncedu.eduprojectapplication;
+package com.ncedu.knownetapplication;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,10 +8,10 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.ncedu"})
-public class EduProjectApplication {
+public class KnownetApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EduProjectApplication.class, args);
+        SpringApplication.run(KnownetApplication.class, args);
     }
 
 }
