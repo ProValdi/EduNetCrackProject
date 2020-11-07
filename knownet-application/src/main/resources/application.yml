@@ -1,8 +1,8 @@
-server:
-  address: 0.0.0.0
-  port: 8083
-
-logging:
-  level:
-    com:
-      ncedu: INFO
+#server:
+#  address: 0.0.0.0
+#  port: 8083
+#
+#logging:
+#  level:
+#    com:
+#      ncedu: INFO
