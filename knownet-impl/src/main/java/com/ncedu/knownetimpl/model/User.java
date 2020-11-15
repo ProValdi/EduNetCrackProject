@@ -12,32 +12,47 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue
+//    @GeneratedValue
     private Long id;
 
-    @Column(name = "login", nullable = false, length = 100)
+    @Column(name = "login", nullable = false, unique = true)
     private String login;
-//    private String encodedPassword;
-//    private String firstName;
-//    private String lastName;
-//    private Double rating;
-//    private Integer points;
+    
+    @Column(name = "encoded_password")
+    private String encodedPassword;
+    
+    @Column(name = "first_name")
+    private String firstName;
+    
+    @Column(name = "last_name")
+    private String lastName;
+    
+    @Column(name = "rating")
+    private Double rating;
+    
+    @Column(name = "points")
+    private Integer points;
+    
 //    private Integer additionalBuyingCost;
 //    private Integer additionalSellingCost;
-//    private String group;
-//    private Contacts contacts;
+    
+    @Column(name = "group_label")
+    private String group;
+    
 //    private UserSettings settings;
 //    private Status status;
 //    private Image photo;
-
-
-//    @Data
-//    @NoArgsConstructor
-//    @AllArgsConstructor
-//    public static class Contacts {
-//        private String email;
-//        private String vkLink;
-//        private String telegramLink;
-//        private String phoneNumber;
-//    }
+    
+    @Column(name = "email")
+    private String email;
+    
+    @Column(name = "vk_link")
+    private String vkLink;
+    
+    @Column(name = "telegram_link")
+    private String telegramLink;
+    
+    @Column(name = "phone_number")
+    private String phoneNumber;
+    
 }
