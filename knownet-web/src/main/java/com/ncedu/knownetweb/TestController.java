@@ -15,10 +15,14 @@ import java.util.List;
 @RequestMapping("/api")
 public class TestController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     String html = "Hello, World!";
+
+    @Autowired
+    public TestController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
 
     @GetMapping("/test")
