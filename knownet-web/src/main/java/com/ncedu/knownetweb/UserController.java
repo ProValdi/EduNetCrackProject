@@ -43,48 +43,45 @@ public class UserController {
     public ResponseEntity<User> findById(@PathVariable("id") Long id) {
         log.debug("requested: user  get    (id = {})", id);
         Optional<User> user = userService.findById(id);
-//        if (user.isPresent()) {
-//            return ResponseEntity.ok().body(user.get());
-//        } else {
-//            return ResponseEntity.noContent().build(); // 204
-//        }
-        return ResponseEntity.of(user); // 404 if empty
-        
+        return ResponseEntity.of(user);
     }
     
     
-    @DeleteMapping(value = "byId/{id}")
-    public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
-        log.debug("requested: user  delete (id = {})", id);
-        boolean deleted = userService.deleteById(id);
+    @DeleteMapping(value = "byLogin/{login}")
+    public ResponseEntity<String> deleteByLogin(@PathVariable("login") String login) {
+        log.debug("requested: user  delete (login = {})", login);
+        boolean deleted = userService.deleteByLogin(login);
         if (deleted) {
-            return ResponseEntity.ok().body("user with id = " + id + " was deleted");
+            return ResponseEntity.ok().body("user with login = " + login + " was deleted");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user with id = " + id + " does not exist");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("user with login = " + login + " does not exist");
         }
     }
     
     @PostMapping(value = "user")
     public ResponseEntity<String> create(@RequestBody User user) {
-        Long id = user.getId();
-        log.debug("requested: user  create (id = {})", id);
+        String login = user.getLogin();
+        log.debug("requested: user  create (login = {})", login);
         boolean created = userService.create(user);
         if (created) {
-            return ResponseEntity.ok().body("user with id = " + id + " was created");
+            return ResponseEntity.ok().body("user with login = " + login + " was created");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user with id = " + id + " already exists");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("user with login = " + login + " already exists");
         }
     }
     
     @PutMapping(value = "user")
     public ResponseEntity<String> update(@RequestBody User user) {
-        Long id = user.getId();
-        log.debug("requested: user  update (id = {})", id);
+        String login = user.getLogin();
+        log.debug("requested: user  update (login = {})", login);
         boolean updated = userService.update(user);
         if (updated) {
-            return ResponseEntity.ok().body("user with id = " + id + " was updated");
+            return ResponseEntity.ok().body("user with login = " + login + " was updated");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user with id = " + id + " does not exist");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("user with login = " + login + " does not exist");
         }
     }
 }

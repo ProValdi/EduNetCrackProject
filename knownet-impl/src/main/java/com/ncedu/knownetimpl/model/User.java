@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class User {
 
     @Id
-//    @GeneratedValue
+    @GeneratedValue
     private Long id;
 
     @Column(name = "login", nullable = false, unique = true)
@@ -36,7 +36,7 @@ public class User {
 //    private Integer additionalBuyingCost;
 //    private Integer additionalSellingCost;
     
-    @Column(name = "group_label")
+    @Column(name = "user_group")
     private String group;
     
 //    private UserSettings settings;

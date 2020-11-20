@@ -35,16 +35,16 @@ public class UserService {
         return userRepository.findById(id);
     }
     
-    public boolean deleteById(Long id) {
-        boolean exists = userRepository.existsById(id);
+    public boolean deleteByLogin(String login) {
+        boolean exists = userRepository.existsByLogin(login);
         if (exists) {
-            userRepository.deleteById(id);
+            userRepository.deleteByLogin(login);
         }
         return exists;
     }
     
     public boolean create(User user) {
-        boolean exists = userRepository.existsById(user.getId());
+        boolean exists = userRepository.existsByLogin(user.getLogin());
         if (!exists) {
             userRepository.save(user);
         }
@@ -52,11 +52,20 @@ public class UserService {
     }
     
     public boolean update(User user) {
-        boolean exists = userRepository.existsById(user.getId());
-        if (exists) {
-            userRepository.save(user);
+        Optional<User> oldUserOpt = findByLogin(user.getLogin());
+        if (oldUserOpt.isPresent()) {
+            User oldUser = oldUserOpt.get();
+            
+            oldUser.setFirstName(user.getFirstName());
+            oldUser.setLastName(user.getLastName());
+            oldUser.setGroup(user.getGroup());
+            oldUser.setVkLink(user.getVkLink());
+            oldUser.setTelegramLink(user.getTelegramLink());
+            oldUser.setEmail(user.getEmail());
+            oldUser.setPhoneNumber(user.getPhoneNumber());
+            userRepository.save(oldUser);
         }
-        return exists;
+        return oldUserOpt.isPresent();
     }
     
     
