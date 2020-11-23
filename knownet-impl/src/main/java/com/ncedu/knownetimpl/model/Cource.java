@@ -26,7 +26,7 @@ public class Course {
     @Column(name = "difficulty")
     private Double difficulty;
 
-    @Column(name = "user_group")
+    @Column(name = "cource_group")
     private String group;
 
     @Column(name = "points_to_get")
