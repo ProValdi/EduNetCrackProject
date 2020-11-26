@@ -1,0 +1,172 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300&display=swap");
+*, :before, :after {
+    box-sizing: border-box;
+}
+.unstyled {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.unstyled a {
+    text-decoration: none;
+}
+.list-inline {
+    overflow: hidden;
+}
+.list-inline li {
+    float: left;
+}
+.header {
+    color: #191970;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 17.5em;
+    background-color: #e0e5ef;
+}
+.canvas {
+    margin-left: 17.5em;
+}
+.contact-card {
+    margin-right: 1em;
+}
+.lessons-info {
+    margin-top: 1.5em;
+    margin-left: 2.4em;
+}
+.photo {
+    box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px rgba(255, 255, 255, 0.5);
+    margin-top: 40px;
+    margin-left: 40px;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 25px;
+    position: relative;
+    float: top;
+    display: inline-block;
+}
+.topics {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    display: inline-block;
+}
+.info {
+    margin-left: 1em;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+.highlight:after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 0.11em;
+    background: black;
+    background-image: linear-gradient(to right, #5e42a6, #b74e91);
+}
+.contact {
+    width: 600px;
+    height: 300px;
+    margin-left: 1em;
+    overflow: hidden;
+    display: inline-block;
+}
+.contact h1 {
+    margin: 0;
+    font: 300 3em "Josefin Sans", sans-serif;
+}
+img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    object-position: center;
+}
+.logo {
+    font: 300 2em "Source Sans Pro", Helvetica, Arial, sans-serif;
+    font-family: "Rock Salt", cursive;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+.logo a {
+    display: block;
+    padding: 1em 0;
+    color: #191970;
+    text-decoration: none;
+    transition: 0.15s linear color;
+}
+.logo a:hover {
+    color: #191970;
+}
+.logo a:hover span {
+    color: #df4500;
+}
+.logo span {
+    font-weight: 700;
+    transition: 0.15s linear color;
+}
+.main-nav a {
+    padding: 1.1em 0;
+    color: #dfdbd9;
+    /* Здесь траблы, надо пофиксить эту хрень*/
+    font: 500 2.225em, "Poppins", sans-serif;
+    text-align: center;
+    text-transform: lowercase;
+}
+.main-nav a:hover {
+    color: #fff;
+}
+.ten a {
+    background-color: #e0e5ec;
+    box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px rgba(255, 255, 255, 0.5);
+    color: #191970;
+    font-weight: 700;
+    margin-bottom: 40px;
+    margin-right: 40px;
+    margin-top: 40px;
+    margin-left: 40px;
+    overflow: hidden;
+    position: relative;
+    text-transform: uppercase;
+    display: block;
+    z-index: 1;
+    transition: 0.15s ease color;
+    border-radius: 25px;
+}
+.ten a:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    opacity: 0;
+    transform: translateX(-100%);
+    background: rgba(255, 255, 255, 0.13);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 77%, rgba(255, 255, 255, 0.5) 92%, rgba(255, 255, 255, 0.3) 100%);
+}
+.ten a:hover {
+    color: #df4500;
+}
+.ten a:hover:after {
+    color: #191970;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    transform: translateX(0);
+    transition-property: transform, opacity;
+    transition-duration: 0.7s, 0.15s;
+    transition-timing-function: ease;
+}
+.ten a:active:after {
+    color: #191970;
+    opacity: 0;
+}
