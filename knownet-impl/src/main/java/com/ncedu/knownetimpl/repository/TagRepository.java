@@ -1,10 +1,10 @@
 package com.ncedu.knownetimpl.repository;
 
-import com.ncedu.knownetimpl.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.ncedu.knownetimpl.model.Tag;
-import org.springframework.stereotype.Repository;
+
 import java.util.List;
+import java.util.Optional;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
 
@@ -12,8 +12,10 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
   boolean existsByTitle(String title);
 
-  List<Tag> findByTitle(String title);
+  Optional<Tag> findByTitle(String title);
 
   List<Tag> findBySemestr(int semestr);
+
+  List<Tag> findByIdSemestr(int idsemestr);
 
 }
