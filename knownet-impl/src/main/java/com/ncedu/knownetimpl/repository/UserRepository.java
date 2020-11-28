@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     
-    void deleteByLogin(String login);
+    Long deleteByLogin(String login);
     
     boolean existsByLogin(String login);
     

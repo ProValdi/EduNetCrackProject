@@ -3,6 +3,7 @@ package com.ncedu.knownetimpl.service;
 import com.ncedu.knownetimpl.model.User;
 import com.ncedu.knownetimpl.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,12 +36,9 @@ public class UserService {
         return userRepository.findById(id);
     }
     
+    @Transactional
     public boolean deleteByLogin(String login) {
-        boolean exists = userRepository.existsByLogin(login);
-        if (exists) {
-            userRepository.deleteByLogin(login);
-        }
-        return exists;
+        return userRepository.deleteByLogin(login) != 0;
     }
     
     public boolean create(User user) {
