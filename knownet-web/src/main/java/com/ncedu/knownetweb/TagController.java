@@ -27,6 +27,7 @@ public class TagController {
     return ResponseEntity.ok(tagService.findAll());
   }
 
+  //todo use list
   @GetMapping("byTitle/{title}")
   public ResponseEntity<Optional<Tag>> findByTitle(@PathVariable(name = "title") String title) {
     log.debug("requested: tag get    (title = {})", title);
@@ -41,10 +42,10 @@ public class TagController {
   }
 
   @GetMapping("byId/{id}")
-  public List<Tag> findWithParents(@PathVariable("id") Long id){
-    log.debug("requested: tag get     (id = {})", id);
-    List<Tag> parents = tagService.findWithParents(id);
-    return parents;
+  public ResponseEntity<List<Tag>> findWithParents(@PathVariable("id") Long id){
+    log.debug("requested: tag get with parents (id = {})", id);
+    List<Tag> tags = tagService.findWithParents(id);
+    return ResponseEntity.ok(tags);
   }
 
   @DeleteMapping(value = "byId/{id}")
