@@ -18,7 +18,8 @@ public class Tag {
   @Column(name = "title", nullable = false, unique = true)
   private String title;
 
-  @JoinColumn(name = "FK_parentID")
+  //???
+  @Column(name = "parent_id")
   private Long parentID;
 
 }

@@ -8,9 +8,10 @@ import java.util.Optional;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
 
-  void deleteByTitle(String title);
-
   boolean existsByTitle(String title);
+
+  //иерархический запрос...
+  List<Tag> findWithParents(Long id);
 
   Optional<Tag> findByTitle(String title);
 

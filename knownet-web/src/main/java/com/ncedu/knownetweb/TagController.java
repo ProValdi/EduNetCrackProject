@@ -40,6 +40,8 @@ public class TagController {
     return ResponseEntity.of(tag);
   }
 
+
+  //делейтбайайди
   @DeleteMapping(value = "byTitle/{title}")
   public ResponseEntity<String> deleteByTitle(@PathVariable("title") String title) {
     log.debug("requested: tag  delete (title = {})", title);
