@@ -18,7 +18,6 @@ public class TagService {
     return tagRepository.findById(id);
   }
 
-
   public boolean deleteByTitle(String title) {
     boolean exists = tagRepository.existsByTitle(title);
     if (exists) {
@@ -35,14 +34,6 @@ public class TagService {
     return tagRepository.findByTitle(title);
   }
 
-  public List<Tag> findBySemestr(int semestr) {
-    return tagRepository.findBySemestr(semestr);
-  }
-
-  public List<Tag> findByIdSemestr(int idsemestr) {
-    return tagRepository.findBySemestr(idsemestr);
-  }
-
   public boolean create(Tag tag) {
     boolean exists = tagRepository.existsByTitle(tag.getTitle());
     if(!exists) {
@@ -57,9 +48,7 @@ public class TagService {
     if(oldTagOpt.isPresent()) {
       Tag oldTag = oldTagOpt.get();
 
-      oldTag.setIdSubject(tag.getIdSubject());
-      oldTag.setLevel(tag.getLevel());
-      oldTag.setNumberOfSemestr(tag.getNumberOfSemestr());
+      oldTag.setTitle(tag.getTitle());
       tagRepository.save(oldTag);
     }
 

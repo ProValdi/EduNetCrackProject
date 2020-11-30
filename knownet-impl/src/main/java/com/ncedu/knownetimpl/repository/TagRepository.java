@@ -14,8 +14,4 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
   Optional<Tag> findByTitle(String title);
 
-  List<Tag> findBySemestr(int semestr);
-
-  List<Tag> findByIdSemestr(int idsemestr);
-
 }

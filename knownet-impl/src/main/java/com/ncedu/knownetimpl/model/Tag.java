@@ -18,13 +18,7 @@ public class Tag {
   @Column(name = "title", nullable = false, unique = true)
   private String title;
 
-  @Column(name = "number_of_semestr")
-  private int numberOfSemestr;
-
-  @Column(name = "id_subject")
-  private int idSubject;
-
-  @Column(name = "level")
-  private int level;
+  @JoinColumn(name = "FK_parentID")
+  private Long parentID;
 
 }
