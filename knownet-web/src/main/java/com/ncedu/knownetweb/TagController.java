@@ -40,6 +40,12 @@ public class TagController {
     return ResponseEntity.of(tag);
   }
 
+  @GetMapping("byParentId/{id}")
+  public ResponseEntity<List<Tag>> findWithParents(@PathVariable("id") Long id){
+    log.debug("requested: tag get     (id = {})", id);
+    List<Tag> tag = tagService.findWithParents(id);
+    return (ResponseEntity<List<Tag>>) tag;
+  }
 
   @DeleteMapping(value = "byId/{id}")
   public ResponseEntity<String> deleteByTitle(@PathVariable("id") Long id) {

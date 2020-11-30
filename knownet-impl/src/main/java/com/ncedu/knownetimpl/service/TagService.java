@@ -18,6 +18,10 @@ public class TagService {
     return tagRepository.findById(id);
   }
 
+  public List<Tag> findWithParents(Long id) {
+    return tagRepository.findWithParents(id);
+  }
+
   public boolean deleteById(Long id) {
     boolean exists = tagRepository.existsById(id);
     if (exists) {
