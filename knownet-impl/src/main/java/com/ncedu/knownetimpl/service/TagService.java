@@ -34,6 +34,7 @@ public class TagService {
     return tagRepository.findAll();
   }
 
+  //todo use List
   public Optional<Tag> findByTitle(String title) {
     return tagRepository.findByTitle(title);
   }

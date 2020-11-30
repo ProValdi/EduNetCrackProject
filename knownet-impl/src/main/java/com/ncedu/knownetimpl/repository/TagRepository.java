@@ -11,8 +11,10 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
   boolean existsByTitle(String title);
 
   //иерархический запрос...
+  // todo написать сам запрос
   List<Tag> findWithParents(Long id);
 
+  // todo use List<Tag>, title is not unique
   Optional<Tag> findByTitle(String title);
 
 }

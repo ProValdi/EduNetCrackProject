@@ -27,6 +27,7 @@ public class TagController {
     return ResponseEntity.ok(tagService.findAll());
   }
 
+  //todo use list
   @GetMapping("byTitle/{title}")
   public ResponseEntity<Optional<Tag>> findByTitle(@PathVariable(name = "title") String title) {
     log.debug("requested: tag get    (title = {})", title);
@@ -42,8 +43,9 @@ public class TagController {
 
   @GetMapping("byId/{id}")
   public ResponseEntity<List<Tag>> findWithParents(@PathVariable("id") Long id){
-    log.debug("requested: tag get     (id = {})", id);
+    log.debug("requested: tag get with parents (id = {})", id);
     List<Tag> tag = tagService.findWithParents(id);
+    //todo посмотри что (точнее как) возвращают остальные методы и сделай так же
     return (ResponseEntity<List<Tag>>) tag;
   }
 
