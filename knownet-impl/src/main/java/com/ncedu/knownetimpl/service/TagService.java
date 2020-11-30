@@ -18,11 +18,10 @@ public class TagService {
     return tagRepository.findById(id);
   }
 
-  //сделать делейтбайайди
-  public boolean deleteByTitle(String title) {
-    boolean exists = tagRepository.existsByTitle(title);
+  public boolean deleteById(Long id) {
+    boolean exists = tagRepository.existsById(id);
     if (exists) {
-      tagRepository.deleteByTitle(title);
+      tagRepository.deleteById(id);
     }
     return exists;
   }

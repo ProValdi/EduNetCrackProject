@@ -41,16 +41,15 @@ public class TagController {
   }
 
 
-  //делейтбайайди
-  @DeleteMapping(value = "byTitle/{title}")
-  public ResponseEntity<String> deleteByTitle(@PathVariable("title") String title) {
-    log.debug("requested: tag  delete (title = {})", title);
-    boolean deleted = tagService.deleteByTitle(title);
+  @DeleteMapping(value = "byId/{id}")
+  public ResponseEntity<String> deleteByTitle(@PathVariable("id") Long id) {
+    log.debug("requested: tag  delete (id = {})", id);
+    boolean deleted = tagService.deleteById(id);
     if (deleted) {
-      return ResponseEntity.ok().body("tag with title = " + title + " was deleted");
+      return ResponseEntity.ok().body("tag with id = " + id + " was deleted");
     } else {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        .body("tag with title = " + title + " does not exist");
+        .body("tag with id = " + id + " does not exist");
     }
   }
 
