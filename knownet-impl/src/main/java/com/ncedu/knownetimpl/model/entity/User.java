@@ -1,4 +1,4 @@
-package com.ncedu.knownetimpl.model;
+package com.ncedu.knownetimpl.model.entity;
 
 import lombok.*;
 
@@ -54,5 +54,11 @@ public class User {
     
     @Column(name = "phone_number")
     private String phoneNumber;
+    
+    @Column(name = "attended_count")
+    private Integer attendedCount;
+    
+    @Column(name = "conducted_count")
+    private Integer conductedCount;
     
 }

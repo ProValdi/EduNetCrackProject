@@ -1,6 +1,6 @@
 package com.ncedu.knownetweb;
 
-import com.ncedu.knownetimpl.model.User;
+import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +56,18 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("user with login = " + login + " does not exist");
+        }
+    }
+    
+    @DeleteMapping(value = "byId/{id}")
+    public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
+        log.debug("requested: user  delete (id = {})", id);
+        boolean deleted = userService.deleteById(id);
+        if (deleted) {
+            return ResponseEntity.ok().body("user with id = " + id + " was deleted");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("user with id = " + id + " does not exist");
         }
     }
     

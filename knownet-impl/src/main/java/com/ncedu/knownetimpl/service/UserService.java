@@ -1,6 +1,6 @@
 package com.ncedu.knownetimpl.service;
 
-import com.ncedu.knownetimpl.model.User;
+import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +39,14 @@ public class UserService {
     @Transactional
     public boolean deleteByLogin(String login) {
         return userRepository.deleteByLogin(login) != 0;
+    }
+    
+    public boolean deleteById(Long id) {
+        boolean exists = userRepository.existsById(id);
+        if (exists) {
+            userRepository.deleteById(id);
+        }
+        return exists;
     }
     
     public boolean create(User user) {
