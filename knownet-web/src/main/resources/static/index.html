@@ -72,7 +72,6 @@
 
 <script>
     initForm();
-    console.log();
 
     function initForm() {
         let http = new XMLHttpRequest();
@@ -81,40 +80,32 @@
         http.open('GET', '/users/byLogin/' + login, false);
         http.send();
 
-        if (http.status != 200) {
+        if (http.status !== 200) {
             alert(http.status + ': ' + http.statusText); // пример вывода: 404: Not Found
         } else {
 
-            let splittedData = http.responseText.split(/,/);
+            const json = http.responseText;
+            const parsedJSONData = JSON.parse(json);
 
-            splittedData.forEach(item => {
-                let pair = item.match(/"(.+)":"?([^"}]+)"?/);
+            for (var key in parsedJSONData) {
+                if (parsedJSONData.hasOwnProperty(key)) {
 
-                switch (pair[1]) {
-                    case "firstName":
-                        document.getElementById("name").innerHTML = pair[2];
-                        break;
-                    case "lastName":
-                        document.getElementById("name").innerHTML += " " + pair[2];
-                        break;
-                    case "rating":
-                    case "group":
-                    case "email":
-                    case "vkLink":
-                    case "telegramLink":
-                    case "phoneNumber":
-                        document.getElementById(pair[1]).innerHTML = pair[2];
-                        console.log(pair[2]);
-                        console.log(pair[2] == "null");
-                        if(pair[2] == "null") {
-                            document.getElementById(pair[1]).remove();
+                    if(key === "firstName") {
+                        document.getElementById("name").innerHTML = parsedJSONData[key];
+                    } else if(key === "lastName") {
+                        document.getElementById("name").innerHTML += " " + parsedJSONData[key];
+                    } else {
+                        if (document.getElementById(key) == null) {
+                            console.log("No usage for key: " + key);
+                            continue;
                         }
-                        break;
-                    default:
-                        console.log("shit happens here:" + pair[1]);
+                        document.getElementById(key).innerHTML = parsedJSONData[key];
+                        if (parsedJSONData[key] === "null") {
+                            document.getElementById(key).remove();
+                        }
+                    }
                 }
-            });
-
+            }
         }
         //{"id":1,"login":"Vas","encodedPassword":"coolVasya","firstName":"Vasya","lastName":"Petrov","rating":0.0,"points":0,"group":null,"email":null,"vkLink":null,"telegramLink":null,"phoneNumber":null}
     }

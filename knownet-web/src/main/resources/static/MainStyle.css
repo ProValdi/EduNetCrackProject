@@ -90,9 +90,11 @@
 
 .picked {
     position: relative;
-    background-color: #9EC1D4;
-    border-top:1px solid #9EC1D4;
-    border-bottom: dotted 1px #9EC1D4;
+    background: #e0e5ec;
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+    border-image: linear-gradient(to right, #9EC1D4, #FFFFFF 0%);
+    box-shadow: inset 1px 1px 4px -1px;
 }
 
 img {
@@ -142,7 +144,8 @@ img {
     box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px rgba(255, 255, 255, 0.5);
     color: #191970;
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     margin-right: 40px;
     margin-left: 40px;
     overflow: hidden;
