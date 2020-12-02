@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>KnowNet</title>
     <link rel="stylesheet" type="text/css" href="MainStyle.css" media="screen"/>
 </head>
 
@@ -57,12 +57,12 @@
     </div>
 
     <div class="lessons-info">
-        <p>Lessons conducted:</p>
-        <p>Lessons attended:</p>
+        <p id="conductedCount">Lessons conducted: </p>
+        <p id="attendedCount">Lessons attended: </p>
     </div>
 
     <div id="field">
-        kek lol
+
     </div>
 
 </div>
@@ -73,11 +73,19 @@
 <script>
     initForm();
 
+    function getQueryParam(param) {
+        var result =  window.location.search.match(
+            new RegExp("(\\?|&)" + param + "(\\[\\])?=([^&]*)")
+        );
+        return result ? result[3] : false;
+    }
+
     function initForm() {
         let http = new XMLHttpRequest();
-        console.log(window.location.href);
-        let login = window.location.search.slice(1).split("=")[1];
-        http.open('GET', '/users/byLogin/' + login, false);
+
+        http.open('GET', '/users/byLogin/' + getQueryParam("usr"), false);
+
+
         http.send();
 
         if (http.status !== 200) {
@@ -87,26 +95,40 @@
             const json = http.responseText;
             const parsedJSONData = JSON.parse(json);
 
-            for (var key in parsedJSONData) {
+            for (let key in parsedJSONData) {
                 if (parsedJSONData.hasOwnProperty(key)) {
 
+
                     if(key === "firstName") {
-                        document.getElementById("name").innerHTML = parsedJSONData[key];
+                        document.getElementById("name").textContent = parsedJSONData[key];
                     } else if(key === "lastName") {
-                        document.getElementById("name").innerHTML += " " + parsedJSONData[key];
+                        document.getElementById("name").textContent += " " + parsedJSONData[key];
                     } else {
                         if (document.getElementById(key) == null) {
                             console.log("No usage for key: " + key);
                             continue;
                         }
-                        document.getElementById(key).innerHTML = parsedJSONData[key];
+                        if (key === "conductedCount" || key === "attendedCount") {
+                            if (parsedJSONData[key] === "null") {
+                                document.getElementById(key).remove();
+                            }
+                            document.getElementById(key).insertAdjacentHTML("beforeEnd", parsedJSONData[key]);
+                            continue;
+                        }
+
                         if (parsedJSONData[key] === "null") {
                             document.getElementById(key).remove();
                         }
+
+                        document.getElementById(key).textContent = parsedJSONData[key];
+
                     }
                 }
             }
         }
         //{"id":1,"login":"Vas","encodedPassword":"coolVasya","firstName":"Vasya","lastName":"Petrov","rating":0.0,"points":0,"group":null,"email":null,"vkLink":null,"telegramLink":null,"phoneNumber":null}
     }
+
+
+
 </script>
