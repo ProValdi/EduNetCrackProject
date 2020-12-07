@@ -42,7 +42,7 @@ public class TagController {
   }
 
   @GetMapping("byId/{id}")
-  @Query(value = "WITH RECURSIVE r AS (SELECT id, parent_id, title FROM tags WHERE parent_id is not null UNION SELECT tags.id, tags.parent_id, tags.title FROM tags JOIN r ON tags.parent_id = r.id")
+  @Query(value = "SELECT :id, title, parent_id FROM tags CONNECT BY PRIOR :id = parent_id", nativeQuery = true)
   public ResponseEntity<List<Tag>> findWithParents(@PathVariable("id") Long id){
     log.debug("requested: tag get with parents (id = {})", id);
     List<Tag> tags = tagService.findWithParents(id);
