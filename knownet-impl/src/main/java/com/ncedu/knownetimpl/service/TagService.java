@@ -3,6 +3,7 @@ package com.ncedu.knownetimpl.service;
 import com.ncedu.knownetimpl.model.Tag;
 import com.ncedu.knownetimpl.repository.TagRepository;
 import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public class TagService {
     return tagRepository.findWithParents(id);
   }
 
+  @Transactional
   public boolean deleteById(Long id) {
     boolean exists = tagRepository.existsById(id);
     if (exists) {
@@ -39,7 +41,7 @@ public class TagService {
   }
 
   public boolean create(Tag tag) {
-    boolean exists = tagRepository.existsByTitle(tag.getTitle());
+    boolean exists = tagRepository.existsById(tag.getId());
     if(!exists) {
       tagRepository.save(tag);
     }

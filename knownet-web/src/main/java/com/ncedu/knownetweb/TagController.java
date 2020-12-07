@@ -41,9 +41,8 @@ public class TagController {
     return ResponseEntity.of(tag);
   }
 
-  @GetMapping("byId/{id}")
-  @Query(value = "SELECT :id, title, parent_id FROM tags CONNECT BY PRIOR :id = parent_id", nativeQuery = true)
-  public ResponseEntity<List<Tag>> findWithParents(@PathVariable("id") Long id){
+  @GetMapping("withParentsById/{id}")
+  public ResponseEntity<List<Tag>> findWithParents(@PathVariable("id") Long id) {
     log.debug("requested: tag get with parents (id = {})", id);
     List<Tag> tags = tagService.findWithParents(id);
     return ResponseEntity.ok(tags);
@@ -61,6 +60,7 @@ public class TagController {
     }
   }
 
+  //todo изменить логирование с тайтла на id
   @PostMapping(value = "tag")
   public ResponseEntity<String> create(@RequestBody Tag tag) {
     String title = tag.getTitle();
@@ -74,7 +74,8 @@ public class TagController {
     }
   }
 
-  @PostMapping(value = "tag")
+  //todo изменить логирование с тайтла на id
+  @PutMapping(value = "tag")
   public ResponseEntity<String> update(@RequestBody Tag tag) {
     String title = tag.getTitle();
     log.debug("requested: tag  update (title = {})", title);
