@@ -18,7 +18,6 @@ public class Tag {
   @Column(name = "title", nullable = false)
   private String title;
 
-  //???
   @Column(name = "parent_id")
   private Long parentID;
 
