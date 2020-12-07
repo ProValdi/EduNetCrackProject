@@ -15,8 +15,7 @@ public class Tag {
   @GeneratedValue
   private Long id;
 
-  //todo сделать так же как в таблице базы данных
-  @Column(name = "title", nullable = false, unique = true)
+  @Column(name = "title", nullable = false)
   private String title;
 
   //???

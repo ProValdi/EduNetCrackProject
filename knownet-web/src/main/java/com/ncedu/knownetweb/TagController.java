@@ -4,6 +4,7 @@ import com.ncedu.knownetimpl.model.Tag;
 import com.ncedu.knownetimpl.service.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +28,8 @@ public class TagController {
     return ResponseEntity.ok(tagService.findAll());
   }
 
-  //todo use list
   @GetMapping("byTitle/{title}")
-  public ResponseEntity<Optional<Tag>> findByTitle(@PathVariable(name = "title") String title) {
+  public ResponseEntity<List<Tag>> findByTitle(@PathVariable(name = "title") String title) {
     log.debug("requested: tag get    (title = {})", title);
     return ResponseEntity.ok().body(tagService.findByTitle(title));
   }
@@ -42,6 +42,7 @@ public class TagController {
   }
 
   @GetMapping("byId/{id}")
+  @Query(value = "WITH RECURSIVE r AS (SELECT id, parent_id, title FROM tags WHERE parent_id is not null UNION SELECT tags.id, tags.parent_id, tags.title FROM tags JOIN r ON tags.parent_id = r.id")
   public ResponseEntity<List<Tag>> findWithParents(@PathVariable("id") Long id){
     log.debug("requested: tag get with parents (id = {})", id);
     List<Tag> tags = tagService.findWithParents(id);

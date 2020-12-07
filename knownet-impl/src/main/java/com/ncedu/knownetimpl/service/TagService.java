@@ -34,8 +34,7 @@ public class TagService {
     return tagRepository.findAll();
   }
 
-  //todo use List
-  public Optional<Tag> findByTitle(String title) {
+  public List<Tag> findByTitle(String title) {
     return tagRepository.findByTitle(title);
   }
 
@@ -49,7 +48,7 @@ public class TagService {
   }
 
   public boolean update(Tag tag) {
-    Optional<Tag> oldTagOpt = findByTitle(tag.getTitle());
+    Optional<Tag> oldTagOpt = findById(tag.getId());
     if(oldTagOpt.isPresent()) {
       Tag oldTag = oldTagOpt.get();
 
