@@ -45,8 +45,8 @@ public class TagService {
   }
 
   public boolean create(Tag tag) {
-    boolean exists = tagRepository.existsById(tag.getId());
-    if(!exists) {
+    boolean exists = tag.getId() != null && tagRepository.existsById(tag.getId());
+    if (!exists) {
       tagRepository.save(tag);
     }
 
@@ -55,10 +55,11 @@ public class TagService {
 
   public boolean update(Tag tag) {
     Optional<Tag> oldTagOpt = findById(tag.getId());
-    if(oldTagOpt.isPresent()) {
+    if (oldTagOpt.isPresent()) {
       Tag oldTag = oldTagOpt.get();
 
       oldTag.setTitle(tag.getTitle());
+      oldTag.setParentId(tag.getParentId());
       tagRepository.save(oldTag);
     }
 

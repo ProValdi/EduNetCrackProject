@@ -34,7 +34,7 @@ public class TagController {
   }
 
   @GetMapping("byId/{id}")
-  public ResponseEntity<Tag> findByID(@PathVariable("id") Long id) {
+  public ResponseEntity<Tag> findById(@PathVariable("id") Long id) {
     log.debug("requested: tag get      (id = {})", id);
     Optional<Tag> tag = tagService.findById(id);
     return ResponseEntity.of(tag);
@@ -55,7 +55,7 @@ public class TagController {
   }
 
   @DeleteMapping(value = "byId/{id}")
-  public ResponseEntity<String> deleteByTitle(@PathVariable("id") Long id) {
+  public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
     log.debug("requested: tag  delete (id = {})", id);
     boolean deleted = tagService.deleteById(id);
     if (deleted) {
@@ -68,14 +68,13 @@ public class TagController {
 
   @PostMapping(value = "tag")
   public ResponseEntity<String> create(@RequestBody Tag tag) {
-    Long id = tag.getId();
-    log.debug("requested: tag  create (id = {})", id);
+    log.debug("requested: tag  create (title = {}, parentId = {})", tag.getParentId(), tag.getParentId());
     boolean created = tagService.create(tag);
     if (created) {
-      return ResponseEntity.ok().body("tag with id = " + id + " was created");
+      return ResponseEntity.ok().body("tag with id = " + tag.getId() + " was created");
     } else {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        .body("tag with id = " + id + " already exists");
+        .body("tag with id = " + tag.getId() + " already exists");
     }
   }
 
