@@ -19,6 +19,6 @@ public class Tag {
   private String title;
 
   @Column(name = "parent_id")
-  private Long parentID;
+  private Long parentId;
 
 }

@@ -23,6 +23,10 @@ public class TagService {
     return tagRepository.findWithParents(id);
   }
 
+  public List<Tag> getChildren(Long id) {
+    return tagRepository.findByParentId(id);
+  }
+
   @Transactional
   public boolean deleteById(Long id) {
     boolean exists = tagRepository.existsById(id);

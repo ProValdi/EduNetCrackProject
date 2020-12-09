@@ -4,7 +4,6 @@ import com.ncedu.knownetimpl.model.Tag;
 import com.ncedu.knownetimpl.service.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +47,13 @@ public class TagController {
     return ResponseEntity.ok(tags);
   }
 
+  @GetMapping("children/{id}")
+  public ResponseEntity<List<Tag>> getChildren(@PathVariable("id") Long id) {
+    log.debug("requested: tag get children (id = {})", id);
+    List<Tag> tags = tagService.getChildren(id);
+    return ResponseEntity.ok(tags);
+  }
+
   @DeleteMapping(value = "byId/{id}")
   public ResponseEntity<String> deleteByTitle(@PathVariable("id") Long id) {
     log.debug("requested: tag  delete (id = {})", id);
@@ -60,31 +66,29 @@ public class TagController {
     }
   }
 
-  //todo изменить логирование с тайтла на id
   @PostMapping(value = "tag")
   public ResponseEntity<String> create(@RequestBody Tag tag) {
-    String title = tag.getTitle();
-    log.debug("requested: tag  create (title = {})", title);
+    Long id = tag.getId();
+    log.debug("requested: tag  create (id = {})", id);
     boolean created = tagService.create(tag);
     if (created) {
-      return ResponseEntity.ok().body("tag with title = " + title + " was created");
+      return ResponseEntity.ok().body("tag with id = " + id + " was created");
     } else {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        .body("tag with title = " + title + " already exists");
+        .body("tag with id = " + id + " already exists");
     }
   }
 
-  //todo изменить логирование с тайтла на id
   @PutMapping(value = "tag")
   public ResponseEntity<String> update(@RequestBody Tag tag) {
-    String title = tag.getTitle();
-    log.debug("requested: tag  update (title = {})", title);
+    Long id = tag.getId();
+    log.debug("requested: tag  update (id = {})", id);
     boolean updated = tagService.update(tag);
     if (updated) {
-      return ResponseEntity.ok().body("tag with title = " + title + " was updated");
+      return ResponseEntity.ok().body("tag with id = " + id + " was updated");
     } else {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        .body("tag with title = " + title + " does not exist");
+        .body("tag with id = " + id + " does not exist");
     }
   }
 }

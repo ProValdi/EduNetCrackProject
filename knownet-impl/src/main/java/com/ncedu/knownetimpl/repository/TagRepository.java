@@ -10,8 +10,10 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
   boolean existsByTitle(String title);
 
-  @Query(value = "SELECT id, title, parent_id FROM tags START WITH id = :id CONNECT BY PRIOR id = parent_id", nativeQuery = true)
+  @Query(value = "WITH RECURSIVE a AS(SELECT id, parent_id, title FROM tags WHERE id = :id UNION SELECT t.id, t.parent_id, t.title FROM tags t JOIN a ON t.id = a.parent_id) SELECT id, parent_id, title FROM a", nativeQuery = true)
   List<Tag> findWithParents(Long id);
+
+  List<Tag> findByParentId(Long parentId);
 
   List<Tag> findByTitle(String title);
 }
