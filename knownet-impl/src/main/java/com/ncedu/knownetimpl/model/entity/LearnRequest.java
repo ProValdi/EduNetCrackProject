@@ -1,9 +1,11 @@
 package com.ncedu.knownetimpl.model.entity;
 
+import com.ncedu.knownetimpl.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -17,38 +19,54 @@ public class LearnRequest {
     @GeneratedValue
     private Long id;
     
-    ////
-    @Column(name = "teacher_id")
-    private Long teacherId;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
+    private User teacher;
     
-    ////
-    @Column(name = "student_id")
-    private Long studentId;
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private User student;
     
-    ////
-    @Column(name = "lesson_id")
-    private Long lessonId;
+//    todo add foreign key constraint into table
+//    todo connect to lesson class
+//    @ManyToOne()
+//    @JoinColumn(name = "lesson_id", referencedColumnName = "id")
+//    private Lesson lesson;
     
+    @ColumnDefault("string default LESSON_REQUESTED")
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private Status status;
+    private Status status = Status.LESSON_REQUESTED;
     
-    @Column(name = "awaiting_teacher")
-    private Boolean awaitingTeacher;
+//    @ColumnDefault("boolean default true")
+//    @Column(name = "awaiting_teacher")
+//    private Boolean awaitingTeacher = true;
     
+    @ColumnDefault("boolean default false")
     @Column(name = "hidden_for_teacher")
-    private Boolean hiddenForTeacher;
-
+    private Boolean hiddenForTeacher = false;
+    
+    @ColumnDefault("boolean default false")
     @Column(name = "hidden_for_student")
-    private Boolean hiddenForStudent;
+    private Boolean hiddenForStudent = false;
+    
+    public Boolean isAwaitingTeacher() {
+        return status == Status.LESSON_REQUESTED;
+    }
+    
+    public Boolean isAwaitingStudent() {
+        return status == Status.LESSON_REQUEST_ACCEPTED;
+    }
     
     
     public enum Status {
-        LESSON_REQUESTED(""),
-        LESSON_REQUEST_ACCEPTED(""),
-        LESSON_REQUEST_REJECTED(""),
-        MEETING_CONFIRMED(""),
-        MEETING_DISMISSED(""),
-        CONNECTION_FINISHED("");
+        LESSON_REQUESTED("Student requested for the lesson and waiting for teacher's reply"),
+        LESSON_REQUEST_ACCEPTED("Teacher accepted student's request"),
+        LESSON_REQUEST_REJECTED("Teacher rejected student's request"),
+        MEETING_CONFIRMED("Student confirmed that the meeting with teacher had taken place"),
+        MEETING_CANCELED("Student decided to cancel the meeting"),
+        MEETING_DISPROVED("Student declared that the meeting with teacher had NOT taken place"),
+        CONNECTION_FINISHED("Request cycle was fully processed");
         
         @Getter
         private final String description;

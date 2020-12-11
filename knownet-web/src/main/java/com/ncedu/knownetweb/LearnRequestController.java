@@ -1,10 +1,9 @@
 package com.ncedu.knownetweb;
 
-import com.ncedu.knownetimpl.model.User;
+import com.ncedu.knownetimpl.model.LearnRequestBody;
 import com.ncedu.knownetimpl.model.entity.LearnRequest;
 import com.ncedu.knownetimpl.service.LearnRequestService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,6 @@ import java.util.Optional;
 public class LearnRequestController {
     private final LearnRequestService learnRequestService;
     
-//    @Autowired
     public LearnRequestController(LearnRequestService learnRequestService) {
         this.learnRequestService = learnRequestService;
     }
@@ -75,4 +73,36 @@ public class LearnRequestController {
             return ResponseEntity.ok().body(learnRequestService.findByStudentId(studentId));
         }
     }
+    
+    
+    @PostMapping(value = "request")
+    public ResponseEntity<String> create(@RequestBody LearnRequestBody learnRequestbody) {
+        LearnRequest learnRequest = learnRequestService.makeFromBody(learnRequestbody);
+        log.debug("requested: learnRequest  create (teacher_id = {}, studentId = {}, lessonId = {})",
+                learnRequest.getTeacher().getId(), learnRequest.getStudent().getId(),
+                /*learnRequest.getLesson().getId()*/ null);
+        //todo activate
+        boolean created = learnRequestService.create(learnRequest);
+        if (created) {
+            return ResponseEntity.ok().body("learnRequest with id = " + learnRequest.getId() + " was created");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("learnRequest with id = " + learnRequest.getId() + " already exists");
+        }
+    }
+    
+    @PutMapping(value = "request")
+    public ResponseEntity<String> update(@RequestBody LearnRequestBody learnRequestbody) {
+        LearnRequest learnRequest = learnRequestService.makeFromBody(learnRequestbody);
+        Long id = learnRequest.getId();
+        log.debug("requested: learnRequest  update (id = {})", id);
+        boolean updated = learnRequestService.update(learnRequest);
+        if (updated) {
+            return ResponseEntity.ok().body("learnRequest with id = " + id + " was updated");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("learnRequest with id = " + id + " does not exist");
+        }
+    }
+    
 }
