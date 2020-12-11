@@ -17,9 +17,9 @@
                 <li class="picked"><a href="#">My profile</a></li>
                 <li><a href="#">Learn</a></li>
                 <li><a href="#">Teach</a></li>
-                <li><a href="#">My requests</a></li>
+                <li><a href="#">Incoming requests</a></li>
+                <li><a href="#">Outgoing requests</a></li>
                 <li><a href="#">News</a></li>
-                <li><a href="#">My classes</a></li>
                 <li><a href="#">Settings</a></li>
                 <!--<li><a href="#">Manage organization</a></li>
                 <li><a href="#">Manage Tag tree</a></li>
@@ -35,9 +35,12 @@
     <div class="photo">
         <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="profile photo">
     </div>
+
+    <!-- tables todo!! -->
     <div class="contact">
         <h1 id="name">Outer Space</h1>
         <div class="highlight"></div>
+        <!--
         <div class="topics">
             <p>group:</p>
             <p>rating:</p>
@@ -52,13 +55,53 @@
             <p id="email"><a href="#">hello.world@netcracker.edu</a></p>
             <p id="vkLink"><a href="#">http://vk.com/netcrack</a></p>
             <p id="telegramLink"><a href="#">http://telegram.com</a></p>
-            <p id="phoneNumber"><a href="#">89150243155</a></p>
-        </div>
+            <p id="phoneNumber"></p>
+        </div>-->
+
+        <table cellspacing="10px">
+            <tr>
+                <td width="200px">group:</td>
+                <td id="group">MIPT</td>
+            </tr>
+            <tr>
+                <td>rating:</td>
+                <td id="rating">5.00</td>
+            </tr>
+            <tr>
+                <td>status:</td>
+                <td id="status">Professor</td>
+            </tr>
+            <tr>
+                <td>contact information:</td>
+                <td id="email"><a href="#">hello.world@netcracker.edu</a></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td id="vkLink"><a href="#">http://vk.com/netcrack</a></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td id="telegramLink"><a href="#">http://telegram.com</a></td>
+            </tr>
+            <tr>
+                <td></td>
+                <a href="#"><td id="phoneNumber">89150243155</td></a>
+            </tr>
+        </table>
     </div>
 
     <div class="lessons-info">
-        <p id="conductedCount">Lessons conducted: </p>
-        <p id="attendedCount">Lessons attended: </p>
+
+        <table cellspacing="10px">
+            <tr>
+                <td width="150px">Lessons conducted:</td>
+                <td id="conductedCount">13</td>
+            </tr>
+            <tr>
+                <td width="150px">Lessons attended:</td>
+                <td id="attendedCount">5</td>
+            </tr>
+        </table>
     </div>
 
     <div id="field">
@@ -81,6 +124,7 @@
     }
 
     function initForm() {
+
         let http = new XMLHttpRequest();
 
         http.open('GET', '/users/byLogin/' + getQueryParam("usr"), false);
@@ -98,7 +142,46 @@
             for (let key in parsedJSONData) {
                 if (parsedJSONData.hasOwnProperty(key)) {
 
+                    // We can directly insert data like this: ....getElementById(key).textContent = parsedJSONData[key];
+                    // But a bunch of corner-cases makes me to do more understandable approach for parsing data:
 
+                    switch(key) {
+                        case "firstName":
+                            if (parsedJSONData[key] === "null") {
+                                document.getElementById("name").textContent = "";
+                                continue;
+                            }
+                            document.getElementById("name").textContent = parsedJSONData[key];
+                            break;
+                        case "lastName":
+                            if (parsedJSONData[key] === "null") {
+                                document.getElementById("name").textContent = "";
+                                continue;
+                            }
+                            document.getElementById("name").textContent += " " + parsedJSONData[key];
+                            break;
+                        case "group":
+                        case "rating":
+                        case "status":
+                        case "email":
+                        case "vkLink":
+                        case "telegramLink":
+                        case "phoneNumber":
+                        case "conductedCount":
+                        case "attendedCount":
+                            if (document.getElementById(key) == null) {
+                                console.log("cannot find element by ID: " + key);
+                            }
+                            if (parsedJSONData[key] === "null") {
+                                document.getElementById(key).remove();
+                                continue;
+                            }
+                            document.getElementById(key).textContent = parsedJSONData[key];
+                            break;
+                        default:
+                            console.log("something went wrong: " + key);
+                    }
+/*
                     if(key === "firstName") {
                         document.getElementById("name").textContent = parsedJSONData[key];
                     } else if(key === "lastName") {
@@ -112,7 +195,8 @@
                             if (parsedJSONData[key] === "null") {
                                 document.getElementById(key).remove();
                             }
-                            document.getElementById(key).insertAdjacentHTML("beforeEnd", parsedJSONData[key]);
+                            document.getElementById("name").textContent = parsedJSONData[key];
+                            //document.getElementById(key).insertAdjacentHTML("beforeEnd", parsedJSONData[key]);
                             continue;
                         }
 
@@ -122,11 +206,11 @@
 
                         document.getElementById(key).textContent = parsedJSONData[key];
 
-                    }
+                    }*/
                 }
             }
         }
-        //{"id":1,"login":"Vas","encodedPassword":"coolVasya","firstName":"Vasya","lastName":"Petrov","rating":0.0,"points":0,"group":null,"email":null,"vkLink":null,"telegramLink":null,"phoneNumber":null}
+        //{"id":1,"login":"Vas","encodedPassword":"coolVasya","firstName":"Vasya","lastName":"Petrov","rating":0.0,"points":0,"group":null,"email":null,"vkLink":null,"telegramLink":null,"phoneNumber":null, "attended_count":null, "conducted_count":null}
     }
 
 
