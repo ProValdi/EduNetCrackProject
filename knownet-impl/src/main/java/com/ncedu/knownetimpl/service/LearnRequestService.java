@@ -1,7 +1,7 @@
 package com.ncedu.knownetimpl.service;
 
 import com.ncedu.knownetimpl.model.LearnRequestBody;
-import com.ncedu.knownetimpl.model.User;
+import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.model.entity.LearnRequest;
 import com.ncedu.knownetimpl.repository.LearnRequestRepository;
 import lombok.extern.slf4j.Slf4j;

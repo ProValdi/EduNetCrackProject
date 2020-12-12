@@ -1,6 +1,6 @@
 package com.ncedu.knownetimpl.model.entity;
 
-import com.ncedu.knownetimpl.model.User;
+import com.ncedu.knownetimpl.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
