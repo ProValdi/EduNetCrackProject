@@ -1,6 +1,7 @@
 package com.ncedu.knownetimpl.model;
 
 
+import com.ncedu.knownetimpl.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,16 +12,19 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="courses")
-public class Course {
+@Table(name="lessons")
+public class Lesson {
     @Id
     @GeneratedValue
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private User student;
 
-    @MapsId("mnemonic")
-    @JoinColumn(referencedColumnName="id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
+    private User teacher;
 
     //private Long tgaId;
 
