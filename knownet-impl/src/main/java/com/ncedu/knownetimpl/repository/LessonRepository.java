@@ -1,4 +1,5 @@
 package com.ncedu.knownetimpl.repository;
+import com.ncedu.knownetimpl.model.entity.LearnRequest;
 import com.ncedu.knownetimpl.model.entity.Lesson;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,5 +10,6 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     List<Lesson> findByName(String name);
     List<Lesson> findByTagId(Long tagId);
     List<Lesson> findByTeacherId(Long teacherId);
+    List<LearnRequest> findByTeacherIdAndHiddenForTeacherAndStatusNot(Long teacherId, Boolean hidden, LearnRequest.Status status);
 }
 

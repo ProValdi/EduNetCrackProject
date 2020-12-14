@@ -1,9 +1,12 @@
 package com.ncedu.knownetimpl.model.entity;
 
 
+
+import com.ncedu.knownetimpl.model.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -21,13 +24,12 @@ public class Lesson {
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private User teacher;
 
-    //private Long tgaId;
-
     @Column(name = "name")
     private String name;
 
-    @Column(name = "tagId")
-    private Long tagId;
+    @ManyToOne
+    @JoinColumn(name = "tag_id", referencedColumnName = "id")
+    private Tag tag;
 
     @Column(name = "topic")
     private String topic;
@@ -43,5 +45,9 @@ public class Lesson {
 
     @Column(name = "skills_to_complete")
     private String skillsToComplete;
+
+    @ColumnDefault("boolean default false")
+    @Column(name = "hidden_for_teacher")
+    private Boolean hiddenForTeacher = false;
 
 }
