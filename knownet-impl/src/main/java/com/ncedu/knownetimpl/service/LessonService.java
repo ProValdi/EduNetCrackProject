@@ -21,8 +21,6 @@ public class LessonService {
     }
 
 
-
-
     public Optional<Lesson> findById(Long id) {
         return lessonRepository.findById(id);
     }
