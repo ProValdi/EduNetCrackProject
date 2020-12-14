@@ -1,7 +1,6 @@
-package com.ncedu.knownetimpl.model;
+package com.ncedu.knownetimpl.model.entity;
 
 
-import com.ncedu.knownetimpl.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +18,6 @@ public class Lesson {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "id")
-    private User student;
-
-    @ManyToOne
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private User teacher;
 
@@ -31,6 +26,9 @@ public class Lesson {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "tagId")
+    private Long tagId;
+
     @Column(name = "topic")
     private String topic;
 
@@ -38,13 +36,12 @@ public class Lesson {
     private Double difficulty;
 
     @Column(name = "points_to_get")
-    private Integer points_to_get;
+    private Integer pointsToGet;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "skills_to_complete")
-    private String skills_to_complete;
-
+    private String skillsToComplete;
 
 }

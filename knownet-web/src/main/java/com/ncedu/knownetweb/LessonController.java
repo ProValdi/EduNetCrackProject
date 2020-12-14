@@ -1,7 +1,6 @@
 package com.ncedu.knownetweb;
 
-import com.ncedu.knownetimpl.model.Lesson;
-import com.ncedu.knownetimpl.model.entity.LearnRequest;
+import com.ncedu.knownetimpl.model.entity.Lesson;
 import com.ncedu.knownetimpl.service.LessonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +52,6 @@ public class LessonController {
         log.debug("requested: lesson get    (tagId = {})", tagId);
         return ResponseEntity.ok().body(lessonService.findByTagId(tagId));
     }
-
-
-
-
 
     @GetMapping("byTeacherId/{teacherId}")
     public ResponseEntity<List<Lesson>> findByTeacherId(
