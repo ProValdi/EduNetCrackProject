@@ -46,8 +46,4 @@ public class Lesson {
     @Column(name = "skills_to_complete")
     private String skillsToComplete;
 
-    @ColumnDefault("boolean default false")
-    @Column(name = "hidden_for_teacher")
-    private Boolean hiddenForTeacher = false;
-
 }

@@ -7,9 +7,13 @@ import java.util.List;
 
 @Repository
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
+
     List<Lesson> findByName(String name);
+
     List<Lesson> findByTagId(Long tagId);
+
     List<Lesson> findByTeacherId(Long teacherId);
+
     List<LearnRequest> findByTeacherIdAndHiddenForTeacherAndStatusNot(Long teacherId, Boolean hidden, LearnRequest.Status status);
 }
 

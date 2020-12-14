@@ -1,5 +1,8 @@
 package com.ncedu.knownetweb;
 
+import com.ncedu.knownetimpl.model.LearnRequestBody;
+import com.ncedu.knownetimpl.model.LessonBody;
+import com.ncedu.knownetimpl.model.entity.LearnRequest;
 import com.ncedu.knownetimpl.model.entity.Lesson;
 import com.ncedu.knownetimpl.service.LessonService;
 import lombok.extern.slf4j.Slf4j;
@@ -77,7 +80,12 @@ public class LessonController {
     }
 
     @PostMapping(value = "lesson")
-    public ResponseEntity<String> create(@RequestBody Lesson lesson) {
+    public ResponseEntity<String> create(@RequestBody LessonBody lessonBody) {
+        Lesson lesson = lessonService.makeFromBody(lessonBody);
+        log.debug("requested: lesson  create (teacher_id = {}, studentId = {}, lessonId = {})",
+                lesson.getTeacher().getId(), lesson.getTeacher().getId(),
+                /*learnRequest.getLesson().getId()*/ null);
+
         boolean created = lessonService.create(lesson);
         if (created) {
             return ResponseEntity.ok().body("lesson with id = " + lesson.getId() + " was created");
@@ -87,8 +95,9 @@ public class LessonController {
         }
     }
 
-    @PutMapping(value = "lesson")
-    public ResponseEntity<String> update(@RequestBody Lesson lesson) {
+    @PutMapping(value = "request")
+    public ResponseEntity<String> update(@RequestBody LessonBody lessonbody) {
+        Lesson lesson = lessonService.makeFromBody(lessonbody);
         Long id = lesson.getId();
         log.debug("requested: lesson  update (id = {})", id);
         boolean updated = lessonService.update(lesson);
