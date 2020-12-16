@@ -40,10 +40,10 @@ public class Lesson {
     @Column(name = "points_to_get")
     private Integer pointsToGet;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 2000)
     private String description;
 
-    @Column(name = "skills_to_complete")
+    @Column(name = "skills_to_complete", length = 2000)
     private String skillsToComplete;
 
 }

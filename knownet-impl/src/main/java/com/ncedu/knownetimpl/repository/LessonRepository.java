@@ -14,6 +14,5 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
     List<Lesson> findByTeacherId(Long teacherId);
 
-    List<LearnRequest> findByTeacherIdAndHiddenForTeacherAndStatusNot(Long teacherId, Boolean hidden, LearnRequest.Status status);
 }
 

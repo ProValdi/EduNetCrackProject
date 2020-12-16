@@ -50,20 +50,16 @@ public class LessonController {
 
 
 
-    @GetMapping("byTagId/{TagId}")
+    @GetMapping("byTagId/{tagId}")
     public ResponseEntity<List<Lesson>> findByTagId(@PathVariable(name = "tagId") Long tagId) {
         log.debug("requested: lesson get    (tagId = {})", tagId);
         return ResponseEntity.ok().body(lessonService.findByTagId(tagId));
     }
 
     @GetMapping("byTeacherId/{teacherId}")
-    public ResponseEntity<List<Lesson>> findByTeacherId(
-            @PathVariable(name = "teacherId") Long teacherId,
-            @RequestParam(name = "activeOnly", defaultValue = "true", required = false) Boolean activeOnly
-    ) {
+    public ResponseEntity<List<Lesson>> findByTeacherId(@PathVariable(name = "teacherId") Long teacherId) {
         log.debug("requested: learnRequests get    (teacherId = {})", teacherId);
-            return ResponseEntity.ok().body(lessonService.findByTeacherId(teacherId));
-
+        return ResponseEntity.ok().body(lessonService.findByTeacherId(teacherId));
     }
 
 
@@ -82,9 +78,8 @@ public class LessonController {
     @PostMapping(value = "lesson")
     public ResponseEntity<String> create(@RequestBody LessonBody lessonBody) {
         Lesson lesson = lessonService.makeFromBody(lessonBody);
-        log.debug("requested: lesson  create (teacher_id = {}, studentId = {}, lessonId = {})",
-                lesson.getTeacher().getId(), lesson.getTeacher().getId(),
-                /*learnRequest.getLesson().getId()*/ null);
+        log.debug("requested: lesson  create (teacher_id = {}, tagId = {}, lessonName = {})",
+                lesson.getTeacher().getId(), lesson.getTag().getId(), lesson.getName());
 
         boolean created = lessonService.create(lesson);
         if (created) {
@@ -95,9 +90,9 @@ public class LessonController {
         }
     }
 
-    @PutMapping(value = "request")
-    public ResponseEntity<String> update(@RequestBody LessonBody lessonbody) {
-        Lesson lesson = lessonService.makeFromBody(lessonbody);
+    @PutMapping(value = "lesson")
+    public ResponseEntity<String> update(@RequestBody LessonBody lessonBody) {
+        Lesson lesson = lessonService.makeFromBody(lessonBody);
         Long id = lesson.getId();
         log.debug("requested: lesson  update (id = {})", id);
         boolean updated = lessonService.update(lesson);
