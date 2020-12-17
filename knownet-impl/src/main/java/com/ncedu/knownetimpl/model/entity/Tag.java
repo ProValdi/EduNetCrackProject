@@ -1,4 +1,4 @@
-package com.ncedu.knownetimpl.model;
+package com.ncedu.knownetimpl.model.entity;
 
 import lombok.*;
 

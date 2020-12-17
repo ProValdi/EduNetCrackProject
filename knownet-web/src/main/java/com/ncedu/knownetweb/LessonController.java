@@ -1,8 +1,6 @@
 package com.ncedu.knownetweb;
 
-import com.ncedu.knownetimpl.model.LearnRequestBody;
 import com.ncedu.knownetimpl.model.LessonBody;
-import com.ncedu.knownetimpl.model.entity.LearnRequest;
 import com.ncedu.knownetimpl.model.entity.Lesson;
 import com.ncedu.knownetimpl.service.LessonService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,12 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
-
-
-
 
 
 @Slf4j
@@ -48,8 +42,6 @@ public class LessonController {
         return ResponseEntity.ok().body(lessonService.findByName(name));
     }
 
-
-
     @GetMapping("byTagId/{tagId}")
     public ResponseEntity<List<Lesson>> findByTagId(@PathVariable(name = "tagId") Long tagId) {
         log.debug("requested: lesson get    (tagId = {})", tagId);
@@ -61,8 +53,7 @@ public class LessonController {
         log.debug("requested: learnRequests get    (teacherId = {})", teacherId);
         return ResponseEntity.ok().body(lessonService.findByTeacherId(teacherId));
     }
-
-
+    
     @DeleteMapping(value = "byId/{id}")
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
         log.debug("requested: lesson  delete (id = {})", id);
@@ -103,12 +94,5 @@ public class LessonController {
                     .body("lesson with id = " + id + " does not exist");
         }
     }
-
-
+    
 }
-
-
-
-
-
-

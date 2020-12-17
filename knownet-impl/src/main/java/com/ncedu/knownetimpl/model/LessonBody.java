@@ -1,13 +1,8 @@
 package com.ncedu.knownetimpl.model;
 
-import com.ncedu.knownetimpl.model.entity.LearnRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 
 @Data

@@ -1,6 +1,6 @@
 package com.ncedu.knownetimpl.service;
 
-import com.ncedu.knownetimpl.model.Tag;
+import com.ncedu.knownetimpl.model.entity.Tag;
 import com.ncedu.knownetimpl.repository.TagRepository;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;

@@ -1,20 +1,15 @@
 package com.ncedu.knownetimpl.model.entity;
 
-
-
-import com.ncedu.knownetimpl.model.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="lessons")
+@Table(name = "lessons")
 public class Lesson {
     @Id
     @GeneratedValue

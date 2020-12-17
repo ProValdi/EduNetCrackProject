@@ -1,13 +1,12 @@
 package com.ncedu.knownetimpl.service;
 import com.ncedu.knownetimpl.model.LessonBody;
-import com.ncedu.knownetimpl.model.Tag;
+import com.ncedu.knownetimpl.model.entity.Tag;
 import com.ncedu.knownetimpl.model.entity.Lesson;
 import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.repository.LessonRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-
 
 
 @Service
@@ -92,8 +91,5 @@ public class LessonService {
 
         return lesson;
     }
-
-
-
 
 }

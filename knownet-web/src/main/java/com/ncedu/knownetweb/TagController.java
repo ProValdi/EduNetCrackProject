@@ -1,6 +1,6 @@
 package com.ncedu.knownetweb;
 
-import com.ncedu.knownetimpl.model.Tag;
+import com.ncedu.knownetimpl.model.entity.Tag;
 import com.ncedu.knownetimpl.service.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
