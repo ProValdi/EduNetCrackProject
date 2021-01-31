@@ -80,8 +80,7 @@ public class LearnRequestController {
         LearnRequest learnRequest = learnRequestService.makeFromBody(learnRequestbody);
         log.debug("requested: learnRequest  create (teacher_id = {}, studentId = {}, lessonId = {})",
                 learnRequest.getTeacher().getId(), learnRequest.getStudent().getId(),
-                /*learnRequest.getLesson().getId()*/ null);
-        //todo activate
+                learnRequest.getLesson().getId());
         boolean created = learnRequestService.create(learnRequest);
         if (created) {
             return ResponseEntity.ok().body("learnRequest with id = " + learnRequest.getId() + " was created");
