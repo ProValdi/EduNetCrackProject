@@ -1,10 +1,7 @@
 package com.ncedu.knownetimpl.service;
 
 import com.ncedu.knownetimpl.model.LearnRequestBody;
-<<<<<<< HEAD
-=======
 import com.ncedu.knownetimpl.model.entity.Lesson;
->>>>>>> f3b79776fdf29cf49ad91972af7c5cd76dbc7221
 import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.model.entity.LearnRequest;
 import com.ncedu.knownetimpl.repository.LearnRequestRepository;
@@ -19,14 +16,9 @@ import java.util.Optional;
 public class LearnRequestService {
     private final LearnRequestRepository learnRequestRepository;
     private final UserService userService;
-<<<<<<< HEAD
-
-    public LearnRequestService(LearnRequestRepository learnRequestRepository, UserService userService) {
-=======
     private final LessonService lessonService;
-    
+
     public LearnRequestService(LearnRequestRepository learnRequestRepository, UserService userService, LessonService lessonService) {
->>>>>>> f3b79776fdf29cf49ad91972af7c5cd76dbc7221
         this.learnRequestRepository = learnRequestRepository;
         this.userService = userService;
         this.lessonService = lessonService;
@@ -101,7 +93,6 @@ public class LearnRequestService {
         learnRequest.setHiddenForStudent(body.getHiddenForStudent());
         learnRequest.setHiddenForTeacher(body.getHiddenForTeacher());
         learnRequest.setStatus(body.getStatus());
-<<<<<<< HEAD
 
         Optional<User> student = userService.findById(body.getStudentId());
         Optional<User> teacher = userService.findById(body.getTeacherId());
@@ -112,35 +103,33 @@ public class LearnRequestService {
         learnRequest.setTeacher(teacher.orElse(new User()));
 //        learnRequest.setLesson(lesson.orElse(new Lesson()));
 
-=======
-    
-        Optional<User> student;
-        Optional<User> teacher;
+
+//        Optional<User> student;
+//        Optional<User> teacher;
         Optional<Lesson> lesson;
-        
+
         if (body.getStudentId() == null) {
             student = Optional.empty();
         } else {
             student = userService.findById(body.getStudentId());
         }
-        
+
         if (body.getTeacherId() == null) {
             teacher = Optional.empty();
         } else {
             teacher = userService.findById(body.getTeacherId());
         }
-        
+
         if (body.getLessonId() == null) {
             lesson = Optional.empty();
         } else {
             lesson = lessonService.findById(body.getLessonId());
         }
-    
+
         learnRequest.setStudent(student.orElse(new User()));
         learnRequest.setTeacher(teacher.orElse(new User()));
         learnRequest.setLesson(lesson.orElse(new Lesson()));
-        
->>>>>>> f3b79776fdf29cf49ad91972af7c5cd76dbc7221
+
         return learnRequest;
     }
 }

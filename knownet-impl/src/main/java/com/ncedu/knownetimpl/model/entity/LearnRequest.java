@@ -1,9 +1,5 @@
 package com.ncedu.knownetimpl.model.entity;
 
-<<<<<<< HEAD
-import com.ncedu.knownetimpl.model.entity.User;
-=======
->>>>>>> f3b79776fdf29cf49ad91972af7c5cd76dbc7221
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -29,7 +25,6 @@ public class LearnRequest {
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private User student;
-<<<<<<< HEAD
 
 //    todo add foreign key constraint into table
 //    todo connect to lesson class
@@ -37,26 +32,20 @@ public class LearnRequest {
 //    @JoinColumn(name = "lesson_id", referencedColumnName = "id")
 //    private Lesson lesson;
 
-=======
-    
+
     @ManyToOne()
     @JoinColumn(name = "lesson_id", referencedColumnName = "id")
     private Lesson lesson;
-    
->>>>>>> f3b79776fdf29cf49ad91972af7c5cd76dbc7221
+
     @ColumnDefault("string default LESSON_REQUESTED")
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status = Status.LESSON_REQUESTED;
-<<<<<<< HEAD
 
 //    @ColumnDefault("boolean default true")
 //    @Column(name = "awaiting_teacher")
 //    private Boolean awaitingTeacher = true;
 
-=======
-    
->>>>>>> f3b79776fdf29cf49ad91972af7c5cd76dbc7221
     @ColumnDefault("boolean default false")
     @Column(name = "hidden_for_teacher")
     private Boolean hiddenForTeacher = false;
