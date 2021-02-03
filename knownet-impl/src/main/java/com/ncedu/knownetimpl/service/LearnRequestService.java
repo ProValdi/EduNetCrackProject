@@ -93,18 +93,8 @@ public class LearnRequestService {
         learnRequest.setHiddenForTeacher(body.getHiddenForTeacher());
         learnRequest.setStatus(body.getStatus());
 
-        Optional<User> student = userService.findById(body.getStudentId());
-        Optional<User> teacher = userService.findById(body.getTeacherId());
-//        todo activate
-//        Optional<Lesson> lesson = userService.findById(body.getLessonId());
-
-        learnRequest.setStudent(student.orElse(new User()));
-        learnRequest.setTeacher(teacher.orElse(new User()));
-//        learnRequest.setLesson(lesson.orElse(new Lesson()));
-
-
-//        Optional<User> student;
-//        Optional<User> teacher;
+        Optional<User> student;
+        Optional<User> teacher;
         Optional<Lesson> lesson;
 
         if (body.getStudentId() == null) {
