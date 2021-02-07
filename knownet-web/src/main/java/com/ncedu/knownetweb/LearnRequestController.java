@@ -78,7 +78,7 @@ public class LearnRequestController {
     @PostMapping(value = "request")
     public ResponseEntity<String> create(@RequestBody LearnRequestBody learnRequestbody) {
         LearnRequest learnRequest = learnRequestService.makeFromBody(learnRequestbody);
-        log.debug("requested: learnRequest  create (teacher_id = {}, studentId = {}, lessonId = {})",
+        log.debug("requested: learnRequest  create (teacherId = {}, studentId = {}, lessonId = {})",
                 learnRequest.getTeacher().getId(), learnRequest.getStudent().getId(),
                 learnRequest.getLesson().getId());
         boolean created = learnRequestService.create(learnRequest);
@@ -95,12 +95,17 @@ public class LearnRequestController {
         LearnRequest learnRequest = learnRequestService.makeFromBody(learnRequestbody);
         Long id = learnRequest.getId();
         log.debug("requested: learnRequest  update (id = {})", id);
-        boolean updated = learnRequestService.update(learnRequest);
-        if (updated) {
-            return ResponseEntity.ok().body("learnRequest with id = " + id + " was updated");
-        } else {
+        try {
+            boolean updated = learnRequestService.update(learnRequest);
+            if (updated) {
+                return ResponseEntity.ok().body("learnRequest with id = " + id + " was updated");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("learnRequest with id = " + id + " does not exist");
+            }
+        } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("learnRequest with id = " + id + " does not exist");
+                    .body("conflict in current and new status in learnRequest with id = " + id + ". " + e.getMessage());
         }
     }
     

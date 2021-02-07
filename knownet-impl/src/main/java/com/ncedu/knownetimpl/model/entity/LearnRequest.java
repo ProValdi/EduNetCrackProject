@@ -43,6 +43,10 @@ public class LearnRequest {
     @Column(name = "hidden_for_student")
     private Boolean hiddenForStudent = false;
     
+    @ColumnDefault("boolean default false")
+    @Column(name = "is_finished")
+    private Boolean isFinished = false;
+    
     public Boolean isAwaitingTeacher() {
         return status == Status.LESSON_REQUESTED;
     }
@@ -58,14 +62,28 @@ public class LearnRequest {
         LESSON_REQUEST_REJECTED("Teacher rejected student's request"),
         MEETING_CONFIRMED("Student confirmed that the meeting with teacher had taken place"),
         MEETING_CANCELED("Student decided to cancel the meeting"),
-        MEETING_DISPROVED("Student declared that the meeting with teacher had NOT taken place"),
-        CONNECTION_FINISHED("Request cycle was fully processed");
+        MEETING_DISPROVED("Student declared that the meeting with teacher had NOT taken place");
         
         @Getter
         private final String description;
         
         Status(String description) {
             this.description = description;
+        }
+        
+        public boolean isFinished() {
+            switch (this) {
+                case LESSON_REQUESTED:
+                case LESSON_REQUEST_ACCEPTED:
+                    return  false;
+                case LESSON_REQUEST_REJECTED:
+                case MEETING_CONFIRMED:
+                case MEETING_CANCELED:
+                case MEETING_DISPROVED:
+                    return  true;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + this);
+            }
         }
     }
 }

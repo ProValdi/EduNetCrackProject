@@ -8,13 +8,8 @@ import java.util.List;
 
 @Repository
 public interface LearnRequestRepository extends JpaRepository<LearnRequest, Long> {
-    
     List<LearnRequest> findByTeacherId(Long teacherId);
-    
     List<LearnRequest> findByStudentId(Long studentId);
-    
-    List<LearnRequest> findByTeacherIdAndHiddenForTeacherAndStatusNot(Long teacherId, Boolean hidden, LearnRequest.Status status);
-    
-    List<LearnRequest> findByStudentIdAndHiddenForStudentAndStatusNot(Long teacherId, Boolean hidden, LearnRequest.Status status);
-    
+    List<LearnRequest> findByStudentIdAndHiddenForStudentFalse(Long studentId);
+    List<LearnRequest> findByTeacherIdAndHiddenForTeacherFalse(Long teacherId);
 }
