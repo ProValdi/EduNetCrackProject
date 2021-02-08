@@ -11,12 +11,19 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  heroesUrl = 'http://localhost:8083/users';
+  usersUrl = 'http://localhost:8083/users';
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.heroesUrl + '/all')
+    return this.http.get<User[]>(this.usersUrl + '/all')
       .pipe(
         catchError(this.handleError<User[]>('getUseres', []))
+      );
+  }
+
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(this.usersUrl + '/byId/' + id)
+      .pipe(
+        catchError(this.handleError<User>(`getUserById id=${id}`))
       );
   }
 

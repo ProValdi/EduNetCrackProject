@@ -1,25 +1,72 @@
-<header class="header" role="banner">
-  <h1 class="logo">
-    <a href="#"><span>Know</span>net</a>
-  </h1>
-  <div class="nav-wrap">
-    <nav class="main-nav" role="navigation">
-      <ul class="unstyled ten">
-        <li class="picked"><a href="#">My profile</a></li>
-        <li><a routerLink="/users">Users</a></li>  <!--        JUST FOR TEST-->
-        <li><a routerLink="/learn">Learn</a></li>
-        <li><a href="#">Teach</a></li>
-        <li><a href="#">Incoming requests</a></li>
-        <li><a href="#">Outgoing requests</a></li>
-        <li><a href="#">News</a></li>
-        <li><a href="#">Settings</a></li>
-        <!--<li><a href="#">Manage organization</a></li>
-        <li><a href="#">Manage Tag tree</a></li>
-        <li><a href="#">Manage add-lesson requests</a></li>
-        <li><a href="#">Manage reports</a></li>-->
-      </ul>
-    </nav>
-  </div>
-</header>
+<!--<header class="header" role="banner">-->
+<!--  <h1 class="logo">-->
+<!--    <a href="#"><span>Know</span>net</a>-->
+<!--  </h1>-->
+<!--  <div class="nav-wrap">-->
+<!--    <nav class="main-nav" role="navigation">-->
+<!--      <ul class="unstyled ten">-->
+<!--        <li class="picked"><a href="#">My profile</a></li>-->
+<!--        <li><a routerLink="/users">Users</a></li>  &lt;!&ndash;        JUST FOR TEST&ndash;&gt;-->
+<!--        <li><a routerLink="/learn">Learn</a></li>-->
+<!--        <li><a href="#">Teach</a></li>-->
+<!--        <li><a href="#">Incoming requests</a></li>-->
+<!--        <li><a href="#">Outgoing requests</a></li>-->
+<!--        <li><a href="#">News</a></li>-->
+<!--        <li><a href="#">Settings</a></li>-->
+<!--        &lt;!&ndash;<li><a href="#">Manage organization</a></li>-->
+<!--        <li><a href="#">Manage Tag tree</a></li>-->
+<!--        <li><a href="#">Manage add-lesson requests</a></li>-->
+<!--        <li><a href="#">Manage reports</a></li>&ndash;&gt;-->
+<!--      </ul>-->
+<!--    </nav>-->
+<!--  </div>-->
+<!--</header>-->
+
+<div id="menu">
+  <nav>
+    <h1 class="logo">
+      <a href="#"><span>Know</span>net</a>
+    </h1>
+    <a class="a-nav" routerLink="profile" (click)="currentTab='profile'" [class.picked]="currentTab === 'profile'">
+      My profile
+    </a>
+    <a class="a-nav" routerLink="learn" (click)="currentTab='learn'" [class.picked]="currentTab === 'learn'">
+      Learn
+    </a>
+    <a class="a-nav" href="javascript:void(0)">
+      Teach
+    </a>
+    <a class="a-nav" href="javascript:void(0)">
+      My requests
+    </a>
+    <a class="a-nav" href="javascript:void(0)">
+      News
+    </a>
+    <a class="a-nav" href="javascript:void(0)">
+      My classes
+    </a>
+    <a class="a-nav" href="javascript:void(0)">
+      Settings
+    </a>
+    <!--
+    <a class="a-nav" href="javascript:void(0)">
+      Manage organization
+    </a>
+    <a class="a-nav" href="javascript:void(0)">
+      Manage Tag tree
+    </a>
+    <a class="a-nav" href="javascript:void(0)">
+      Manage add-lesson requests
+    </a>
+    <a class="a-nav" href="javascript:void(0)">
+      Manage reports
+    </a>
+-->
+  </nav>
+</div>
 
 <router-outlet></router-outlet>
+
+<div id="footer">
+  KnowNet 2020-2021.
+</div>
