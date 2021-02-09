@@ -4,6 +4,7 @@ import com.ncedu.knownetimpl.model.LearnRequestBody;
 import com.ncedu.knownetimpl.model.entity.LearnRequest;
 import com.ncedu.knownetimpl.service.LearnRequestService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,8 @@ import java.util.Optional;
 @RequestMapping("/requests")
 public class LearnRequestController {
     private final LearnRequestService learnRequestService;
-    
+
+    @Autowired
     public LearnRequestController(LearnRequestService learnRequestService) {
         this.learnRequestService = learnRequestService;
     }

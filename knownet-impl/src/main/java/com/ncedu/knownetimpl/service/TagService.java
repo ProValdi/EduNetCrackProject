@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 @Service
 public class TagService {
@@ -16,15 +17,24 @@ public class TagService {
   }
 
   public Optional<Tag> findById(Long id) {
-    return tagRepository.findById(id);
+    if(id != 0)
+      return tagRepository.findById(id);
+    else
+      return Optional.empty();
   }
 
   public List<Tag> findWithParents(Long id) {
-    return tagRepository.findWithParents(id);
+    if(id != 0)
+      return tagRepository.findWithParents(id);
+    else
+      return new ArrayList<Tag>(0);
   }
 
   public List<Tag> getChildren(Long id) {
-    return tagRepository.findByParentId(id);
+    if(id != 0)
+      return tagRepository.findByParentId(id);
+    else
+      return new ArrayList<Tag>(0);
   }
 
   @Transactional

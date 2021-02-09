@@ -33,7 +33,10 @@ public class UserService {
     }
     
     public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+        if(id != 0)
+            return userRepository.findById(id);
+        else
+            return Optional.empty();
     }
     
     @Transactional
@@ -42,6 +45,8 @@ public class UserService {
     }
     
     public boolean deleteById(Long id) {
+        if(id == 0)
+            return false;
         boolean exists = userRepository.existsById(id);
         if (exists) {
             userRepository.deleteById(id);

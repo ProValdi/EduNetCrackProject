@@ -5,6 +5,9 @@ import com.ncedu.knownetimpl.model.entity.Lesson;
 import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.repository.LessonRepository;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +30,10 @@ public class LessonService {
     }
 
     public Optional<Lesson> findById(Long id) {
-        return lessonRepository.findById(id);
+        if(id != 0)
+            return lessonRepository.findById(id);
+        else
+            return Optional.empty();
     }
 
     public List<Lesson> findByName(String name) {
@@ -35,14 +41,22 @@ public class LessonService {
     }
 
     public List<Lesson> findByTagId(Long tagId) {
-        return lessonRepository.findByTagId(tagId);
+        if(tagId != 0)
+            return lessonRepository.findByTagId(tagId);
+        else
+            return new ArrayList<Lesson>(0);
     }
 
     public List<Lesson> findByTeacherId(Long teacherId) {
-        return lessonRepository.findByTeacherId(teacherId);
+        if(teacherId != 0)
+            return lessonRepository.findByTeacherId(teacherId);
+        else
+            return new ArrayList<Lesson>(0);
     }
 
     public boolean deleteById(Long id) {
+        if(id == 0)
+            return false;
         boolean exists = lessonRepository.existsById(id);
         if (exists) {
             lessonRepository.deleteById(id);
@@ -59,6 +73,8 @@ public class LessonService {
     }
 
     public boolean update(Lesson lesson) {
+        if(lesson.getId() == 0)
+            return false;
         Optional<Lesson> oldLessonOpt = findById(lesson.getId());
         if (oldLessonOpt.isPresent()) {
             Lesson oldLesson = oldLessonOpt.get();
