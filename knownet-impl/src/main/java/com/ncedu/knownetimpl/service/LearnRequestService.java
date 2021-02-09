@@ -104,16 +104,24 @@ public class LearnRequestService {
             student = userService.findById(body.getStudentId());
         }
         
-        if (body.getTeacherId() == null) {
-            teacher = Optional.empty();
-        } else {
-            teacher = userService.findById(body.getTeacherId());
-        }
-        
         if (body.getLessonId() == null) {
             lesson = Optional.empty();
         } else {
             lesson = lessonService.findById(body.getLessonId());
+        }
+    
+        Long teacherId = null;
+        if (lesson.isPresent()) {
+            teacherId = lesson.get().getTeacher().getId();
+        }
+        if (teacherId == null) {
+            teacherId = body.getTeacherId();
+        }
+        
+        if (teacherId == null) {
+            teacher = Optional.empty();
+        } else {
+            teacher = userService.findById(teacherId);
         }
     
         learnRequest.setStudent(student.orElse(new User()));

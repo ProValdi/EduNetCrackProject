@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/requests")
 public class LearnRequestController {
     private final LearnRequestService learnRequestService;
@@ -75,7 +76,7 @@ public class LearnRequestController {
     }
     
     
-    @PostMapping(value = "request")
+    @PostMapping(value = "")
     public ResponseEntity<String> create(@RequestBody LearnRequestBody learnRequestbody) {
         LearnRequest learnRequest = learnRequestService.makeFromBody(learnRequestbody);
         log.debug("requested: learnRequest  create (teacher_id = {}, studentId = {}, lessonId = {})",
@@ -90,7 +91,7 @@ public class LearnRequestController {
         }
     }
     
-    @PutMapping(value = "request")
+    @PutMapping(value = "")
     public ResponseEntity<String> update(@RequestBody LearnRequestBody learnRequestbody) {
         LearnRequest learnRequest = learnRequestService.makeFromBody(learnRequestbody);
         Long id = learnRequest.getId();

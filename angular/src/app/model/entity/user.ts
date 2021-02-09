@@ -1,5 +1,5 @@
-export interface User {
-  id: bigint;
+export class User {
+  id: number;
   email: string;
   login: string;
   encodedPassword: string;

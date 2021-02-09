@@ -72,7 +72,7 @@ public class UserController {
         }
     }
     
-    @PostMapping(value = "user")
+    @PostMapping(value = "")
     public ResponseEntity<String> create(@RequestBody User user) {
         String login = user.getLogin();
         log.debug("requested: user  create (login = {})", login);
@@ -85,7 +85,7 @@ public class UserController {
         }
     }
     
-    @PutMapping(value = "user")
+    @PutMapping(value = "")
     public ResponseEntity<String> update(@RequestBody User user) {
         String login = user.getLogin();
         log.debug("requested: user  update (login = {})", login);

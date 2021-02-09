@@ -1,91 +1,73 @@
 <body class="canvas">
 <div class="learndiv">
   <div class="tag-search">
-    <div class="tag">
-      Astrophysics
+    <div class="tag" *ngFor="let tag of tags">
+      {{tag.title}}
     </div>
-    <div class="tag _2">
-      Space structures
+
+    <div class="tag" *ngIf="possibleTags.length != 0">
+<!--todo я не понимаю как блин обработать выбор тэга нормально без кнопки-->
+      <select [(ngModel)]="selectedTag">
+<!--        <option selected hidden>chose tag</option>-->
+        <option *ngFor="let tag of possibleTags" [ngValue]="tag">
+            {{tag.title}}
+        </option>
+      </select>
     </div>
-    <div class="tag _3">
-      Nebula
-    </div>
+
+    <button *ngIf="possibleTags.length != 0" (click)="choseTag()">
+      confirm
+    </button>
+    <button (click)="back()">
+      back
+    </button>
   </div>
 
-  <div class="lesson">
-    <div class="request-icon">
-      <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
-    </div>
-    <div class="personal-info">
-      <div class="request-name">
-        Petrova
-      </div>
-      <div class="request-name">
-        Masha
-      </div>
-      <div class="request-info">
-        <table>
-          <tr>
-            <td>Status:</td>
-            <td>Student</td>
-          </tr>
-          <tr>
-            <td>Rating:</td>
-            <td>5.00</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="verticale">
-        I know physics very well and I will tell you a lot about outer space.
-      </div>
-    </div>
-    <div class="ending">
-      request
-    </div>
+<!--  todo-->
+<!--  дурацкие точки-->
+  <ul>
+    <li *ngFor="let lesson of lessons">
 
-    <div class="request-points">
-      15 points
-    </div>
+      <div class="lesson">
+        <div class="request-icon">
+          <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
+        </div>
+        <div class="personal-info">
+          <div class="request-name">
+            {{lesson.teacher.lastName}}
+          </div>
+          <div class="request-name">
+            {{lesson.teacher.firstName}}
+          </div>
+          <div class="request-info">
+            <table>
+              <tr>
+                <td>Status:</td>
+                <td>Student</td>
+              </tr>
+              <tr>
+                <td>Rating:</td>
+                <td>{{lesson.teacher.rating}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="comment">
+          <div class="verticale">
+            {{lesson.description}}
+          </div>
+        </div>
+        <button class="ending" (click)="requestLesson(lesson)">
+          request
+        </button>
 
-  </div>
-  <div class="lesson">
-    <div class="request-icon">
-      <Img src="https://i2.wp.com/spacegid.com/wp-content/uploads/2015/03/NGC-2683-spiralnaya-galaktika-v-sozvezdii-Ryis.-Snimok-teleskopa-Habbl..jpg" alt="request icon">
-    </div>
-    <div class="personal-info">
-      <div class="request-name">
-        Ivanov
+        <div class="request-points">
+          {{lesson.pointsToGet}} points
+        </div>
       </div>
-      <div class="request-name">
-        Vasya
-      </div>
-      <div class="request-info">
-        <table>
-          <tr>
-            <td>Status:</td>
-            <td>Professor</td>
-          </tr>
-          <tr>
-            <td>Rating:</td>
-            <td>4.56</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="verticale">
-        I love outer Space!
-      </div>
-    </div>
-    <div class="ending">
-      request
-    </div>
 
-    <div class="request-points">
-      0 points
-    </div>
-  </div>
+    </li>
+  </ul>
+
 </div>
 </body>

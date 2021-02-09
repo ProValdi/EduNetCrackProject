@@ -1,40 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { User } from '../../model/entity/user';
-import { catchError, map, tap } from 'rxjs/operators';
+import {BaseService} from "../base-service/base.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService extends BaseService<User, User>{
 
-  constructor(private http: HttpClient) { }
-
-  usersUrl = 'http://localhost:8083/users';
-
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersUrl + '/all')
-      .pipe(
-        catchError(this.handleError<User[]>('getUseres', []))
-      );
+  constructor(protected http: HttpClient) {
+    super(http, User);
+    this.url += '/users';
   }
 
-  getUserById(id: number): Observable<User> {
-    return this.http.get<User>(this.usersUrl + '/byId/' + id)
-      .pipe(
-        catchError(this.handleError<User>(`getUserById id=${id}`))
-      );
-  }
-
-  private handleError<T>(operation = 'operation', result?: T): (error: any) => Observable<T> {
-    return (error: any): Observable<T> => {
-
-      // better job of transforming error for user consumption
-      console.error(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
 }

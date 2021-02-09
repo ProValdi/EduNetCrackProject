@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/tags")
 public class TagController {
   private final TagService tagService;
@@ -66,7 +67,7 @@ public class TagController {
     }
   }
 
-  @PostMapping(value = "tag")
+  @PostMapping(value = "")
   public ResponseEntity<String> create(@RequestBody Tag tag) {
     log.debug("requested: tag  create (title = {}, parentId = {})", tag.getParentId(), tag.getParentId());
     boolean created = tagService.create(tag);
@@ -78,7 +79,7 @@ public class TagController {
     }
   }
 
-  @PutMapping(value = "tag")
+  @PutMapping(value = "")
   public ResponseEntity<String> update(@RequestBody Tag tag) {
     Long id = tag.getId();
     log.debug("requested: tag  update (id = {})", id);

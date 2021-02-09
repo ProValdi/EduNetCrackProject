@@ -1,64 +1,40 @@
-<!--<header class="header" role="banner">-->
-<!--  <h1 class="logo">-->
-<!--    <a href="#"><span>Know</span>net</a>-->
-<!--  </h1>-->
-<!--  <div class="nav-wrap">-->
-<!--    <nav class="main-nav" role="navigation">-->
-<!--      <ul class="unstyled ten">-->
-<!--        <li class="picked"><a href="#">My profile</a></li>-->
-<!--        <li><a routerLink="/users">Users</a></li>  &lt;!&ndash;        JUST FOR TEST&ndash;&gt;-->
-<!--        <li><a routerLink="/learn">Learn</a></li>-->
-<!--        <li><a href="#">Teach</a></li>-->
-<!--        <li><a href="#">Incoming requests</a></li>-->
-<!--        <li><a href="#">Outgoing requests</a></li>-->
-<!--        <li><a href="#">News</a></li>-->
-<!--        <li><a href="#">Settings</a></li>-->
-<!--        &lt;!&ndash;<li><a href="#">Manage organization</a></li>-->
-<!--        <li><a href="#">Manage Tag tree</a></li>-->
-<!--        <li><a href="#">Manage add-lesson requests</a></li>-->
-<!--        <li><a href="#">Manage reports</a></li>&ndash;&gt;-->
-<!--      </ul>-->
-<!--    </nav>-->
-<!--  </div>-->
-<!--</header>-->
-
 <div id="menu">
   <nav>
     <h1 class="logo">
       <a href="#"><span>Know</span>net</a>
     </h1>
-    <a class="a-nav" routerLink="profile" (click)="currentTab='profile'" [class.picked]="currentTab === 'profile'">
+    <a class="a-nav" routerLink="profile" [class.picked]="this.router.url === '/profile'">
       My profile
     </a>
-    <a class="a-nav" routerLink="learn" (click)="currentTab='learn'" [class.picked]="currentTab === 'learn'">
+    <a class="a-nav" routerLink="learn" [class.picked]="this.router.url === '/learn'">
       Learn
     </a>
-    <a class="a-nav" href="javascript:void(0)">
+    <a class="a-nav" routerLink="teach" [class.picked]="this.router.url === '/teach'">
       Teach
     </a>
-    <a class="a-nav" href="javascript:void(0)">
+    <a class="a-nav" routerLink="requests" [class.picked]="this.router.url === '/requests'">
       My requests
     </a>
-    <a class="a-nav" href="javascript:void(0)">
+    <a class="a-nav" routerLink="news" [class.picked]="this.router.url === '/news'">
       News
     </a>
-    <a class="a-nav" href="javascript:void(0)">
+    <a class="a-nav" routerLink="classes" [class.picked]="this.router.url === '/classes'">
       My classes
     </a>
-    <a class="a-nav" href="javascript:void(0)">
+    <a class="a-nav" routerLink="settings" [class.picked]="this.router.url === '/settings'">
       Settings
     </a>
     <!--
-    <a class="a-nav" href="javascript:void(0)">
+    <a class="a-nav" routerLink="manage" [class.picked]="this.router.url === '/manage'">
       Manage organization
     </a>
-    <a class="a-nav" href="javascript:void(0)">
+    <a class="a-nav" routerLink="tags" [class.picked]="this.router.url === '/tags'">
       Manage Tag tree
     </a>
-    <a class="a-nav" href="javascript:void(0)">
+    <a class="a-nav" routerLink="" [class.picked]="this.router.url === '/'">
       Manage add-lesson requests
     </a>
-    <a class="a-nav" href="javascript:void(0)">
+    <a class="a-nav" routerLink="" [class.picked]="this.router.url === '/'">
       Manage reports
     </a>
 -->
