@@ -33,7 +33,6 @@ public class LessonController {
     @GetMapping(value = "byId/{id}")
     public ResponseEntity<Lesson> findById(@PathVariable("id") Long id) {
         log.debug("requested: lesson  get    (id = {})", id);
-        log.info("requested: lesson get    (tagId = {})", id);
         Optional<Lesson> lesson = lessonService.findById(id);
         return ResponseEntity.of(lesson);
     }
@@ -47,7 +46,6 @@ public class LessonController {
     @GetMapping("byTagId/{tagId}")
     public ResponseEntity<List<Lesson>> findByTagId(@PathVariable(name = "tagId") Long tagId) {
         log.debug("requested: lesson get    (tagId = {})", tagId);
-        log.info("requested: lesson get    (tagId = {})", tagId);
         return ResponseEntity.ok().body(lessonService.findByTagId(tagId));
     }
 
