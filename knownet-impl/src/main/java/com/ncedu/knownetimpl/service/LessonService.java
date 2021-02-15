@@ -4,6 +4,7 @@ import com.ncedu.knownetimpl.model.entity.Tag;
 import com.ncedu.knownetimpl.model.entity.Lesson;
 import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.repository.LessonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -19,6 +20,7 @@ public class LessonService {
     private final TagService tagService;
     private final LessonRepository lessonRepository;
 
+    @Autowired
     public LessonService(LessonRepository lessonRepository, UserService userService, TagService tagService) {
         this.lessonRepository = lessonRepository;
         this.userService = userService;

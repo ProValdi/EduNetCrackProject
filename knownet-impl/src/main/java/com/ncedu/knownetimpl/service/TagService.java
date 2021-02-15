@@ -2,6 +2,7 @@ package com.ncedu.knownetimpl.service;
 
 import com.ncedu.knownetimpl.model.entity.Tag;
 import com.ncedu.knownetimpl.repository.TagRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class TagService {
   private final TagRepository tagRepository;
 
+  @Autowired
   public TagService(TagRepository tagRepository) {
     this.tagRepository = tagRepository;
   }

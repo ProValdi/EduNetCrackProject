@@ -6,6 +6,7 @@ import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.model.entity.LearnRequest;
 import com.ncedu.knownetimpl.repository.LearnRequestRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -19,7 +20,8 @@ public class LearnRequestService {
     private final LearnRequestRepository learnRequestRepository;
     private final UserService userService;
     private final LessonService lessonService;
-    
+
+    @Autowired
     public LearnRequestService(LearnRequestRepository learnRequestRepository, UserService userService, LessonService lessonService) {
         this.learnRequestRepository = learnRequestRepository;
         this.userService = userService;
