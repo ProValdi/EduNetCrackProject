@@ -48,6 +48,7 @@
         <module>knownet-application</module>
         <module>knownet-web</module>
         <module>knownet-impl</module>
+        <module>knownet-database</module>
     </modules>
 
 </project>
