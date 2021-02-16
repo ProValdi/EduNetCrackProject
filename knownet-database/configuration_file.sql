@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS users;
 
 create table users
 (
-    id integer not null
-        constraint users_pkey
+    id SERIAL not null
+       constraint users_pkey
             primary key,
     login varchar(255) not null,
     encoded_password varchar(255),
@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS lessons;
 
 create table lessons
 (
-    id integer not null
+    id SERIAL not null
         constraint lessons_pk
             primary key,
     teacher_id integer
@@ -50,14 +50,14 @@ create table lessons
 );
 
 alter table lessons
-    owner to knownet_user
+    owner to knownet_user;
 
 
 DROP TABLE IF EXISTS tags;
 
 create table tags
 (
-    id integer not null
+    id SERIAL not null
         constraint tags_pk
             primary key,
     title varchar(255),
@@ -65,13 +65,13 @@ create table tags
 );
 
 alter table tags
-    owner to knownet_user
+    owner to knownet_user;
 
 DROP TABLE IF EXISTS requests;
 
 create table requests
 (
-    id integer not null
+    id SERIAL not null
         constraint requests_pk
             primary key,
     teacher_id integer
