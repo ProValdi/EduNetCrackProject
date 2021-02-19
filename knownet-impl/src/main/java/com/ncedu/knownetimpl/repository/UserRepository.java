@@ -3,21 +3,21 @@ package com.ncedu.knownetimpl.repository;
 import com.ncedu.knownetimpl.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Long deleteByLogin(String login);
+    Long deleteByUsername(String username);
 
-    boolean existsByLogin(String login);
+    boolean existsByUsername(String username);
 
-    List<User> findByLogin(String login);
+    List<User> findByUsername(String username);
 
     List<User> findByGroup(String group);
 
-
-
-//    List<User> findByFirstNameAndLastName(String firstName, String lastName);
+    Optional<User> findByEmail(String email);
 
 }
