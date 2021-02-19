@@ -2,6 +2,7 @@ package com.ncedu.knownetimpl.service;
 
 import com.ncedu.knownetimpl.model.entity.Tag;
 import com.ncedu.knownetimpl.repository.TagRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ArrayList;
 
+@Slf4j
 @Service
 public class TagService {
   private final TagRepository tagRepository;
@@ -19,24 +21,33 @@ public class TagService {
   }
 
   public Optional<Tag> findById(Long id) {
-    if(id != 0)
-      return tagRepository.findById(id);
+    if(id != null)
+        return tagRepository.findById(id);
     else
-      return Optional.empty();
+    {
+        log.warn("requested tag with null id");
+        return Optional.empty();
+    }
   }
 
   public List<Tag> findWithParents(Long id) {
-    if(id != 0)
+    if(id != null)
       return tagRepository.findWithParents(id);
     else
-      return new ArrayList<Tag>(0);
+    {
+        log.warn("requested tag with parents with null id");
+        return new ArrayList<Tag>(0);
+    }
   }
 
   public List<Tag> getChildren(Long id) {
-    if(id != 0)
-      return tagRepository.findByParentId(id);
+    if(id != null)
+        return tagRepository.findByParentId(id);
     else
-      return new ArrayList<Tag>(0);
+    {
+        log.warn("requested children with null id");
+        return new ArrayList<Tag>(0);
+    }
   }
 
   @Transactional

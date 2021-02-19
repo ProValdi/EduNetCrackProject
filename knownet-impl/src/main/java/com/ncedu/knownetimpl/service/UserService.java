@@ -2,12 +2,14 @@ package com.ncedu.knownetimpl.service;
 
 import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -35,10 +37,13 @@ public class UserService {
     }
     
     public Optional<User> findById(Long id) {
-        if(id != 0)
+        if(id != null)
             return userRepository.findById(id);
         else
+        {
+            log.warn("requested user with null id");
             return Optional.empty();
+        }
     }
     
     @Transactional
@@ -47,8 +52,11 @@ public class UserService {
     }
     
     public boolean deleteById(Long id) {
-        if(id == 0)
+        if(id == null)
+        {
+            log.warn("requested user with null id");
             return false;
+        }
         boolean exists = userRepository.existsById(id);
         if (exists) {
             userRepository.deleteById(id);

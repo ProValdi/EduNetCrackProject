@@ -4,6 +4,7 @@ import com.ncedu.knownetimpl.model.entity.Tag;
 import com.ncedu.knownetimpl.model.entity.Lesson;
 import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.repository.LessonRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
+@Slf4j
 @Service
 public class LessonService {
 
@@ -32,10 +33,13 @@ public class LessonService {
     }
 
     public Optional<Lesson> findById(Long id) {
-        if(id != 0)
+        if(id != null)
             return lessonRepository.findById(id);
         else
+        {
+            log.warn("requested user with null id");
             return Optional.empty();
+        }
     }
 
     public List<Lesson> findByName(String name) {
@@ -43,22 +47,31 @@ public class LessonService {
     }
 
     public List<Lesson> findByTagId(Long tagId) {
-        if(tagId != 0)
+        if(tagId != null)
             return lessonRepository.findByTagId(tagId);
         else
+        {
+            log.warn("requested lesson with null id");
             return new ArrayList<Lesson>(0);
+        }
     }
 
     public List<Lesson> findByTeacherId(Long teacherId) {
-        if(teacherId != 0)
+        if(teacherId != null)
             return lessonRepository.findByTeacherId(teacherId);
         else
+        {
+            log.warn("requested teacher with null id");
             return new ArrayList<Lesson>(0);
+        }
     }
 
     public boolean deleteById(Long id) {
-        if(id == 0)
+        if(id == null)
+        {
+            log.warn("requested lesson with null id");
             return false;
+        }
         boolean exists = lessonRepository.existsById(id);
         if (exists) {
             lessonRepository.deleteById(id);
@@ -75,8 +88,11 @@ public class LessonService {
     }
 
     public boolean update(Lesson lesson) {
-        if(lesson.getId() == 0)
+        if(lesson.getId() == null)
+        {
+            log.warn("requested lesson with null id");
             return false;
+        }
         Optional<Lesson> oldLessonOpt = findById(lesson.getId());
         if (oldLessonOpt.isPresent()) {
             Lesson oldLesson = oldLessonOpt.get();

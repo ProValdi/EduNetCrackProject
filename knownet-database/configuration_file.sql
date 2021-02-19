@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS users;
 
 create table users
 (
-    id SERIAL not null
+    id integer not null
        constraint users_pkey
             primary key,
     login varchar(255) not null,
@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS lessons;
 
 create table lessons
 (
-    id SERIAL not null
+    id integer not null
         constraint lessons_pk
             primary key,
     teacher_id integer
@@ -57,7 +57,7 @@ DROP TABLE IF EXISTS tags;
 
 create table tags
 (
-    id SERIAL not null
+    id integer not null
         constraint tags_pk
             primary key,
     title varchar(255),
@@ -71,7 +71,7 @@ DROP TABLE IF EXISTS requests;
 
 create table requests
 (
-    id SERIAL not null
+    id integer not null
         constraint requests_pk
             primary key,
     teacher_id integer

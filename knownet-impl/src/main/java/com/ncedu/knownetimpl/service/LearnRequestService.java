@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,50 +33,65 @@ public class LearnRequestService {
     }
     
     public Optional<LearnRequest> findById(Long id) {
-        if(id != 0)
+        if(id != null)
             return learnRequestRepository.findById(id);
-        else
+        else {
+            log.warn("requested LearnRequest with null id");
             return Optional.empty();
+        }
     }
     
     public boolean deleteById(Long id) {
         boolean exists = false;
-        if(id != 0)
+        if(id != null)
             exists = learnRequestRepository.existsById(id);
         if (exists) {
+            log.warn("requested LearnRequest with null id");
             learnRequestRepository.deleteById(id);
         }
         return exists;
     }
     
     public List<LearnRequest> findByTeacherId(Long teacherId) {
-        if(teacherId != 0)
+        if(teacherId != null)
             return learnRequestRepository.findByTeacherId(teacherId);
         else
+        {
+            log.warn("requested teacher with null id");
             return new ArrayList<LearnRequest>(0);
+        }
     }
     
     public List<LearnRequest> findByStudentId(Long studentId) {
-        if(studentId != 0)
+        if(studentId != null)
             return learnRequestRepository.findByStudentId(studentId);
         else
+        {
+            log.warn("requested user with null id");
             return new ArrayList<LearnRequest>(0);
+        }
     }
     
     public List<LearnRequest> findActiveByTeacherId(Long teacherId) {
-        if(teacherId != 0)
+        if(teacherId != null)
             return learnRequestRepository.findByTeacherIdAndHiddenForTeacherAndStatusNot(
                     teacherId, false, LearnRequest.Status.CONNECTION_FINISHED);
         else
+        {
+            log.warn("requested teacher with null id");
             return new ArrayList<LearnRequest>(0);
+        }
     }
     
     public List<LearnRequest> findActiveByStudentId(Long studentId) {
-        if(studentId != 0)
+        if(studentId != null)
             return learnRequestRepository.findByStudentIdAndHiddenForStudentAndStatusNot(
                    studentId, false, LearnRequest.Status.CONNECTION_FINISHED);
         else
+        {
+            log.warn("requested student with null id");
             return new ArrayList<LearnRequest>(0);
+        }
     }
     
     public boolean create(LearnRequest learnRequest) {
@@ -88,8 +103,11 @@ public class LearnRequestService {
     }
     
     public boolean update(LearnRequest learnRequest) {
-        if(learnRequest.getId() == 0)
+        if(learnRequest.getId() == null)
+        {
+            log.warn("requested learnRequest with null id");
             return false;
+        }
         Optional<LearnRequest> oldLearnRequestOpt = findById(learnRequest.getId());
         if (oldLearnRequestOpt.isPresent()) {
             LearnRequest oldLearnRequest = oldLearnRequestOpt.get();
@@ -122,18 +140,21 @@ public class LearnRequestService {
         Optional<Lesson> lesson;
         
         if (body.getStudentId() == null) {
+            log.warn("Student in body with null id");
             student = Optional.empty();
         } else {
             student = userService.findById(body.getStudentId());
         }
         
         if (body.getTeacherId() == null) {
+            log.warn("Teacher in body with null id");
             teacher = Optional.empty();
         } else {
             teacher = userService.findById(body.getTeacherId());
         }
         
         if (body.getLessonId() == null) {
+            log.warn("Lesson in body with null id");
             lesson = Optional.empty();
         } else {
             lesson = lessonService.findById(body.getLessonId());
