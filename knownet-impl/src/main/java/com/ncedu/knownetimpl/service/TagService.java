@@ -1,5 +1,6 @@
 package com.ncedu.knownetimpl.service;
 
+import com.ncedu.knownetimpl.model.entity.LearnRequest;
 import com.ncedu.knownetimpl.model.entity.Tag;
 import com.ncedu.knownetimpl.repository.TagRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -21,37 +22,38 @@ public class TagService {
   }
 
   public Optional<Tag> findById(Long id) {
-    if(id != null)
-        return tagRepository.findById(id);
-    else
-    {
-        log.warn("requested tag with null id");
-        return Optional.empty();
+    if (id != null) {
+      return tagRepository.findById(id);
+    } else {
+      log.warn("requested tag with null id");
+      return Optional.empty();
     }
   }
 
   public List<Tag> findWithParents(Long id) {
-    if(id != null)
+    if (id != null) {
       return tagRepository.findWithParents(id);
-    else
-    {
-        log.warn("requested tag with parents with null id");
-        return new ArrayList<Tag>(0);
+    } else {
+      log.warn("requested tag with parents with null id");
+      return new ArrayList<Tag>(0);
     }
   }
 
   public List<Tag> getChildren(Long id) {
-    if(id != null)
-        return tagRepository.findByParentId(id);
-    else
-    {
-        log.warn("requested children with null id");
-        return new ArrayList<Tag>(0);
+    if (id != null) {
+      return tagRepository.findByParentId(id);
+    } else {
+      log.warn("requested children of tag with null id");
+      return new ArrayList<Tag>(0);
     }
   }
 
   @Transactional
   public boolean deleteById(Long id) {
+    if (id == null) {
+      log.warn("deleting tag with null id");
+      return false;
+    }
     boolean exists = tagRepository.existsById(id);
     if (exists) {
       tagRepository.deleteById(id);
@@ -77,6 +79,11 @@ public class TagService {
   }
 
   public boolean update(Tag tag) {
+    if (tag.getId() == null) {
+      log.warn("updating tag with null id");
+      return false;
+    }
+    
     Optional<Tag> oldTagOpt = findById(tag.getId());
     if (oldTagOpt.isPresent()) {
       Tag oldTag = oldTagOpt.get();

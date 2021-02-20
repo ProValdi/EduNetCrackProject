@@ -53,7 +53,7 @@ public class LessonController {
         log.debug("requested: learnRequests get    (teacherId = {})", teacherId);
         return ResponseEntity.ok().body(lessonService.findByTeacherId(teacherId));
     }
-
+    
     @DeleteMapping(value = "byId/{id}")
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
         log.debug("requested: lesson  delete (id = {})", id);
@@ -94,5 +94,5 @@ public class LessonController {
                     .body("lesson with id = " + id + " does not exist");
         }
     }
-
+    
 }

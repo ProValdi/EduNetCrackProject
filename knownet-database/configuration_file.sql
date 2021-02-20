@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;
 
 create table users
 (
@@ -20,15 +20,17 @@ create table users
     conducted_count integer default 0
 );
 
-
 alter table users
     owner to knownet_user;
 
 create unique index users_login_uindex
     on users (login);
 
+create unique index users_email_uindex
+    on users (email);
 
-DROP TABLE IF EXISTS lessons;
+
+DROP TABLE IF EXISTS lessons CASCADE;
 
 create table lessons
 (
@@ -53,7 +55,7 @@ alter table lessons
     owner to knownet_user;
 
 
-DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS tags CASCADE;
 
 create table tags
 (
@@ -67,7 +69,8 @@ create table tags
 alter table tags
     owner to knownet_user;
 
-DROP TABLE IF EXISTS requests;
+
+DROP TABLE IF EXISTS requests CASCADE;
 
 create table requests
 (

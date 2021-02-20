@@ -33,11 +33,10 @@ public class LessonService {
     }
 
     public Optional<Lesson> findById(Long id) {
-        if(id != null)
+        if (id != null) {
             return lessonRepository.findById(id);
-        else
-        {
-            log.warn("requested user with null id");
+        } else {
+            log.warn("requested lesson with null id");
             return Optional.empty();
         }
     }
@@ -47,29 +46,26 @@ public class LessonService {
     }
 
     public List<Lesson> findByTagId(Long tagId) {
-        if(tagId != null)
+        if (tagId != null) {
             return lessonRepository.findByTagId(tagId);
-        else
-        {
-            log.warn("requested lesson with null id");
+        } else {
+            log.warn("requested lesson with null tagId");
             return new ArrayList<Lesson>(0);
         }
     }
 
     public List<Lesson> findByTeacherId(Long teacherId) {
-        if(teacherId != null)
+        if (teacherId != null) {
             return lessonRepository.findByTeacherId(teacherId);
-        else
-        {
-            log.warn("requested teacher with null id");
+        } else {
+            log.warn("requested lesson with null teacherId");
             return new ArrayList<Lesson>(0);
         }
     }
 
     public boolean deleteById(Long id) {
-        if(id == null)
-        {
-            log.warn("requested lesson with null id");
+        if (id == null) {
+            log.warn("deleting lesson with null id");
             return false;
         }
         boolean exists = lessonRepository.existsById(id);
@@ -88,16 +84,15 @@ public class LessonService {
     }
 
     public boolean update(Lesson lesson) {
-        if(lesson.getId() == null)
-        {
-            log.warn("requested lesson with null id");
+        if (lesson.getId() == null) {
+            log.warn("updating lesson with null id");
             return false;
         }
         Optional<Lesson> oldLessonOpt = findById(lesson.getId());
         if (oldLessonOpt.isPresent()) {
             Lesson oldLesson = oldLessonOpt.get();
             oldLesson.setName(lesson.getName());
-            oldLesson.setTag(lesson.getTag());
+//            oldLesson.setTag(lesson.getTag());
             oldLesson.setTopic(lesson.getTopic());
             oldLesson.setPointsToGet(lesson.getPointsToGet());
             oldLesson.setSkillsToComplete(lesson.getSkillsToComplete());

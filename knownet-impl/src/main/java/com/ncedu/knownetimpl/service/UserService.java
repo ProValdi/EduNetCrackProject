@@ -24,6 +24,10 @@ public class UserService {
     }
     
     public Optional<User> findByLogin(String login) {
+        if (login == null) {
+            log.warn("requested user with null login");
+            return Optional.empty();
+        }
         List<User> users = userRepository.findByLogin(login);
         if (users.isEmpty()) {
             return Optional.empty();
@@ -37,10 +41,9 @@ public class UserService {
     }
     
     public Optional<User> findById(Long id) {
-        if(id != null)
+        if (id != null) {
             return userRepository.findById(id);
-        else
-        {
+        } else {
             log.warn("requested user with null id");
             return Optional.empty();
         }
@@ -48,13 +51,16 @@ public class UserService {
     
     @Transactional
     public boolean deleteByLogin(String login) {
+        if (login == null) {
+            log.warn("deleting user with null login");
+            return false;
+        }
         return userRepository.deleteByLogin(login) != 0;
     }
     
     public boolean deleteById(Long id) {
-        if(id == null)
-        {
-            log.warn("requested user with null id");
+        if (id == null) {
+            log.warn("deleting user with null id");
             return false;
         }
         boolean exists = userRepository.existsById(id);
@@ -65,6 +71,10 @@ public class UserService {
     }
     
     public boolean create(User user) {
+        if (user.getLogin() == null) {
+            log.warn("creating user with null login");
+            return false;
+        }
         boolean exists = userRepository.existsByLogin(user.getLogin());
         if (!exists) {
             userRepository.save(user);
@@ -73,6 +83,11 @@ public class UserService {
     }
     
     public boolean update(User user) {
+        if (user.getLogin() == null) {
+            log.warn("updating user with null login");
+            return false;
+        }
+    
         Optional<User> oldUserOpt = findByLogin(user.getLogin());
         if (oldUserOpt.isPresent()) {
             User oldUser = oldUserOpt.get();
