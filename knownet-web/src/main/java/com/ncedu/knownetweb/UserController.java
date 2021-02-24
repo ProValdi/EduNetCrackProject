@@ -21,16 +21,17 @@ public class UserController {
         this.userService = userService;
     }
 
+//    @PermitAll //todo note permissions for functions of all controllers
     @GetMapping("/all")
     public ResponseEntity<List<User>> findAll() {
         log.debug("requested: users get    (all)");
         return ResponseEntity.ok().body(userService.findAll());
     }
 
-    @GetMapping("byUsername/{username}")
-    public ResponseEntity<User> findByUsername(@PathVariable(name = "username") String username) {
-        log.debug("requested: user  get    (username = {})", username);
-        return ResponseEntity.of(userService.findByUsername(username));
+    @GetMapping("byLogin/{login}")
+    public ResponseEntity<User> findByLogin(@PathVariable(name = "login") String login) {
+        log.debug("requested: user  get    (login = {})", login);
+        return ResponseEntity.of(userService.findByLogin(login));
     }
 
     @GetMapping("byGroup/{group}")
@@ -47,15 +48,15 @@ public class UserController {
     }
 
 
-    @DeleteMapping(value = "byUsername/{username}")
-    public ResponseEntity<String> deleteByUsername(@PathVariable("username") String username) {
-        log.debug("requested: user  delete (username = {})", username);
-        boolean deleted = userService.deleteByUsername(username);
+    @DeleteMapping(value = "byLogin/{login}")
+    public ResponseEntity<String> deleteByLogin(@PathVariable("login") String login) {
+        log.debug("requested: user  delete (login = {})", login);
+        boolean deleted = userService.deleteByLogin(login);
         if (deleted) {
-            return ResponseEntity.ok().body("user with username = " + username + " was deleted");
+            return ResponseEntity.ok().body("user with login = " + login + " was deleted");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("user with username = " + username + " does not exist");
+                    .body("user with login = " + login + " does not exist");
         }
     }
 
@@ -71,29 +72,30 @@ public class UserController {
         }
     }
 
+    //todo check right working
     @PostMapping(value = "user")
     public ResponseEntity<String> create(@RequestBody User user) {
-        String username = user.getUsername();
-        log.debug("requested: user  create (username = {})", username);
+        String login = user.getLogin();
+        log.debug("requested: user  create (login = {})", login);
         boolean created = userService.create(user);
         if (created) {
-            return ResponseEntity.ok().body("user with username = " + username + " was created");
+            return ResponseEntity.ok().body("user with login = " + login + " was created");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("user with username = " + username + " already exists");
+                    .body("user with login = " + login + " already exists");
         }
     }
 
     @PutMapping(value = "user")
     public ResponseEntity<String> update(@RequestBody User user) {
-        String username = user.getUsername();
-        log.debug("requested: user  update (username = {})", username);
+        String login = user.getLogin();
+        log.debug("requested: user  update (login = {})", login);
         boolean updated = userService.update(user);
         if (updated) {
-            return ResponseEntity.ok().body("user with username = " + username + " was updated");
+            return ResponseEntity.ok().body("user with login = " + login + " was updated");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("user with username = " + username + " does not exist");
+                    .body("user with login = " + login + " does not exist");
         }
     }
 }

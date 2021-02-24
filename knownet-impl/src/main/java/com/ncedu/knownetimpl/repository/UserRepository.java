@@ -5,19 +5,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Long deleteByUsername(String username);
+    Long deleteByLogin(String login);
 
-    boolean existsByUsername(String username);
+    boolean existsByLogin(String login);
 
-    List<User> findByUsername(String username);
+    List<User> findByLogin(String login);
 
     List<User> findByGroup(String group);
-
-    Optional<User> findByEmail(String email);
 
 }

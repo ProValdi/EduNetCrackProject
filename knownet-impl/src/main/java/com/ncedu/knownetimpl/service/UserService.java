@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,14 +17,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
   private final UserRepository userRepository;
-  private final BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final PasswordEncoder passwordEncoder;
 
   public List<User> findAll() {
     return userRepository.findAll();
   }
 
-  public Optional<User> findByUsername(String login) {
-    List<User> users = userRepository.findByUsername(login);
+  public Optional<User> findByLogin(String login) {
+    List<User> users = userRepository.findByLogin(login);
     if (users.isEmpty()) {
       return Optional.empty();
     } else {
@@ -41,8 +41,8 @@ public class UserService implements UserDetailsService {
   }
 
   @Transactional
-  public boolean deleteByUsername(String login) {
-    return userRepository.deleteByUsername(login) != 0;
+  public boolean deleteByLogin(String login) {
+    return userRepository.deleteByLogin(login) != 0;
   }
 
   public boolean deleteById(Long id) {
@@ -54,15 +54,16 @@ public class UserService implements UserDetailsService {
   }
 
   public boolean create(User user) {
-    boolean exists = userRepository.existsByUsername(user.getUsername());
+    boolean exists = userRepository.existsByLogin(user.getLogin());
     if (!exists) {
+      user.setPassword(passwordEncoder.encode(user.getPassword()));
       userRepository.save(user);
     }
     return !exists;
   }
 
   public boolean update(User user) {
-    Optional<User> oldUserOpt = findByUsername(user.getUsername());
+    Optional<User> oldUserOpt = findByLogin(user.getLogin());
     if (oldUserOpt.isPresent()) {
       User oldUser = oldUserOpt.get();
 
@@ -79,27 +80,8 @@ public class UserService implements UserDetailsService {
   }
 
   @Override
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(String.format("user with this email not found")));
+  public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    return findByLogin(login).orElseThrow(() -> new UsernameNotFoundException(String.format("user with login \"%s\" not found", login)));
   }
-
-  public String signUpUser(User user) {
-    boolean userExist = userRepository.findByEmail(user.getEmail()).isPresent();
-
-    if(userExist) {
-      throw new IllegalStateException("user with this email are already exists");
-    }
-
-    String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-
-    user.setPassword(encodedPassword);
-
-    userRepository.save(user);
-
-    // TODO: SEND CONFIRMATION TOKEN
-
-    return "it works: sign up";
-  }
-
 
 }

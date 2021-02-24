@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +18,11 @@ public class TagController {
   private final TagService tagService;
 
   @Autowired
-  private TagController(TagService tagService) {
+  public TagController(TagService tagService) {
     this.tagService = tagService;
   }
 
+  @RolesAllowed("ADMIN")
   @GetMapping("/all")
   public ResponseEntity<List<Tag>> findAll() {
     log.debug("requested: tag get     (all)");
