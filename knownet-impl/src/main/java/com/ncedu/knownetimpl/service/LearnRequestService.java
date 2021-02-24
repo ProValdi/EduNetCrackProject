@@ -94,6 +94,7 @@ public class LearnRequestService {
     public boolean create(LearnRequest learnRequest) {
         boolean exists = learnRequest.getId() != null && learnRequestRepository.existsById(learnRequest.getId());
         if (!exists) {
+            learnRequest.setTeacher(learnRequest.getLesson().getTeacher());
             learnRequestRepository.save(learnRequest);
         }
         return !exists;

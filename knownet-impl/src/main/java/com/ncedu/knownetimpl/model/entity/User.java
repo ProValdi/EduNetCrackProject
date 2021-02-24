@@ -12,13 +12,13 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "login", nullable = false, unique = true)
     private String login;
     
-    @Column(name = "encoded_password")
+    @Column(name = "password")
     private String encodedPassword;
     
     @Column(name = "first_name")
@@ -43,7 +43,7 @@ public class User {
 //    private Status status;
 //    private Image photo;
     
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
     
     @Column(name = "vk_link")

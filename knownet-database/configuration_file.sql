@@ -1,12 +1,16 @@
-DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS requests;
+DROP TABLE IF EXISTS lessons;
+DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS users;
+
 
 create table users
 (
-    id integer not null
-       constraint users_pkey
+    id bigserial
+        constraint users_pkey
             primary key,
     login varchar(255) not null,
-    encoded_password varchar(255),
+    password varchar(255),
     first_name varchar(255),
     last_name varchar(255),
     rating double precision default 0,
@@ -30,11 +34,22 @@ create unique index users_email_uindex
     on users (email);
 
 
-DROP TABLE IF EXISTS lessons CASCADE;
+create table tags
+(
+    id bigserial
+        constraint tags_pk
+            primary key,
+    title varchar(255),
+    parent_id integer
+);
+
+alter table tags
+    owner to knownet_user;
+
 
 create table lessons
 (
-    id integer not null
+    id bigserial
         constraint lessons_pk
             primary key,
     teacher_id integer
@@ -55,26 +70,9 @@ alter table lessons
     owner to knownet_user;
 
 
-DROP TABLE IF EXISTS tags CASCADE;
-
-create table tags
-(
-    id integer not null
-        constraint tags_pk
-            primary key,
-    title varchar(255),
-    parent_id integer
-);
-
-alter table tags
-    owner to knownet_user;
-
-
-DROP TABLE IF EXISTS requests CASCADE;
-
 create table requests
 (
-    id integer not null
+    id bigserial
         constraint requests_pk
             primary key,
     teacher_id integer

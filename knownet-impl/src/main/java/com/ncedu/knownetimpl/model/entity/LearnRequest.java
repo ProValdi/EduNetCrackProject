@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "requests")
 public class LearnRequest {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @ManyToOne
