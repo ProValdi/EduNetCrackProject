@@ -6,7 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
-//    @PermitAll //todo note permissions for functions of all controllers
+    @RolesAllowed("ADMIN")
     @GetMapping("/all")
     public ResponseEntity<List<User>> findAll() {
         log.debug("requested: users get    (all)");
@@ -47,7 +49,7 @@ public class UserController {
         return ResponseEntity.of(user);
     }
 
-
+    @RolesAllowed("ADMIN")
     @DeleteMapping(value = "byLogin/{login}")
     public ResponseEntity<String> deleteByLogin(@PathVariable("login") String login) {
         log.debug("requested: user  delete (login = {})", login);
@@ -60,6 +62,7 @@ public class UserController {
         }
     }
 
+    @RolesAllowed("ADMIN")
     @DeleteMapping(value = "byId/{id}")
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
         log.debug("requested: user  delete (id = {})", id);
@@ -72,7 +75,6 @@ public class UserController {
         }
     }
 
-    //todo check right working
     @PostMapping(value = "user")
     public ResponseEntity<String> create(@RequestBody User user) {
         String login = user.getLogin();
@@ -90,6 +92,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("#user.login == authentication.principal.username or hasRole('ADMIN')")
     @PutMapping(value = "user")
     public ResponseEntity<String> update(@RequestBody User user) {
         String login = user.getLogin();

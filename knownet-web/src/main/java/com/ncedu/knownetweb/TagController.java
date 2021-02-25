@@ -56,6 +56,7 @@ public class TagController {
     return ResponseEntity.ok(tags);
   }
 
+  @RolesAllowed("ADMIN")
   @DeleteMapping(value = "byId/{id}")
   public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
     log.debug("requested: tag  delete (id = {})", id);
@@ -68,6 +69,7 @@ public class TagController {
     }
   }
 
+  @RolesAllowed("ADMIN")
   @PostMapping(value = "tag")
   public ResponseEntity<String> create(@RequestBody Tag tag) {
     log.debug("requested: tag  create (title = {}, parentId = {})", tag.getParentId(), tag.getParentId());
@@ -80,6 +82,7 @@ public class TagController {
     }
   }
 
+  @RolesAllowed("ADMIN")
   @PutMapping(value = "tag")
   public ResponseEntity<String> update(@RequestBody Tag tag) {
     Long id = tag.getId();
