@@ -83,6 +83,7 @@ create table requests
             references users,
     hidden_for_teacher boolean default false,
     hidden_for_student boolean default false,
+    is_finished boolean default false,
     status varchar(255) default 'LESSON_REQUESTED'::character varying,
     lesson_id integer
         constraint requests_lessons_id_fk
