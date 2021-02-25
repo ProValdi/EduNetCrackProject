@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LearnRequestBody {
     private Long id;
-    private Long teacherId;
     private Long studentId;
     private Long lessonId;
     private LearnRequest.Status status = LearnRequest.Status.LESSON_REQUESTED;

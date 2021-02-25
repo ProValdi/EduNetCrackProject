@@ -4,6 +4,7 @@ import com.ncedu.knownetimpl.model.LearnRequestBody;
 import com.ncedu.knownetimpl.model.entity.Lesson;
 import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.model.entity.LearnRequest;
+import com.ncedu.knownetimpl.model.entity.LearnRequest.Status;
 import com.ncedu.knownetimpl.repository.LearnRequestRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +74,7 @@ public class LearnRequestService {
     
     public List<LearnRequest> findActiveByTeacherId(Long teacherId) {
         if (teacherId != null) {
-            return learnRequestRepository.findByTeacherIdAndHiddenForTeacherAndStatusNot(
-                    teacherId, false, LearnRequest.Status.CONNECTION_FINISHED);
+            return learnRequestRepository.findByTeacherIdAndHiddenForTeacherFalse(teacherId);
         } else {
             log.warn("requested learnRequest with null teacherId");
             return new ArrayList<LearnRequest>(0);
@@ -83,8 +83,7 @@ public class LearnRequestService {
     
     public List<LearnRequest> findActiveByStudentId(Long studentId) {
         if (studentId != null) {
-            return learnRequestRepository.findByStudentIdAndHiddenForStudentAndStatusNot(
-                    studentId, false, LearnRequest.Status.CONNECTION_FINISHED);
+            return learnRequestRepository.findByStudentIdAndHiddenForStudentFalse(studentId);
         } else {
             log.warn("requested learnRequest with null studentId");
             return new ArrayList<LearnRequest>(0);
@@ -100,7 +99,7 @@ public class LearnRequestService {
         return !exists;
     }
     
-    public boolean update(LearnRequest learnRequest) {
+    public boolean update(LearnRequest learnRequest) throws IllegalStateException {
         if (learnRequest.getId() == null) {
             log.warn("updating learnRequest with null id");
             return false;
@@ -109,13 +108,22 @@ public class LearnRequestService {
         if (oldLearnRequestOpt.isPresent()) {
             LearnRequest oldLearnRequest = oldLearnRequestOpt.get();
             
-            oldLearnRequest.setHiddenForStudent(learnRequest.getHiddenForStudent());
-            oldLearnRequest.setHiddenForTeacher(learnRequest.getHiddenForTeacher());
-            
-            LearnRequest.Status newStatus = learnRequest.getStatus();
-            if (oldLearnRequest.getStatus() != newStatus) {
+            Status oldStatus = oldLearnRequest.getStatus();
+            Status newStatus = learnRequest.getStatus();
+
+            if (ifCanChangeStatus(oldStatus, newStatus)) {
                 log.debug(newStatus.getDescription());
                 oldLearnRequest.setStatus(newStatus);
+
+                oldLearnRequest.setHiddenForStudent(false);
+                oldLearnRequest.setHiddenForTeacher(false);
+
+                if (newStatus.isFinished()) {
+                    oldLearnRequest.setIsFinished(true);
+                }
+            } else {
+                oldLearnRequest.setHiddenForStudent(learnRequest.getHiddenForStudent());
+                oldLearnRequest.setHiddenForTeacher(learnRequest.getHiddenForTeacher());
             }
             
             learnRequestRepository.save(oldLearnRequest);
@@ -124,6 +132,40 @@ public class LearnRequestService {
         return oldLearnRequestOpt.isPresent();
     }
     
+    static private boolean ifCanChangeStatus(Status oldStatus, Status newStatus) throws IllegalStateException {
+        if (oldStatus == newStatus) {
+            return false;
+        }
+
+        switch (oldStatus) {
+            case LESSON_REQUESTED:
+                if (
+                    newStatus == Status.LESSON_REQUEST_REJECTED ||
+                    newStatus == Status.LESSON_REQUEST_ACCEPTED
+                ) {
+                    return true;
+                } else {
+                    throw new IllegalStateException("Unexpected value: " + newStatus);
+                }
+            case LESSON_REQUEST_ACCEPTED:
+                if (
+                    newStatus == Status.MEETING_CONFIRMED ||
+                    newStatus == Status.MEETING_DISPROVED ||
+                    newStatus == Status.MEETING_CANCELED
+                ) {
+                    return true;
+                } else {
+                    throw new IllegalStateException("Unexpected value: " + newStatus);
+                }
+            case LESSON_REQUEST_REJECTED:
+            case MEETING_CONFIRMED:
+            case MEETING_CANCELED:
+            case MEETING_DISPROVED:
+            default:
+                throw new IllegalStateException("Unexpected value: " + newStatus);
+        }
+    }
+
     public LearnRequest makeFromBody(LearnRequestBody body) {
         LearnRequest learnRequest = new LearnRequest();
 
@@ -131,9 +173,9 @@ public class LearnRequestService {
         learnRequest.setHiddenForStudent(body.getHiddenForStudent());
         learnRequest.setHiddenForTeacher(body.getHiddenForTeacher());
         learnRequest.setStatus(body.getStatus());
-    
+        learnRequest.setIsFinished(body.getStatus().isFinished());
+
         Optional<User> student;
-        Optional<User> teacher;
         Optional<Lesson> lesson;
         
         if (body.getStudentId() == null) {
@@ -141,21 +183,20 @@ public class LearnRequestService {
         } else {
             student = userService.findById(body.getStudentId());
         }
-        
-        if (body.getTeacherId() == null) {
-            teacher = Optional.empty();
-        } else {
-            teacher = userService.findById(body.getTeacherId());
-        }
-        
+
         if (body.getLessonId() == null) {
             lesson = Optional.empty();
         } else {
             lesson = lessonService.findById(body.getLessonId());
         }
     
+        if (lesson.isPresent()) {
+            learnRequest.setTeacher(lesson.get().getTeacher());
+        } else {
+            learnRequest.setTeacher(new User());
+        }
+
         learnRequest.setStudent(student.orElse(new User()));
-        learnRequest.setTeacher(teacher.orElse(new User()));
         learnRequest.setLesson(lesson.orElse(new Lesson()));
         
         return learnRequest;
