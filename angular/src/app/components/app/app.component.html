@@ -1,48 +1,57 @@
-<div id="menu">
-  <nav>
-    <h1 class="logo">
-      <a href="#"><span>Know</span>net</a>
-    </h1>
-    <a class="a-nav" routerLink="profile" [class.picked]="this.router.url === '/profile'">
-      My profile
-    </a>
-    <a class="a-nav" routerLink="learn" [class.picked]="this.router.url === '/learn'">
-      Learn
-    </a>
-    <a class="a-nav" routerLink="teach" [class.picked]="this.router.url === '/teach'">
-      Teach
-    </a>
-    <a class="a-nav" routerLink="requests" [class.picked]="this.router.url === '/requests'">
-      My requests
-    </a>
-    <a class="a-nav" routerLink="news" [class.picked]="this.router.url === '/news'">
-      News
-    </a>
-    <a class="a-nav" routerLink="classes" [class.picked]="this.router.url === '/classes'">
-      My classes
-    </a>
-    <a class="a-nav" routerLink="settings" [class.picked]="this.router.url === '/settings'">
-      Settings
-    </a>
-    <!--
-    <a class="a-nav" routerLink="manage" [class.picked]="this.router.url === '/manage'">
-      Manage organization
-    </a>
-    <a class="a-nav" routerLink="tags" [class.picked]="this.router.url === '/tags'">
-      Manage Tag tree
-    </a>
-    <a class="a-nav" routerLink="" [class.picked]="this.router.url === '/'">
-      Manage add-lesson requests
-    </a>
-    <a class="a-nav" routerLink="" [class.picked]="this.router.url === '/'">
-      Manage reports
-    </a>
--->
-  </nav>
+
+<div id="container">
+
+  <div id="header">
+  </div>
+
+  <div id="menu">
+    <nav>
+      <h1 class="logo">
+        <a href="#"><span>Know</span>net</a>
+      </h1>
+      <a class="a-nav" routerLink="profile" [class.picked]="this.router.url === '/profile'">
+        My profile
+      </a>
+      <a class="a-nav" routerLink="learn" [class.picked]="this.router.url === '/learn'">
+        Learn
+      </a>
+      <a class="a-nav" routerLink="teach" [class.picked]="this.router.url === '/teach'">
+        Teach
+      </a>
+      <a class="a-nav" routerLink="requests" [class.picked]="this.router.url === '/requests'">
+        My requests
+      </a>
+      <a class="a-nav" routerLink="news" [class.picked]="this.router.url === '/news'">
+        News
+      </a>
+      <a class="a-nav" routerLink="classes" [class.picked]="this.router.url === '/classes'">
+        My classes
+      </a>
+      <a class="a-nav" routerLink="settings" [class.picked]="this.router.url === '/settings'">
+        Settings
+      </a>
+      <a class="a-nav" routerLink="manage" [class.picked]="this.router.url === '/manage'">
+        Manage organization
+      </a>
+      <a class="a-nav" routerLink="tags" [class.picked]="this.router.url === '/tags'">
+        Manage Tag tree
+      </a>
+      <a class="a-nav" routerLink="" [class.picked]="this.router.url === '/'">
+        Manage add-lesson requests
+      </a>
+      <a class="a-nav" routerLink="" [class.picked]="this.router.url === '/'">
+        Manage reports
+      </a>
+    </nav>
+  </div>
+
+  <router-outlet></router-outlet>
+
+  <div id="clear">
+  </div>
+
+  <div id="footer">
+    KnowNet 2020-2021.
+  </div>
 </div>
 
-<router-outlet></router-outlet>
-
-<div id="footer">
-  KnowNet 2020-2021.
-</div>

@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserListComponent } from './components/user-list/user-list.component';
 import {UserPageComponent} from "./components/user-page/user-page.component";
 import {LearnTabComponent} from "./components/learn-tab/learn-tab.component";
+import {TagTreeComponent}  from './components/tag-tree/tag-tree.component';
 
 
 const routes: Routes = [
   { path: 'users', component: UserListComponent },
   { path: 'profile', component: UserPageComponent },
   { path: 'learn', component: LearnTabComponent },
+  { path: 'tags', component: TagTreeComponent },
   { path: '', redirectTo: '/learn', pathMatch: 'full' },
 ];
 

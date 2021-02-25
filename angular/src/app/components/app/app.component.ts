@@ -7,7 +7,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  public static currentUserId: number = 14;
+  public static currentUserId: number = 2;
   
   constructor(public router: Router ) {}
 }

@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserPageComponent } from './components/user-page/user-page.component';
 import { LearnTabComponent } from './components/learn-tab/learn-tab.component';
 import {FormsModule} from "@angular/forms";
-
+import { TagTreeComponent } from './components/tag-tree/tag-tree.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +16,7 @@ import {FormsModule} from "@angular/forms";
     UserListComponent,
     UserPageComponent,
     LearnTabComponent,
+    TagTreeComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,3 +28,5 @@ import {FormsModule} from "@angular/forms";
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
