@@ -41,10 +41,10 @@ public class User implements UserDetails {
   private Boolean enabled = true;
 
   @Column(name = "rating")
-  private Double rating;
+  private Double rating = 0.0;
 
   @Column(name = "points")
-  private Integer points;
+  private Integer points = 100;
 
   @Column(name = "user_group")
   private String group;
@@ -96,5 +96,6 @@ public class User implements UserDetails {
   public boolean isEnabled() {
     return this.enabled;
   }
+
 
 }
