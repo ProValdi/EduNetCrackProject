@@ -77,12 +77,16 @@ public class UserController {
     public ResponseEntity<String> create(@RequestBody User user) {
         String login = user.getLogin();
         log.debug("requested: user  create (login = {})", login);
-        boolean created = userService.create(user);
-        if (created) {
-            return ResponseEntity.ok().body("user with login = " + login + " was created");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("user with login = " + login + " already exists");
+        try {
+            boolean created = userService.create(user);
+            if (created) {
+                return ResponseEntity.ok().body("user with login = " + login + " was created");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("user with login = " + login + " already exists");
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
