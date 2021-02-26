@@ -2,12 +2,17 @@ package com.ncedu.knownetweb;
 
 import com.ncedu.knownetimpl.model.LearnRequestBody;
 import com.ncedu.knownetimpl.model.entity.LearnRequest;
+import com.ncedu.knownetimpl.model.entity.Role;
+import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.service.LearnRequestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +25,8 @@ public class LearnRequestController {
     public LearnRequestController(LearnRequestService learnRequestService) {
         this.learnRequestService = learnRequestService;
     }
-    
+
+    @RolesAllowed("ADMIN")
     @GetMapping("/all")
     public ResponseEntity<List<LearnRequest>> findAll() {
         log.debug("requested: learnRequests get    (all)");
@@ -33,7 +39,8 @@ public class LearnRequestController {
         Optional<LearnRequest> request = learnRequestService.findById(id);
         return ResponseEntity.of(request);
     }
-    
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "byId/{id}")
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
         log.debug("requested: learnRequest  delete (id = {})", id);
@@ -45,7 +52,8 @@ public class LearnRequestController {
                     .body("learnRequest with id = " + id + " does not exist");
         }
     }
-    
+
+    @PreAuthorize("#teacherId == authentication.principal.id or hasRole('ADMIN')")
     @GetMapping("byTeacherId/{teacherId}")
     public ResponseEntity<List<LearnRequest>> findByTeacherId(
             @PathVariable(name = "teacherId") Long teacherId,
@@ -59,7 +67,8 @@ public class LearnRequestController {
             return ResponseEntity.ok().body(learnRequestService.findByTeacherId(teacherId));
         }
     }
-    
+
+    @PreAuthorize("#studentId == authentication.principal.id or hasRole('ADMIN')")
     @GetMapping("byStudentId/{studentId}")
     public ResponseEntity<List<LearnRequest>> findByStudentId(
             @PathVariable(name = "studentId") Long studentId,
@@ -73,10 +82,10 @@ public class LearnRequestController {
             return ResponseEntity.ok().body(learnRequestService.findByStudentId(studentId));
         }
     }
-    
-    
+
+    @PreAuthorize("#learnRequestbody.studentId == authentication.principal.id or hasRole('ADMIN')")
     @PostMapping(value = "request")
-    public ResponseEntity<String> create(@RequestBody LearnRequestBody learnRequestbody) {
+    public ResponseEntity<String> create(@RequestBody LearnRequestBody learnRequestbody, Authentication authentication) {
         LearnRequest learnRequest = learnRequestService.makeFromBody(learnRequestbody);
         log.debug("requested: learnRequest  create (teacher_id = {}, studentId = {}, lessonId = {})",
                 learnRequest.getTeacher().getId(), learnRequest.getStudent().getId(),
@@ -89,12 +98,21 @@ public class LearnRequestController {
                     .body("learnRequest with id = " + learnRequest.getId() + " already exists");
         }
     }
-    
+
     @PutMapping(value = "request")
-    public ResponseEntity<String> update(@RequestBody LearnRequestBody learnRequestbody) {
+    public ResponseEntity<String> update(@RequestBody LearnRequestBody learnRequestbody, Authentication authentication) {
         LearnRequest learnRequest = learnRequestService.makeFromBody(learnRequestbody);
         Long id = learnRequest.getId();
         log.debug("requested: learnRequest  update (id = {})", id);
+
+        User user = (User)authentication.getPrincipal();
+        if (!(user.getRole() == Role.ADMIN ||
+                learnRequest.getTeacher().getLogin().equals(user.getLogin()) ||
+                learnRequest.getStudent().getLogin().equals(user.getLogin())
+        )) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("");
+        }
+
         boolean updated = learnRequestService.update(learnRequest);
         if (updated) {
             return ResponseEntity.ok().body("learnRequest with id = " + id + " was updated");

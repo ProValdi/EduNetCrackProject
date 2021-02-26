@@ -54,12 +54,27 @@ public class UserService implements UserDetailsService {
   }
 
   public boolean create(User user) {
-    boolean exists = userRepository.existsByLogin(user.getLogin());
-    if (!exists) {
-      user.setPassword(passwordEncoder.encode(user.getPassword()));
-      userRepository.save(user);
+    if (user.getLogin() == null) {
+      throw new IllegalArgumentException("user mustn't have null login");
     }
-    return !exists;
+    if (user.getLogin().length() < 4) {
+      throw new IllegalArgumentException("login must have at least 4 symbols");
+    }
+
+    if (userRepository.existsByLogin(user.getLogin())) {
+      return false;
+    }
+
+    if (user.getPassword() == null) {
+      throw new IllegalArgumentException("user mustn't have null password");
+    }
+    if (user.getPassword().length() < 4) {
+      throw new IllegalArgumentException("password must have at least 4 symbols");
+    }
+
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    userRepository.save(user);
+    return true;
   }
 
   public boolean update(User user) {

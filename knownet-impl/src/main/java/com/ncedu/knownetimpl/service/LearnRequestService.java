@@ -85,6 +85,7 @@ public class LearnRequestService {
         return oldLearnRequestOpt.isPresent();
     }
 
+
     public LearnRequest makeFromBody(LearnRequestBody body) {
         LearnRequest learnRequest = new LearnRequest();
 
@@ -92,9 +93,9 @@ public class LearnRequestService {
         learnRequest.setHiddenForStudent(body.getHiddenForStudent());
         learnRequest.setHiddenForTeacher(body.getHiddenForTeacher());
         learnRequest.setStatus(body.getStatus());
+//        learnRequest.setIsFinished(body.getStatus().isFinished());
 
         Optional<User> student;
-        Optional<User> teacher;
         Optional<Lesson> lesson;
 
         if (body.getStudentId() == null) {
@@ -103,20 +104,19 @@ public class LearnRequestService {
             student = userService.findById(body.getStudentId());
         }
 
-        if (body.getTeacherId() == null) {
-            teacher = Optional.empty();
-        } else {
-            teacher = userService.findById(body.getTeacherId());
-        }
-
         if (body.getLessonId() == null) {
             lesson = Optional.empty();
         } else {
             lesson = lessonService.findById(body.getLessonId());
         }
 
+        if (lesson.isPresent()) {
+            learnRequest.setTeacher(lesson.get().getTeacher());
+        } else {
+            learnRequest.setTeacher(new User());
+        }
+
         learnRequest.setStudent(student.orElse(new User()));
-        learnRequest.setTeacher(teacher.orElse(new User()));
         learnRequest.setLesson(lesson.orElse(new Lesson()));
 
         return learnRequest;

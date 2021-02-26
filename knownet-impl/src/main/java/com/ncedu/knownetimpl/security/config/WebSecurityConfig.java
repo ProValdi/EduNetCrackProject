@@ -15,7 +15,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-@EnableGlobalMethodSecurity(jsr250Enabled = true)
+@EnableGlobalMethodSecurity(jsr250Enabled = true, prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   private final UserService userService;
   private final PasswordEncoder passwordEncoder;
@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .authorizeRequests()
           .antMatchers("/").permitAll()
           .antMatchers("/auth/hello").permitAll()
+          .antMatchers("/users/user").permitAll()
         .anyRequest()
         .authenticated()
       .and()
