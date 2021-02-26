@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +18,11 @@ public class TagController {
   private final TagService tagService;
 
   @Autowired
-  private TagController(TagService tagService) {
+  public TagController(TagService tagService) {
     this.tagService = tagService;
   }
 
+  @RolesAllowed("ADMIN")
   @GetMapping("/all")
   public ResponseEntity<List<Tag>> findAll() {
     log.debug("requested: tag get     (all)");
@@ -54,6 +56,7 @@ public class TagController {
     return ResponseEntity.ok(tags);
   }
 
+  @RolesAllowed("ADMIN")
   @DeleteMapping(value = "byId/{id}")
   public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
     log.debug("requested: tag  delete (id = {})", id);
@@ -66,6 +69,7 @@ public class TagController {
     }
   }
 
+  @RolesAllowed("ADMIN")
   @PostMapping(value = "tag")
   public ResponseEntity<String> create(@RequestBody Tag tag) {
     log.debug("requested: tag  create (title = {}, parentId = {})", tag.getParentId(), tag.getParentId());
@@ -78,6 +82,7 @@ public class TagController {
     }
   }
 
+  @RolesAllowed("ADMIN")
   @PutMapping(value = "tag")
   public ResponseEntity<String> update(@RequestBody Tag tag) {
     Long id = tag.getId();

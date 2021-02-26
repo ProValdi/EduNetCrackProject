@@ -28,11 +28,11 @@ public class LearnRequestService {
         this.userService = userService;
         this.lessonService = lessonService;
     }
-    
+
     public List<LearnRequest> findAll() {
         return learnRequestRepository.findAll();
     }
-    
+
     public Optional<LearnRequest> findById(Long id) {
         if (id != null) {
             return learnRequestRepository.findById(id);
@@ -41,7 +41,7 @@ public class LearnRequestService {
             return Optional.empty();
         }
     }
-    
+
     public boolean deleteById(Long id) {
         if (id == null) {
             log.warn("deleting learnRequest with null id");
@@ -53,7 +53,7 @@ public class LearnRequestService {
         }
         return exists;
     }
-    
+
     public List<LearnRequest> findByTeacherId(Long teacherId) {
         if (teacherId != null) {
             return learnRequestRepository.findByTeacherId(teacherId);
@@ -62,7 +62,7 @@ public class LearnRequestService {
             return new ArrayList<LearnRequest>(0);
         }
     }
-    
+
     public List<LearnRequest> findByStudentId(Long studentId) {
         if (studentId != null) {
             return learnRequestRepository.findByStudentId(studentId);
@@ -71,7 +71,7 @@ public class LearnRequestService {
             return new ArrayList<LearnRequest>(0);
         }
     }
-    
+
     public List<LearnRequest> findActiveByTeacherId(Long teacherId) {
         if (teacherId != null) {
             return learnRequestRepository.findByTeacherIdAndHiddenForTeacherFalse(teacherId);
@@ -80,7 +80,7 @@ public class LearnRequestService {
             return new ArrayList<LearnRequest>(0);
         }
     }
-    
+
     public List<LearnRequest> findActiveByStudentId(Long studentId) {
         if (studentId != null) {
             return learnRequestRepository.findByStudentIdAndHiddenForStudentFalse(studentId);
@@ -89,7 +89,7 @@ public class LearnRequestService {
             return new ArrayList<LearnRequest>(0);
         }
     }
-    
+
     public boolean create(LearnRequest learnRequest) {
         boolean exists = learnRequest.getId() != null && learnRequestRepository.existsById(learnRequest.getId());
         if (!exists) {
@@ -125,13 +125,13 @@ public class LearnRequestService {
                 oldLearnRequest.setHiddenForStudent(learnRequest.getHiddenForStudent());
                 oldLearnRequest.setHiddenForTeacher(learnRequest.getHiddenForTeacher());
             }
-            
+
             learnRequestRepository.save(oldLearnRequest);
         }
-        
+
         return oldLearnRequestOpt.isPresent();
     }
-    
+
     static private boolean ifCanChangeStatus(Status oldStatus, Status newStatus) throws IllegalStateException {
         if (oldStatus == newStatus) {
             return false;
@@ -177,7 +177,7 @@ public class LearnRequestService {
 
         Optional<User> student;
         Optional<Lesson> lesson;
-        
+
         if (body.getStudentId() == null) {
             student = Optional.empty();
         } else {
@@ -189,7 +189,7 @@ public class LearnRequestService {
         } else {
             lesson = lessonService.findById(body.getLessonId());
         }
-    
+
         if (lesson.isPresent()) {
             learnRequest.setTeacher(lesson.get().getTeacher());
         } else {
@@ -198,7 +198,7 @@ public class LearnRequestService {
 
         learnRequest.setStudent(student.orElse(new User()));
         learnRequest.setLesson(lesson.orElse(new Lesson()));
-        
+
         return learnRequest;
     }
 }

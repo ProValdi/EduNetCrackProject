@@ -105,9 +105,10 @@ public class LessonService {
 
     public Lesson makeFromBody(LessonBody body) {
         Lesson lesson = new Lesson();
+        Optional<Lesson> lessonOpt = findById(body.getId());
         lesson.setId(body.getId());
-        Optional<User> teacher = userService.findById(body.getTeacherId());
-        Optional<Tag> tag = tagService.findById(body.getTagId());
+        Optional<User> teacher = userService.findById(body.getTeacherId() == null ? lessonOpt.get().getTeacher().getId() : body.getTeacherId());
+        Optional<Tag> tag = tagService.findById(body.getTagId() == null ? lessonOpt.get().getTag().getId() : body.getTagId());
         lesson.setTeacher(teacher.orElse(new User()));
         lesson.setTag(tag.orElse(new Tag()));
 
