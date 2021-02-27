@@ -13,6 +13,7 @@ import { TagTreeComponent } from './components/tag-tree/tag-tree.component';
 import { jqxTreeModule } from "jqwidgets-ng/jqxtree";
 import { jqxMenuModule } from 'jqwidgets-ng/jqxmenu';
 import { TeachTabComponent } from './components/teach-tab/teach-tab.component';
+import { OutgoingRequestsComponent } from './components/outgoing-requests/outgoing-requests.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TeachTabComponent } from './components/teach-tab/teach-tab.component';
     LearnTabComponent,
     TagTreeComponent,
     TeachTabComponent,
+    OutgoingRequestsComponent,
   ],
   imports: [
     BrowserModule,

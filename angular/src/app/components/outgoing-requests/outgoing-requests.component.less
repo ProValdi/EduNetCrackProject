@@ -31,6 +31,8 @@
   .tags {
     overflow: hidden;
     height: @tags-height;
+    width: @infocard-width - 110px;
+    float: left;
     .tag {
       font-size: @tags-height / 2;
       background-color: #dfffff;
@@ -72,6 +74,7 @@
     .personal-info {
       height: @local-height;
       margin: 5px;
+      margin-left: 5px;
       padding: 10px;
       float: left;
       display: inline-block;
@@ -87,12 +90,12 @@
     }
 
     .comment {
-      font-size: 20px;
+      font-size: 18px;
       background-color: #dfdfdf;
       text-align: left;
-      width: @infocard-width - 480px;
-      height: @local-height - 40px;
-      max-height: @local-height - 20px;
+      width: @infocard-width - 450px;
+      min-height: @local-height - 40px;
+      max-height: @local-height - 10px;
       position: relative;
       overflow: hidden;
       padding: 10px;
@@ -100,35 +103,46 @@
       border-radius: 14px;
       float: left;
     }
+  }
+  .trailer-section {
+    font-size: 20px;
+    width: 100px;
+    height: @infocard-height - 10px;
+    margin-top: 0px;
+    float: right;
 
-    .trailer-section {
-      font-size: 20px;
-      margin-top: 20px;
-      margin-right: 0;
-      height: 100px;
+    .top {
+      margin: auto;
       width: 100px;
-      float: right;
-      button {
-        border: 1px;
-        outline: none;
-        border-radius: 14px;
-        width: 86px;
-        height: 40px;
-        background: #FF1493;
-      }
+      height: 30px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 5px;
+      margin-bottom: 10px;
+      background-color: #dfdfdf;
+      border-radius: 14px;
+    }
+
+    .data {
+      font-size: 17px;
+      margin: auto;
+      margin-bottom: 10px;
+      width: 100px;
+      height: 30px;
+      padding-left: 5px;
+      padding-top: 8px;
+      background-color: #dfdfdf;
+      border-radius: 14px;
+    }
+
+    button {
+      border: 1;
+      border-radius: 14px;
+      font-size: 20px;
+      width: 105px;
+      height: 45px;
+      outline: none;
+      background: #ff1493;
     }
   }
-}
-
-.add-button {
-  font-size: 25px;
-  background-color: @infocard-background-color;
-  width: @infocard-width + 20px;
-  height: 50px;
-  outline: none;
-  margin: @infocard-margin;
-  padding: @infocard-padding;
-  overflow: hidden;
-  box-shadow: 2px 2px 8px #a3b1c6;
-  border-radius: 18px;
 }
