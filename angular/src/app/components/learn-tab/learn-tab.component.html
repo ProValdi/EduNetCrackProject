@@ -1,11 +1,10 @@
-<body class="canvas">
-<div class="learndiv">
+<div id="content">
   <div class="tag-search">
-    <div class="tag" *ngFor="let tag of tags">
+    <span class="tag" *ngFor="let tag of tags">
       {{tag.title}}
-    </div>
+    </span>
 
-    <div class="tag" *ngIf="possibleTags.length != 0">
+    <span class="tag" *ngIf="possibleTags.length != 0">
 <!--todo я не понимаю как блин обработать выбор тэга нормально без кнопки-->
       <select [(ngModel)]="selectedTag">
 <!--        <option selected hidden>chose tag</option>-->
@@ -13,7 +12,7 @@
             {{tag.title}}
         </option>
       </select>
-    </div>
+    </span>
 
     <button *ngIf="possibleTags.length != 0" (click)="choseTag()">
       confirm
@@ -23,51 +22,94 @@
     </button>
   </div>
 
-<!--  todo-->
-<!--  дурацкие точки-->
-  <ul>
-    <li *ngFor="let lesson of lessons">
+  <div class="infocard" *ngFor="let lesson of lessons">
+    <div class="tags">
+      <span class="tag" *ngFor="let tag of tags">
+        {{tag.title}}
+      </span>
+    </div>
+    <div class="trailer-section">
+      <button (click)="requestLesson(lesson)">
+        request
+      </button>
+      <div class="point-amount">
+        {{lesson.pointsToGet}} points
+      </div>
+    </div>
+    <div class="info">
+      <div class="photo">
+        <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
+      </div>
+      <div class="personal-info">
+            <span class="contacts">
+              <div class="name">
+                {{lesson.teacher.lastName}} {{lesson.teacher.firstName}}
+              </div>
+              <table>
+                <tr>
+                  <td>status:</td>
+                  <td id="group">student</td>
+                </tr>
+                <tr>
+                  <td>rating:</td>
+                  <td id="rating">{{lesson.teacher.rating}}</td>
+                </tr>
+              </table>
+            </span>
+      </div>
+      <div class="comment">
+        Description is {{lesson.description}}
+      </div>
+    </div>
+  </div>
+</div>
 
-      <div class="lesson">
-        <div class="request-icon">
-          <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
-        </div>
-        <div class="personal-info">
-          <div class="request-name">
-            {{lesson.teacher.lastName}}
-          </div>
-          <div class="request-name">
-            {{lesson.teacher.firstName}}
-          </div>
-          <div class="request-info">
-            <table>
-              <tr>
-                <td>Status:</td>
-                <td>Student</td>
-              </tr>
-              <tr>
-                <td>Rating:</td>
-                <td>{{lesson.teacher.rating}}</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="comment">
-          <div class="verticale">
-            {{lesson.description}}
-          </div>
-        </div>
-        <button class="ending" (click)="requestLesson(lesson)">
-          request
-        </button>
+<!--
 
-        <div class="request-points">
-          {{lesson.pointsToGet}} points
+<div id="content">
+      <div class="tag-search">
+
+      </div>
+      <div class="infocard" *ngFor="let lesson of lessons">
+        <div class="tags">
+          <div class="tag" *ngFor="let tag of tags">
+            {{tag.title}}
+          </div>
+        </div>
+        <div class="trailer-section">
+          <button (click)="requestLesson(lesson)">
+            request
+          </button>
+          <div class="point-amount">
+            {{lesson.pointsToGet}} points
+          </div>
+        </div>
+        <div class="info">
+          <div class="photo">
+            <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
+          </div>
+          <div class="personal-info">
+            <span class="contacts">
+              <div class="name">
+                {{lesson.teacher.lastName}} {{lesson.teacher.firstName}}
+              </div>
+              <table>
+                <tr>
+                  <td>status:</td>
+                  <td id="group">student</td>
+                </tr>
+                <tr>
+                  <td>rating:</td>
+                  <td id="rating">{{lesson.teacher.rating}}</td>
+                </tr>
+              </table>
+            </span>
+          </div>
+          <div class="comment">
+            Description is {{lesson.description}}
+          </div>
         </div>
       </div>
-
-    </li>
-  </ul>
-
 </div>
-</body>
+
+-->

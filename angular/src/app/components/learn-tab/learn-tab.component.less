@@ -1,207 +1,168 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300&display=swap");
-*, :before, :after {
-  box-sizing: border-box;
-}
-.unstyled {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.unstyled a {
-  text-decoration: none;
-}
-.list-inline {
-  overflow: hidden;
-}
-.list-inline li {
-  float: left;
-}
-.learndiv {
-  min-width: 90%;
-  min-height: 700px;
-  position: relative;
-  overflow: hidden;
-  margin: 20px;
-}
 
-.tag {
-  background-color: #DFFFFF;
-  display: inline-block;
-  height: 40px;
-  position: relative;
-  overflow: hidden;
-  padding: 10px;
-  margin-left: 10px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border-radius: 14px;
-  float: left;
-}
+@width: 1300px;
+@navbar-width: 300px;
+@content-width: @width - @navbar-width;
 
-._2 {
-  background-color: #A0FBFB;
-}
+/* Infocard */
 
-._3 {
-  background-color: #00FFFF;
-}
+@infocard-width: 900px;
+@infocard-height: 140px;
+@infocard-margin: 20px;
+@infocard-padding: 10px;
+@infocard-background-color: #ffefd5;
+
+@tags-height: 45px;
 
 .tag-search {
-  background-color: #FFE4B5;
-  width: 750px;
-  height: 80px;
+  @tag-search-height: 60px;
+
+  background-color: #ffe4b5;
+  width: @infocard-width + 20px;
+  height: @tag-search-height;
   position: relative;
   overflow: hidden;
-  margin: 20px;
+  margin: @infocard-margin;
+  padding-top: @tag-search-height / 4;
   margin-bottom: 50px;
   box-shadow: inset 4px 4px 16px #a3b1c6;
   border-radius: 18px;
+
+  .tag {
+    font-size: @tags-height / 2;
+    background-color: #dfffff;
+    overflow: hidden;
+    padding: 6px;
+    margin: 5px;
+    padding-left: 10px;
+    border-radius: 14px;
+
+    &._2 {
+      background-color: #a0fbfb;
+    }
+
+    &._3 {
+      background-color: #00ffff;
+    }
+  }
 }
 
-.request-points {
-  position: relative;
+.infocard {
+  background-color: @infocard-background-color;
+  width: @infocard-width;
+  height: @infocard-height;
+  margin: @infocard-margin;
+  padding: @infocard-padding;
   overflow: hidden;
-  padding-left: 10px;
-}
-
-.ending {
-  background-color: #A0FFFF;
-  width: 80px;
-  height: 40px;
-  position: relative;
-  overflow: hidden;
-  padding: 10px;
-  margin-left: 10px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border-radius: 14px;
-  padding-left: 15px;
-}
-
-.request-name {
-  padding-left: 4px;
-  padding-top: 12px;
-  float: left;
-}
-
-
-.comment {
-  background-color: #DFDFDF;
-  vertical-align: middle;
-  text-align: left;
-  width: 330px;
-  height: 90px;
-  position: relative;
-  overflow: hidden;
-  padding: 10px;
-  margin: 15px;
-  margin-bottom: 50px;
-  border-radius: 14px;
-  padding-top: 40px;
-  float: left;
-}
-
-.personal-info {
-  width: 170px;
-  height: 80%;
-  position: relative;
-  overflow: hidden;
-  margin-top: 12px;
-  float: left;
-}
-
-.request-info {
-  position: flex;
-  padding-top: 2px;
-  vertical-align: top;
-  clear: left;
-}
-
-.request-icon {
-  width: 100px;
-  height: 100px;
-  background: #83A7C9;
-  border-radius: 50%;
-  margin: 10px;
-  margin-left: 15px;
-  float: left;
-  overflow: hidden;
-}
-
-.lesson {
-  background-color: #FFEFD5;
-  width: 750px;
-  height: 120px;
-  position: relative;
-
-  overflow: hidden;
-  margin: 20px;
-  z-index: 0;
   box-shadow: inset 2px 2px 8px #a3b1c6;
   border-radius: 18px;
+
+  .tags {
+    overflow: hidden;
+    height: @tags-height;
+    width: @infocard-width - 110px;
+    float: left;
+    .tag {
+      font-size: @tags-height / 2;
+      background-color: #dfffff;
+      overflow: hidden;
+      padding: 6px;
+      margin: 5px;
+      padding-left: 10px;
+      border-radius: 14px;
+      &._2 {
+        background-color: #a0fbfb;
+      }
+
+      &._3 {
+        background-color: #00ffff;
+      }
+    }
+  }
+
+  .info {
+    @local-height: @infocard-height - @tags-height - @infocard-padding;
+    .photo {
+      /* circle shape */
+      width: @local-height;
+      height: @local-height;
+      border-radius: 50%;
+      margin-right: 5px;
+      float: left;
+      overflow: hidden;
+      display: inline-block;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+
+    .personal-info {
+      height: @local-height;
+      margin: 5px;
+      margin-left: 5px;
+      padding: 10px;
+      float: left;
+      display: inline-block;
+
+      .contacts {
+        font: 400 0.6em "Roboto";
+        .name {
+          min-width: 170px;
+          max-width: 190px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    .comment {
+      font-size: 18px;
+      background-color: #dfdfdf;
+      text-align: left;
+      width: @infocard-width - 450px;
+      min-height: @local-height - 40px;
+      max-height: @local-height - 10px;
+      position: relative;
+      overflow: hidden;
+      padding: 10px;
+      margin: 15px;
+      border-radius: 14px;
+      float: left;
+    }
+  }
+  .trailer-section {
+    font-size: 20px;
+    width: 100px;
+    height: @infocard-height - 10px;
+    margin-right: 5px;
+    float: right;
+
+    button {
+      border: 1px;
+      outline: none;
+      border-radius: 14px;
+      margin-top: @infocard-height / 5;
+      font-size: 20px;
+      width: 105px;
+      height: 45px;
+      background: #a0ffff;
+    }
+
+    .point-amount {
+      margin: auto;
+      width: 100px;
+      height: 30px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 5px;
+      margin-top: 10px;
+      border-radius: 14px;
+    }
+  }
 }
 
-.canvas {
-  margin-left: 17.5em;
-}
-.contact-card {
-  margin-right: 1em;
-}
-.lessons-info {
-  margin-top: 1.5em;
-  margin-left: 2.4em;
-}
-.photo {
-  box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px rgba(255, 255, 255, 0.5);
-  margin-top: 40px;
-  margin-left: 40px;
-  width: 300px;
-  height: 300px;
-  overflow: hidden;
-  border-radius: 25px;
-  position: relative;
-  float: top;
-  display: inline-block;
-}
-.topics {
-  width: 200px;
-  height: 200px;
-  position: relative;
-  display: inline-block;
-}
-.info {
-  margin-left: 1em;
-  width: 100px;
-  height: 200px;
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-}
-.highlight:after {
-  content: "";
-  position: absolute;
-  width: 300px;
-  height: 0.11em;
-  background: black;
-  background-image: linear-gradient(to right, #5e42a6, #b74e91);
-}
-.contact {
-  width: 600px;
-  height: 320px;
-  margin-left: 1em;
-  overflow: hidden;
-  display: inline-block;
-}
-.contact h1 {
-  margin: 0;
-  font: 300 3em "Josefin Sans", sans-serif;
-}
-img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
-  object-position: center;
-}
