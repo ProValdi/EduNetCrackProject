@@ -92,7 +92,7 @@ public class LessonService {
         if (oldLessonOpt.isPresent()) {
             Lesson oldLesson = oldLessonOpt.get();
             oldLesson.setName(lesson.getName());
-//            oldLesson.setTag(lesson.getTag());
+            oldLesson.setTag(lesson.getTag());
             oldLesson.setTopic(lesson.getTopic());
             oldLesson.setPointsToGet(lesson.getPointsToGet());
             oldLesson.setSkillsToComplete(lesson.getSkillsToComplete());
@@ -107,9 +107,25 @@ public class LessonService {
         Lesson lesson = new Lesson();
         Optional<Lesson> lessonOpt = findById(body.getId());
         lesson.setId(body.getId());
-        Optional<User> teacher = userService.findById(body.getTeacherId() == null ? lessonOpt.get().getTeacher().getId() : body.getTeacherId());
-        Optional<Tag> tag = tagService.findById(body.getTagId() == null ? lessonOpt.get().getTag().getId() : body.getTagId());
+
+        Optional<User> teacher;
+        if (body.getTeacherId() != null) {
+            teacher = userService.findById(body.getTeacherId());
+        } else if (lessonOpt.isPresent()) {
+            teacher = userService.findById(lessonOpt.get().getTeacher().getId());
+        } else {
+            teacher = Optional.empty();
+        }
         lesson.setTeacher(teacher.orElse(new User()));
+
+        Optional<Tag> tag;
+        if (body.getTagId() != null) {
+            tag = tagService.findById(body.getTagId());
+        } else if (lessonOpt.isPresent()) {
+            tag = tagService.findById(lessonOpt.get().getTag().getId());
+        } else {
+            tag = Optional.empty();
+        }
         lesson.setTag(tag.orElse(new Tag()));
 
         lesson.setSkillsToComplete(body.getSkillsToComplete());
