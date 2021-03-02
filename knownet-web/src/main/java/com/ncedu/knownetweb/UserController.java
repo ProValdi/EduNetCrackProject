@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
@@ -74,8 +75,8 @@ public class UserController {
                     .body("user with id = " + id + " does not exist");
         }
     }
-
-    @PostMapping(value = "user")
+    
+    @PostMapping(value = "")
     public ResponseEntity<String> create(@RequestBody User user) {
         String login = user.getLogin();
         log.debug("requested: user  create (login = {})", login);
@@ -93,7 +94,7 @@ public class UserController {
     }
 
     @PreAuthorize("#user.login == authentication.principal.username or hasRole('ADMIN')")
-    @PutMapping(value = "user")
+    @PutMapping(value = "")
     public ResponseEntity<String> update(@RequestBody User user) {
         String login = user.getLogin();
         log.debug("requested: user  update (login = {})", login);

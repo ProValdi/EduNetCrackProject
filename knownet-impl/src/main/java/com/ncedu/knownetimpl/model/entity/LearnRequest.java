@@ -26,7 +26,7 @@ public class LearnRequest {
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private User student;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "lesson_id", referencedColumnName = "id")
     private Lesson lesson;
 

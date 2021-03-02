@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +58,7 @@ public class LearnRequestService {
             return learnRequestRepository.findByTeacherId(teacherId);
         } else {
             log.warn("requested learnRequest with null teacherId");
-            return new ArrayList<LearnRequest>(0);
+            return new ArrayList<>();
         }
     }
 
@@ -68,7 +67,7 @@ public class LearnRequestService {
             return learnRequestRepository.findByStudentId(studentId);
         } else {
             log.warn("requested learnRequest with null studentId");
-            return new ArrayList<LearnRequest>(0);
+            return new ArrayList<>();
         }
     }
 
@@ -77,7 +76,7 @@ public class LearnRequestService {
             return learnRequestRepository.findByTeacherIdAndHiddenForTeacherFalse(teacherId);
         } else {
             log.warn("requested learnRequest with null teacherId");
-            return new ArrayList<LearnRequest>(0);
+            return new ArrayList<>();
         }
     }
 
@@ -86,14 +85,13 @@ public class LearnRequestService {
             return learnRequestRepository.findByStudentIdAndHiddenForStudentFalse(studentId);
         } else {
             log.warn("requested learnRequest with null studentId");
-            return new ArrayList<LearnRequest>(0);
+            return new ArrayList<>();
         }
     }
 
     public boolean create(LearnRequest learnRequest) {
         boolean exists = learnRequest.getId() != null && learnRequestRepository.existsById(learnRequest.getId());
         if (!exists) {
-            learnRequest.setTeacher(learnRequest.getLesson().getTeacher());
             learnRequestRepository.save(learnRequest);
         }
         return !exists;

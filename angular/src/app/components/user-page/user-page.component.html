@@ -1,0 +1,65 @@
+<div id="content">
+  <div id="profile">
+    <div id="photo">
+      <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="profile photo">
+    </div>
+
+    <div id="personal-info">
+      <div id="name">
+        {{user.firstName}} {{user.lastName}}
+      </div>
+      <div class="highlight"></div>
+      <div id="contacts">
+        <table cellspacing="10px">
+          <tr>
+            <td width="200px">group:</td>
+            <td id="group">{{user.group}}</td>
+          </tr>
+          <tr>
+            <td>rating:</td>
+            <td id="rating">{{user.rating}}</td>
+          </tr>
+          <tr>
+            <td>status:</td>
+            <td id="status">Professor</td>
+          </tr>
+          <tr>
+            <td colspan="2">contact information:</td>
+          </tr>
+          <tr>
+            <td class="tab">email:</td>
+            <td id="email"><a href="#">{{user.email}}</a></td>
+          </tr>
+          <tr>
+            <td class="tab">VK:</td>
+            <td id="vkLink"><a href="#">{{user.vkLink}}</a></td>
+          </tr>
+          <tr>
+            <td class="tab">telegram:</td>
+            <td id="telegramLink"><a href="#">{{user.telegramLink}}</a></td>
+          </tr>
+          <tr>
+            <td class="tab">phone:</td>
+            <a href="#">
+              <td id="phoneNumber">{{user.phoneNumber}}</td>
+            </a>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id="lessons-info">
+      <table cellspacing="10px">
+        <tr>
+          <td>Lessons conducted:</td>
+          <td id="conductedCount">{{user.conductedCount}}</td>
+        </tr>
+        <tr>
+          <td>Lessons attended:</td>
+          <td id="attendedCount">{{user.attendedCount}}</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+  <hr />
+</div>

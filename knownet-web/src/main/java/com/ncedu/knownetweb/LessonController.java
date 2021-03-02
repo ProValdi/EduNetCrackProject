@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/lessons")
 public class LessonController {
     private final LessonService lessonService;
@@ -78,7 +79,7 @@ public class LessonController {
     }
 
     @PreAuthorize("#lessonBody.teacherId == authentication.principal.id or hasRole('ADMIN')")
-    @PostMapping(value = "lesson")
+    @PostMapping(value = "")
     public ResponseEntity<String> create(@RequestBody LessonBody lessonBody) {
         Lesson lesson = lessonService.makeFromBody(lessonBody);
         log.debug("requested: lesson  create (teacher_id = {}, tagId = {}, lessonName = {})",
@@ -93,7 +94,7 @@ public class LessonController {
         }
     }
 
-    @PutMapping(value = "lesson")
+    @PutMapping(value = "")
     public ResponseEntity<String> update(@RequestBody LessonBody lessonBody, Authentication authentication) {
         Lesson lesson = lessonService.makeFromBody(lessonBody);
 
