@@ -14,6 +14,7 @@ import { jqxTreeModule } from "jqwidgets-ng/jqxtree";
 import { jqxMenuModule } from 'jqwidgets-ng/jqxmenu';
 import { TeachTabComponent } from './components/teach-tab/teach-tab.component';
 import { OutgoingRequestsComponent } from './components/outgoing-requests/outgoing-requests.component';
+import { IncomingRequestsComponent } from './components/incoming-requests/incoming-requests.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { OutgoingRequestsComponent } from './components/outgoing-requests/outgoi
     TagTreeComponent,
     TeachTabComponent,
     OutgoingRequestsComponent,
+    IncomingRequestsComponent,
   ],
   imports: [
     BrowserModule,
