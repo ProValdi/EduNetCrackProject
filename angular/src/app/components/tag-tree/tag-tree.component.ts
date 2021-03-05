@@ -2,7 +2,6 @@ import {Component, ViewChild, AfterViewInit, ViewEncapsulation, OnInit} from '@a
 
 import { jqxTreeComponent } from 'jqwidgets-ng/jqxtree';
 import { jqxMenuComponent } from 'jqwidgets-ng/jqxmenu';
-import {coerceStringArray} from "@angular/cdk/coercion";
 
 @Component({
   selector: 'app-tag-tree',
