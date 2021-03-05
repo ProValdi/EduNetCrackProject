@@ -42,6 +42,9 @@
       <a class="a-nav" routerLink="" [class.picked]="this.router.url === '/'">
         Manage reports
       </a>
+      <a class="a-nav" routerLink="login" [class.picked]="this.router.url === '/login' || this.router.url === '/registration'">
+        Login
+      </a>
     </nav>
   </div>
 

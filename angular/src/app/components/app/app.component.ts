@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +7,9 @@ import {Router} from "@angular/router";
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  public static currentUserId: number = 2;
-  
+  public static currentUserId: number;
+  public static currentUserLogin: string;
+  public static currentUserPassword: string;
+
   constructor(public router: Router ) {}
 }
