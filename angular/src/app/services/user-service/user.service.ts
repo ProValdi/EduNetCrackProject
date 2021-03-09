@@ -32,4 +32,12 @@ export class UserService extends BaseService<User, User>{
       );
   }
 
+  createWithResponse(user: User): Observable<string> {
+    return this.http.post<string>(this.url, user, {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      }),
+    });
+  }
+
 }

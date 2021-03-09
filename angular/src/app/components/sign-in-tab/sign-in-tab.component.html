@@ -4,9 +4,9 @@
   <h2 class="login-header">Sign in</h2>
 
   <form class="login-container">
-    <p><input #login_str type="login" placeholder="Login"></p>
-    <p><input #password_str type="password" placeholder="Password"></p>
-    <p><input type="submit" (click)="login(login_str.value, password_str.value)" value="Sign in"></p>
+    <p><input #loginStr type="login" placeholder="Login"></p>
+    <p><input #passwordStr type="password" placeholder="Password"></p>
+    <p><input type="submit" (click)="login(loginStr.value, passwordStr.value)" value="Sign in"></p>
     <div style="text-align: center;">For registration: <a routerLink="/registration">Click here! </a> </div>
   </form>
 </div>
@@ -19,10 +19,10 @@
   <h2 class="login-header">Sign Up</h2>
 
   <form class="login-container">
-    <p><input type="login" placeholder="Login" required></p>
-    <p><input type="password" placeholder="Password" required></p>
-    <p><input type="password" placeholder="Confirm password" required></p>
-    <p><input type="submit" value="Sign up"></p>
+    <p><input #loginStr type="login" placeholder="Login" required></p>
+    <p><input #passwordStr type="password" placeholder="Password" required></p>
+    <p><input #passwordConfirmStr type="password" placeholder="Confirm password" required></p>
+    <p><input type="submit" (click)="registry(loginStr.value, passwordStr.value, passwordConfirmStr.value)" value="Sign up"></p>
     <div style="text-align: center;">Already have an account? <a routerLink="/login">Click here!</a> </div>
   </form>
 </div>
