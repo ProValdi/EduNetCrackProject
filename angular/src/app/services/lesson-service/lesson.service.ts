@@ -16,9 +16,9 @@ export class LessonService extends BaseService<Lesson, LessonBody>{
     super(http, Lesson);
     this.url += '/lessons';
   }
-  
+
   getByTagId(id: number): Observable<Lesson[]> {
-    return this.http.get<Lesson[]>(this.url + '/byTagId/' + id)
+    return this.http.get<Lesson[]>(this.url + '/byTagId/' + id, this.getAuthHttpHeaders())
       .pipe(
         catchError(ErrorHandler.handleError<Lesson[]>('getLessons ' + `ByTagId id=${id}`, []))
       );

@@ -2,7 +2,7 @@ export class User {
   id: number;
   email: string;
   login: string;
-  encodedPassword: string;
+  password: string;
   firstName: string;
   lastName: string;
   rating: number;

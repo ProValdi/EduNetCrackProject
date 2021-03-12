@@ -17,7 +17,7 @@ export class TagService extends BaseService<Tag, Tag>{
   }
   
   getChildren(id: number): Observable<Tag[]> {
-    return this.http.get<Tag[]>(this.url + '/children/' + id)
+    return this.http.get<Tag[]>(this.url + '/children/' + id, this.getAuthHttpHeaders())
       .pipe(
         catchError(ErrorHandler.handleError<Tag[]>('getChildren ' + `ById id=${id}`, []))
       );

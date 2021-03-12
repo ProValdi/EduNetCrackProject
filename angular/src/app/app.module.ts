@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
@@ -18,6 +18,7 @@ import { jqxMenuModule } from 'jqwidgets-ng/jqxmenu';
 import { TeachTabComponent } from './components/teach-tab/teach-tab.component';
 import { OutgoingRequestsComponent } from './components/outgoing-requests/outgoing-requests.component';
 import { IncomingRequestsComponent } from './components/incoming-requests/incoming-requests.component';
+import { SignInTabComponent } from './components/sign-in-tab/sign-in-tab.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { IncomingRequestsComponent } from './components/incoming-requests/incomi
     TeachTabComponent,
     OutgoingRequestsComponent,
     IncomingRequestsComponent,
+    SignInTabComponent,
   ],
   imports: [
     BrowserModule,

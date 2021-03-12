@@ -37,6 +37,12 @@ public class UserController {
         return ResponseEntity.of(userService.findByLogin(login));
     }
 
+    @PreAuthorize("#login == authentication.principal.username")
+    @GetMapping("auth/{login}")
+    public ResponseEntity<User> authenticate(@PathVariable(name = "login") String login) {
+        return findByLogin(login);
+    }
+
     @GetMapping("byGroup/{group}")
     public ResponseEntity<List<User>> findByGroup(@PathVariable(name = "group") String group) {
         log.debug("requested: users get    (group = {})", group);

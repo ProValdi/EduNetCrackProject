@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { catchError, tap } from 'rxjs/operators';
 import {ErrorHandler} from "../error-handler";
+import {AppComponent} from '../../components/app/app.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,18 @@ export class BaseService<T extends {id: number}, U extends {id: number}> {
 
   protected url = 'http://localhost:8083';
   protected TName = '';
-  
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+
+  getAuthHttpHeaders(): { headers: HttpHeaders } {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Basic ' + btoa(AppComponent.currentUserLogin + ':' + AppComponent.currentUserPassword)
+      })
+    };
+  }
 
   getAll(): Observable<T[]> {
-    return this.http.get<T[]>(this.url + '/all')
+    return this.http.get<T[]>(this.url + '/all', this.getAuthHttpHeaders())
       .pipe(
         tap(_ => this.log('got all ' + this.TName + 's')),
         catchError(ErrorHandler.handleError<T[]>('get all ' + this.TName + 's', []))
@@ -28,7 +34,7 @@ export class BaseService<T extends {id: number}, U extends {id: number}> {
   }
 
   getById(id: number): Observable<T> {
-    return this.http.get<T>(this.url + '/byId/' + id)
+    return this.http.get<T>(this.url + '/byId/' + id, this.getAuthHttpHeaders())
       .pipe(
         tap(_ => this.log('got ' + this.TName + ` id=${id}`)),
         catchError(ErrorHandler.handleError<T>('get ' + this.TName + ` id=${id}`))
@@ -36,14 +42,14 @@ export class BaseService<T extends {id: number}, U extends {id: number}> {
   }
 
   delete(id: number): Observable<T> {
-    return this.http.delete<T>(`${this.url}/byId/${id}`, this.httpOptions).pipe(
+    return this.http.delete<T>(`${this.url}/byId/${id}`, this.getAuthHttpHeaders()).pipe(
       tap(_ => this.log('deleted ' + this.TName + ` id=${id}`)),
       catchError(ErrorHandler.handleError<T>('delete ' + this.TName))
     );
   }
 
   create(u: U): Observable<U> {
-    return this.http.post<U>(this.url, u, this.httpOptions)
+    return this.http.post<U>(this.url, u, this.getAuthHttpHeaders())
       .pipe(
         tap((newt: U) => this.log('created ' + this.TName + ` id=${newt.id}`)),
         catchError(ErrorHandler.handleError<U>('create ' + this.TName))
@@ -51,12 +57,12 @@ export class BaseService<T extends {id: number}, U extends {id: number}> {
   }
 
   update(u: U): Observable<any> {
-    return this.http.put(this.url, u, this.httpOptions).pipe(
+    return this.http.put(this.url, u, this.getAuthHttpHeaders()).pipe(
       tap(_ => this.log('updated ' + this.TName + ` id=${u.id}`)),
       catchError(ErrorHandler.handleError<any>('update ' + this.TName))
     );
   }
-  
+
   log(message: string): void {
     console.log(message);
   }

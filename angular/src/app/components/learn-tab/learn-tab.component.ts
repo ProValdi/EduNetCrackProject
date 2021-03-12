@@ -19,7 +19,7 @@ export class LearnTabComponent implements OnInit {
   tags: Tag[];
   possibleTags: Tag[];
   selectedTag: Tag;
-  
+
   constructor(private lessonService: LessonService,
               private tagService: TagService,
               private learningRequestService: LearningRequestService) { }
@@ -29,7 +29,7 @@ export class LearnTabComponent implements OnInit {
     this.tagService.getChildren(0).subscribe(tags => this.possibleTags = tags);
     this.tags = [];
   }
-  
+
   getByTagId(): void {
     this.lessonService.getByTagId(this.tags[this.tags.length - 1].id).subscribe(lessons => this.lessons = lessons);
   }
@@ -39,25 +39,25 @@ export class LearnTabComponent implements OnInit {
       this.tags.push(this.selectedTag);
       this.tagService.getChildren(this.selectedTag.id).subscribe(tags => {
         this.possibleTags = tags;
-        if (this.possibleTags.length == 0) {
+        if (this.possibleTags.length === 0) {
           this.getByTagId();
         }
       });
       this.selectedTag = null;
     }
   }
-  
+
   back(): void {
     this.tags.pop();
     this.tagService.getChildren(this.tags.length > 0 ? this.tags[this.tags.length - 1].id : 0)
       .subscribe(tags => this.possibleTags = tags);
   }
-  
+
   requestLesson(lesson: Lesson): void {
-    let request: LearnRequestBody = new LearnRequestBody();
+    const request: LearnRequestBody = new LearnRequestBody();
     request.lessonId = lesson.id;
     request.studentId = AppComponent.currentUserId;
     this.learningRequestService.create(request).subscribe();
   }
-  
+
 }

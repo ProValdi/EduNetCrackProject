@@ -7,6 +7,8 @@ import {TagTreeComponent}  from './components/tag-tree/tag-tree.component';
 import {TeachTabComponent}  from './components/teach-tab/teach-tab.component';
 import {OutgoingRequestsComponent} from './components/outgoing-requests/outgoing-requests.component';
 import { IncomingRequestsComponent } from './components/incoming-requests/incoming-requests.component';
+import {SignInTabComponent} from './components/sign-in-tab/sign-in-tab.component';
+
 
 const routes: Routes = [
   { path: 'users', component: UserListComponent },
@@ -16,6 +18,8 @@ const routes: Routes = [
   { path: 'teach', component: TeachTabComponent },
   { path: 'incoming-requests', component: IncomingRequestsComponent },
   { path: 'outgoing-requests', component: OutgoingRequestsComponent },
+  { path: 'login', component: SignInTabComponent },
+  { path: 'registration', component: SignInTabComponent },
   { path: '', redirectTo: '/learn', pathMatch: 'full' },
 ];
 

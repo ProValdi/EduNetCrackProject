@@ -1,0 +1,28 @@
+
+<div *ngIf="this.router.url === '/login'" class="login">
+  <div class="login-triangle"></div>
+  <h2 class="login-header">Sign in</h2>
+
+  <form class="login-container">
+    <p><input #loginStr type="login" placeholder="Login"></p>
+    <p><input #passwordStr type="password" placeholder="Password"></p>
+    <p><input type="submit" (click)="login(loginStr.value, passwordStr.value)" value="Sign in"></p>
+    <div style="text-align: center;">For registration: <a routerLink="/registration">Click here! </a> </div>
+  </form>
+</div>
+
+
+<div *ngIf="this.router.url === '/registration'" class="login">
+  <div class="login-triangle"></div>
+  <div style="text-align: center"></div>
+
+  <h2 class="login-header">Sign Up</h2>
+
+  <form class="login-container">
+    <p><input #loginStr type="login" placeholder="Login" required></p>
+    <p><input #passwordStr type="password" placeholder="Password" required></p>
+    <p><input #passwordConfirmStr type="password" placeholder="Confirm password" required></p>
+    <p><input type="submit" (click)="registry(loginStr.value, passwordStr.value, passwordConfirmStr.value)" value="Sign up"></p>
+    <div style="text-align: center;">Already have an account? <a routerLink="/login">Click here!</a> </div>
+  </form>
+</div>
