@@ -1,20 +1,19 @@
 <div id="content">
   <div id="tag-tree-view">
-    <jqxTreeGrid [theme]="'material'"
-                 (onRowSelect)="rowSelect($event)"
-                 (onRowUnselect)="rowUnselect($event)"
-                 (onRowEndEdit)="rowEndEdit($event)"
-                 (onRowBeginEdit)="rowBeginEdit($event)"
-                 [width]="getWidth()"
-                 [source]="dataAdapter"
-                 [editable]="true"
-                 [showToolbar]="true"
-                 [altRows]="true"
-                 [pagerButtonsCount]="8"
-                 [toolbarHeight]="35"
-                 [renderToolbar]="renderToolbar"
-                 [columns]="columns"
-                 #TreeGrid>
+    <jqxTreeGrid #myTreeGrid
+                 (onCellBeginEdit)="treeGridOnCellBeginEdit($event)" (onCellEndEdit)="treeGridOnCellEndEdit($event)"
+                 (onContextmenu)="myTreeGridOnContextmenu()" (onRowClick)="myTreeGridOnRowClick($event)"
+                 [width]="getWidth()" [source]="dataAdapter" [columns]="columns" [editable]="true"
+                 [columnsResize]="true" [ready]="ready" [editSettings]="editSettings">
     </jqxTreeGrid>
+    <jqxMenu #myMenu (onItemclick)="myMenuOnItemClick($event)"
+             [width]="200" [height]="84" [autoOpenPopup]="false" [mode]="'popup'">
+      <ul>
+        <li>Add new Row</li>
+        <li>Delete Selected Row</li>
+
+      </ul>
+    </jqxMenu>
+
   </div>
 </div>

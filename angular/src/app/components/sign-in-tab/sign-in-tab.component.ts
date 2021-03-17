@@ -34,9 +34,9 @@ export class SignInTabComponent implements OnInit {
           case 200:
             const user = response.body;
             user.password = password;
-            AppComponent.currentUserId = user.id;
-            AppComponent.currentUserLogin = login;
-            AppComponent.currentUserPassword = password;
+            // AppComponent.currentUserId = user.id;
+            // AppComponent.currentUserLogin = login;
+            // AppComponent.currentUserPassword = password;
             console.log('auth');
             break;
           case 401:

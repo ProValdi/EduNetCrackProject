@@ -1,8 +1,11 @@
-import {Component, ViewChild, AfterViewInit, ViewEncapsulation, OnInit} from '@angular/core';
+import {Component, ViewChild, AfterViewInit, ViewEncapsulation, OnInit, SimpleChange} from '@angular/core';
 
-import { jqxTreeComponent } from 'jqwidgets-ng/jqxtree';
-import { jqxTreeGridComponent } from 'jqwidgets-ng/jqxtreegrid';
-import { jqxMenuComponent } from 'jqwidgets-ng/jqxmenu';
+import {jqxTreeComponent} from 'jqwidgets-ng/jqxtree';
+import {jqxTreeGridComponent} from 'jqwidgets-ng/jqxtreegrid';
+import {jqxMenuComponent} from 'jqwidgets-ng/jqxmenu';
+import {TagService} from "../../services/tag-service/tag.service";
+import {Tag} from "../../model/entity/tag";
+import {checkIfClassIsExported} from "@angular/compiler-cli/src/ngtsc/typecheck/src/ts_util";
 
 @Component({
   selector: 'app-tag-tree',
@@ -10,10 +13,15 @@ import { jqxMenuComponent } from 'jqwidgets-ng/jqxmenu';
   styleUrls: ['./tag-tree.component.less']
 })
 
-export class TagTreeComponent {
+export class TagTreeComponent implements OnInit {
   @ViewChild('TreeGrid') treeGrid: jqxTreeGridComponent;
+  @ViewChild('myTreeGrid') myTreeGrid: jqxTreeGridComponent;
+  @ViewChild('myMenu') myMenu: jqxMenuComponent;
 
-  getWidth() : any {
+  constructor(private tagService: TagService) {
+  }
+
+  getWidth(): any {
     if (document.body.offsetWidth < 250) {
       return '90%';
     }
@@ -21,213 +29,156 @@ export class TagTreeComponent {
     return 200;
   }
 
+  tags: any[] = null;
+
   employees: any[] = [
     {
-      EmployeeID: 2,
-      FirstName: "Andrew",
-      LastName: "Fuller",
+      id: 2,
+      title: "Andrew",
+      parentId: "Fuller",
       expanded: "true",
       children: [
         {
-          EmployeeID: 8,
-          FirstName: "Laura",
-          LastName: "Callahan"
+          id: 8,
+          title: "Laura",
+          parentId: "Callahan"
         }
       ]
     }
   ];
 
-  source: any = {
-    dataType: "json",
-    dataFields: [
-      { name: "EmployeeID", type: "number" },
-      { name: "FirstName", type: "string" },
-      { name: "LastName", type: "string" },
-      { name: "children", type: "array" },
-      { name: "expanded", type: "bool" }
-    ],
-    hierarchy: {
-      root: "children"
-    },
-    id: "EmployeeID",
-    localData: this.employees,
-      addRow: (rowID, rowData, position, parentID, commit) => {
-        // synchronize with the server - send insert command
-        // call commit with parameter true if the synchronization with the server is successful 
-        // and with parameter false if the synchronization failed.
-        // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
-        this.newRowID = rowID;
-        commit(true);
-      },
-      updateRow: (rowID, rowData, commit) => {
-        // synchronize with the server - send update command
-        // call commit with parameter true if the synchronization with the server is successful 
-        // and with parameter false if the synchronization failed.
-        commit(true);
-      },
-      deleteRow: (rowID, commit) => {
-        // synchronize with the server - send delete command
-        // call commit with parameter true if the synchronization with the server is successful 
-        // and with parameter false if the synchronization failed.
-        commit(true);
+  ngOnInit(): void {
+    let allTags: Tag[];
+
+    this.tagService.getAll().subscribe(tags => {
+      allTags = tags
+      this.tags = allTags.filter(tag => tag.parentId === 0);
+
+      for (let tag of this.tags) {
+        tag.children = allTags.filter(x => x.parentId === tag.id);
+        tag.expanded = false;
       }
-    };
-
-  dataAdapter: any = new jqx.dataAdapter(this.source);
-
-  newRowID = null;
-  theme: string = '';
-  buttonsObject: any = null;
-
-  updateButtons(action: string, buttons: any): void {
-    switch (action) {
-      case 'Select':
-        buttons.addButton.jqxButton({ disabled: false });
-        buttons.deleteButton.jqxButton({ disabled: false });
-        buttons.editButton.jqxButton({ disabled: false });
-        buttons.cancelButton.jqxButton({ disabled: true });
-        buttons.updateButton.jqxButton({ disabled: true });
-        break;
-      case 'Unselect':
-        buttons.addButton.jqxButton({ disabled: true });
-        buttons.deleteButton.jqxButton({ disabled: true });
-        buttons.editButton.jqxButton({ disabled: true });
-        buttons.cancelButton.jqxButton({ disabled: true });
-        buttons.updateButton.jqxButton({ disabled: true });
-        break;
-      case 'Edit':
-        buttons.addButton.jqxButton({ disabled: true });
-        buttons.deleteButton.jqxButton({ disabled: true });
-        buttons.editButton.jqxButton({ disabled: true });
-        buttons.cancelButton.jqxButton({ disabled: false });
-        buttons.updateButton.jqxButton({ disabled: false });
-        break;
-      case 'End Edit':
-        buttons.addButton.jqxButton({ disabled: false });
-        buttons.deleteButton.jqxButton({ disabled: false });
-        buttons.editButton.jqxButton({ disabled: false });
-        buttons.cancelButton.jqxButton({ disabled: true });
-        buttons.updateButton.jqxButton({ disabled: true });
-        break;
-    }
+      this.dataAdapter = new jqx.dataAdapter(this.getSource());
+      this.dataAdapter.localData = this.tags;
+    });
   }
 
-  renderToolbar = (toolBar) => {
-    let toTheme = (className) => {
-      if (this.theme == '') return className;
-      return className + ' ' + className + '-' + this.theme;
-    }
-    // appends buttons to the status bar.
-    let container: any = $('<div style="overflow: hidden; position: relative; height: 100%; width: 100%;"></div>');
-    let buttonTemplate: any = '<div style="float: left; padding: 3px; margin: 2px;"><div style="margin: 4px; width: 16px; height: 16px;"></div></div>';
-    let addButton: any = $(buttonTemplate);
-    let editButton: any = $(buttonTemplate);
-    let deleteButton: any = $(buttonTemplate);
-    let cancelButton: any = $(buttonTemplate);
-    let updateButton: any = $(buttonTemplate);
-    container.append(addButton);
-    container.append(editButton);
-    container.append(deleteButton);
-    container.append(cancelButton);
-    container.append(updateButton);
-    toolBar.append(container);
-    addButton.jqxButton({ cursor: 'pointer', enableDefault: false, disabled: true, height: 25, width: 25 });
-    addButton.find('div:first').addClass(toTheme('jqx-icon-plus'));
-    addButton.jqxTooltip({ position: 'bottom', content: 'Add' });
-    editButton.jqxButton({ cursor: 'pointer', disabled: true, enableDefault: false, height: 25, width: 25 });
-    editButton.find('div:first').addClass(toTheme('jqx-icon-edit'));
-    editButton.jqxTooltip({ position: 'bottom', content: 'Edit' });
-    deleteButton.jqxButton({ cursor: 'pointer', disabled: true, enableDefault: false, height: 25, width: 25 });
-    deleteButton.find('div:first').addClass(toTheme('jqx-icon-delete'));
-    deleteButton.jqxTooltip({ position: 'bottom', content: 'Delete' });
-    updateButton.jqxButton({ cursor: 'pointer', disabled: true, enableDefault: false, height: 25, width: 25 });
-    updateButton.find('div:first').addClass(toTheme('jqx-icon-save'));
-    updateButton.jqxTooltip({ position: 'bottom', content: 'Save Changes' });
-    cancelButton.jqxButton({ cursor: 'pointer', disabled: true, enableDefault: false, height: 25, width: 25 });
-    cancelButton.find('div:first').addClass(toTheme('jqx-icon-cancel'));
-    cancelButton.jqxTooltip({ position: 'bottom', content: 'Cancel' });
+  getSource(): any {
+    return {
+      dataType: "json",
+      dataFields: [
+        {name: "id", type: "number"},
+        {name: "title", type: "string"},
+        {name: "parentId", type: "number"},
+        {name: "children", type: "array"},
+        {name: "expanded", type: "bool"}
+      ],
+      hierarchy: {
+        root: "children"
+      },
+      id: "id",
+      localData: this.tags
+    };
+  }
 
-    this.buttonsObject = {
-      addButton: addButton,
-      editButton: editButton,
-      deleteButton: deleteButton,
-      cancelButton: cancelButton,
-      updateButton: updateButton,
+  dataAdapter: any;
+
+  columns =
+    [
+      {text: 'tag tree view', dataField: 'title', minWidth: 100, width: 200},
+    ];
+
+  ready = (): void => {
+    this.myTreeGrid.expandRow(32);
+    document.addEventListener('contextmenu', event => event.preventDefault());
+  };
+
+  editSettings: any =
+    {
+      saveOnPageChange: true, saveOnBlur: true, saveOnSelectionChange: true,
+      cancelOnEsc: true, saveOnEnter: true, editSingleCell: true, editOnDoubleClick: true, editOnF2: true
     };
 
-    addButton.click((event) => {
-      if (!addButton.jqxButton('disabled')) {
-        this.treeGrid.expandRow(this.rowKey);
-        // add new empty row.
-        this.treeGrid.addRow(null, {}, 'first', this.rowKey);
-        // select the first row and clear the selection.
-        this.treeGrid.clearSelection();
-        this.treeGrid.selectRow(this.newRowID);
-        // edit the new row.
-        this.treeGrid.beginRowEdit(this.newRowID);
-        this.updateButtons('add', this.buttonsObject);
-      }
-    });
+  oldCellName: string;
+  
+  treeGridOnCellBeginEdit(event: any): void {
+    this.oldCellName = event.args.value; 
+    console.log(event.args);
+  }
 
-    cancelButton.click((event) => {
-      if (!cancelButton.jqxButton('disabled')) {
-        // cancel changes.
-        this.treeGrid.endRowEdit(this.rowKey, true);
-      }
-    });
-
-    updateButton.click((event) => {
-      if (!updateButton.jqxButton('disabled')) {
-        this.treeGrid.endRowEdit(this.rowKey, false);
-      }
-    });
-
-    editButton.click(() => {
-      if (!editButton.jqxButton('disabled')) {
-        this.treeGrid.beginRowEdit(this.rowKey);
-        this.updateButtons('edit', this.buttonsObject);
-      }
-    });
-
-    deleteButton.click(() => {
-      if (!deleteButton.jqxButton('disabled')) {
-        let selection = this.treeGrid.getSelection();
-        if (selection.length > 1) {
-          for (let i = 0; i < selection.length; i++) {
-            let key = this.treeGrid.getKey(selection[i]);
-            this.treeGrid.deleteRow(key);
-          }
-        }
-        else {
-          this.treeGrid.deleteRow(this.rowKey);
-        }
-        this.updateButtons('delete', this.buttonsObject);
-      }
-    });
-  };
-
-  rowKey = null;
-
-  rowSelect(event: any): void {
+  treeGridOnCellEndEdit(event: any): void {
     let args = event.args;
-    this.rowKey = args.key;
-    this.updateButtons('Select', this.buttonsObject);
+    let rowKey = args.key; // id of tag
+    let rowData = args.row; // all internal data of tag
+    let value = args.value; // title of selected tag
+    
+    if (this.oldCellName === value) {
+      console.log("no changes");
+      return;
+    }
+    
+    this.tagService.getById(rowKey).subscribe(tag => {
+      tag.title = value;
+      this.tagService.update(tag).subscribe(_ =>{
+        console.log("item id=" + tag.id + " \'" +  this.oldCellName + "\' was renamed, new name is \'" + value + "\'");
+      });
+    });
+  }
+
+  myTreeGridOnContextmenu(): boolean {
+    return false;
   };
 
-  rowUnselect(event: any): void {
-    this.updateButtons('Unselect', this.buttonsObject);
+  myTreeGridOnRowClick(event: any): boolean {
+    let args = event.args;
+    if (args.originalEvent.button == 2) {
+      let scrollTop = window.scrollX;
+      let scrollLeft = window.scrollY;
+      this.myMenu.open(parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
+      return false;
+    }
   };
 
-  rowEndEdit(event: any): void {
-    this.updateButtons('End Edit', this.buttonsObject);
+  myMenuOnItemClick(event: any): void {
+    let args = event.args;
+    let selection = this.myTreeGrid.getSelection();
+    let rowid = selection[0].uid;
+
+    switch (args.innerHTML) { 
+      case 'Delete Selected Row':
+        console.log(selection.pop().data);
+        this.myTreeGrid.deleteRow(rowid);
+
+        //this.deleteTagBranch(selection.pop());
+        break;
+      case 'Add new Row':
+        
+        this.tagService.getById(selection.pop().data.id).subscribe(tag => {
+          
+        });
+        
+        
+        
+        this.myTreeGrid.expandRow(rowid);
+        this.myTreeGrid.addRow(rowid + 1, {}, 'first', rowid);
+        this.myTreeGrid.clearSelection();
+        this.myTreeGrid.selectRow(rowid + 1);
+        this.myTreeGrid.beginRowEdit(rowid + 1);
+
+        break;
+    }
   };
 
-  rowBeginEdit(event: any): void {
-    this.updateButtons('Edit', this.buttonsObject);
-  };
+  deleteTagBranch(tag: any): any[] {
+    this.tagService.delete(tag.id);
 
-  columns: any[] = [
-    // { text: 'tags', dataField: 'Name', align: 'center' },
-    { text: "Tag tree view", dataField: "FirstName", align: 'center' }
-  ];
+    let children = tag.children;
+    if (children.isEmpty) {
+      return null;
+    } else {
+      for (let child of children) {
+        this.deleteTagBranch(child);
+      }
+    }
+  }
 }
