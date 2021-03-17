@@ -96,4 +96,10 @@ public class TagController {
         .body("tag with id = " + id + " does not exist");
     }
   }
+  @RolesAllowed("ADMIN")
+  @GetMapping("/lastTagId")
+  public ResponseEntity<Long> getLastId() {
+    log.debug("requested: last tag id");
+    return ResponseEntity.ok(tagService.getLastId());
+  }
 }

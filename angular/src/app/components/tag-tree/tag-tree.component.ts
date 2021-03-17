@@ -5,7 +5,8 @@ import {jqxTreeGridComponent} from 'jqwidgets-ng/jqxtreegrid';
 import {jqxMenuComponent} from 'jqwidgets-ng/jqxmenu';
 import {TagService} from "../../services/tag-service/tag.service";
 import {Tag} from "../../model/entity/tag";
-import {checkIfClassIsExported} from "@angular/compiler-cli/src/ngtsc/typecheck/src/ts_util";
+import {LearnRequestBody} from "../../model/entity/learn-request-body";
+import {AppComponent} from "../app/app.component";
 
 @Component({
   selector: 'app-tag-tree',
@@ -57,10 +58,26 @@ export class TagTreeComponent implements OnInit {
       for (let tag of this.tags) {
         tag.children = allTags.filter(x => x.parentId === tag.id);
         tag.expanded = false;
+        for (let tag2 of tag.children) {
+          tag2.children = allTags.filter(x => x.parentId === tag2.id);
+          tag2.expanded = false;
+        }
       }
+      
       this.dataAdapter = new jqx.dataAdapter(this.getSource());
       this.dataAdapter.localData = this.tags;
     });
+  }
+
+  setExpandedChild(allTags: any[], tags: any[]): void {
+    console.log(tags);
+    if(!tags.length)
+      return;
+    for (let node of this.tags) {
+      node.children = allTags.filter(x => x.parentId === node.id);
+      node.expanded = false;
+      this.setExpandedChild(allTags, node.children);
+    }
   }
 
   getSource(): any {
@@ -103,6 +120,7 @@ export class TagTreeComponent implements OnInit {
   
   treeGridOnCellBeginEdit(event: any): void {
     this.oldCellName = event.args.value; 
+    console.log("editing tag \'" + this.oldCellName + "\'");
     console.log(event.args);
   }
 
@@ -112,14 +130,17 @@ export class TagTreeComponent implements OnInit {
     let rowData = args.row; // all internal data of tag
     let value = args.value; // title of selected tag
     
-    if (this.oldCellName === value) {
+    
+    console.log(value);
+    
+    if (this.oldCellName === value || value == "") {
       console.log("no changes");
       return;
     }
     
     this.tagService.getById(rowKey).subscribe(tag => {
       tag.title = value;
-      this.tagService.update(tag).subscribe(_ =>{
+      this.tagService.update(tag).subscribe(_ => {
         console.log("item id=" + tag.id + " \'" +  this.oldCellName + "\' was renamed, new name is \'" + value + "\'");
       });
     });
@@ -139,6 +160,17 @@ export class TagTreeComponent implements OnInit {
     }
   };
 
+  tagNumbers: number[];
+  
+  deleteChild(array: any[]): void {
+    for (let i = 0; i < array.length; i++) {
+      this.tagService.delete(array[i].id).subscribe();
+      if (array[i].children.length == 0)
+        return;
+      this.deleteChild(array[i].children);
+    }
+  }
+  
   myMenuOnItemClick(event: any): void {
     let args = event.args;
     let selection = this.myTreeGrid.getSelection();
@@ -146,39 +178,40 @@ export class TagTreeComponent implements OnInit {
 
     switch (args.innerHTML) { 
       case 'Delete Selected Row':
-        console.log(selection.pop().data);
-        this.myTreeGrid.deleteRow(rowid);
+        
+        let selection = this.myTreeGrid.getSelection();
+        
+        if (selection.length > 1) {
+          for (let i = 0; i < selection.length; i++) {
+            let key = this.myTreeGrid.getKey(selection[i]);
+            this.myTreeGrid.deleteRow(key);
+          }
+        }
+        else {
+          this.myTreeGrid.deleteRow(rowid);
+        }
 
-        //this.deleteTagBranch(selection.pop());
+        this.deleteChild(selection);
+        
         break;
       case 'Add new Row':
         
-        this.tagService.getById(selection.pop().data.id).subscribe(tag => {
-          
+        this.tagService.getLastId().subscribe( value => {
+          this.tagService.getById(rowid).subscribe(tag => {
+            
+            tag.parentId = rowid;
+            tag.id = parseInt(String(value)) + 1;
+            this.tagService.create(tag).subscribe();
+            this.myTreeGrid.expandRow(rowid);
+            this.myTreeGrid.addRow(value + 1, {}, 'first', rowid);
+            this.myTreeGrid.clearSelection();
+            this.myTreeGrid.selectRow(value + 1);
+            this.myTreeGrid.beginRowEdit(value + 1);
+          });
         });
-        
-        
-        
-        this.myTreeGrid.expandRow(rowid);
-        this.myTreeGrid.addRow(rowid + 1, {}, 'first', rowid);
-        this.myTreeGrid.clearSelection();
-        this.myTreeGrid.selectRow(rowid + 1);
-        this.myTreeGrid.beginRowEdit(rowid + 1);
 
         break;
     }
   };
-
-  deleteTagBranch(tag: any): any[] {
-    this.tagService.delete(tag.id);
-
-    let children = tag.children;
-    if (children.isEmpty) {
-      return null;
-    } else {
-      for (let child of children) {
-        this.deleteTagBranch(child);
-      }
-    }
-  }
+  
 }
