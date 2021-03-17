@@ -49,6 +49,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.findByGroup(group));
     }
 
+    @RolesAllowed("ADMIN")
     @GetMapping(value = "byId/{id}")
     public ResponseEntity<User> findById(@PathVariable("id") Long id) {
         log.debug("requested: user  get    (id = {})", id);
@@ -81,7 +82,7 @@ public class UserController {
                     .body("user with id = " + id + " does not exist");
         }
     }
-    
+
     @PostMapping(value = "")
     public ResponseEntity<String> create(@RequestBody User user) {
         String login = user.getLogin();

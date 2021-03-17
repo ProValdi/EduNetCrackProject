@@ -24,17 +24,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
 
     http
-      .cors().and()
       .csrf().disable()
       .authorizeRequests()
           .antMatchers("/").permitAll()
           .antMatchers("/auth/hello").permitAll()
-          .antMatchers("/auth/login").permitAll()
-            .antMatchers("/users").permitAll()
+          .antMatchers("/users/user").permitAll()
         .anyRequest()
         .authenticated()
       .and()
-            .httpBasic()
+        .formLogin()
+//          .loginProcessingUrl("/auth/login").permitAll()
+          .defaultSuccessUrl("/auth/success")
       .and()
         .logout()
           .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))

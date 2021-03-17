@@ -36,6 +36,7 @@ public class TagController {
     return ResponseEntity.ok().body(tagService.findByTitle(title));
   }
 
+  @RolesAllowed("ADMIN")
   @GetMapping("byId/{id}")
   public ResponseEntity<Tag> findById(@PathVariable("id") Long id) {
     log.debug("requested: tag get      (id = {})", id);

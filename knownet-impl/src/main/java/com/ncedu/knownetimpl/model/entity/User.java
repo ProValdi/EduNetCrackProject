@@ -36,7 +36,6 @@ public class User implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
 
-    //todo set default values to fields
     @Column(name = "enabled")
     private Boolean enabled = true;
 
