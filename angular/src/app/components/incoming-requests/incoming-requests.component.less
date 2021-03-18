@@ -2,8 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300&display=swap");
 
-/* Global variables */
-
 @width: 1300px;
 @navbar-width: 300px;
 @content-width: @width - @navbar-width;
@@ -16,6 +14,41 @@
 @infocard-padding: 10px;
 @infocard-background-color: #ffefd5;
 
+@tags-height: 45px;
+
+.tag-search {
+  @tag-search-height: 60px;
+
+  background-color: #ffe4b5;
+  width: @infocard-width + 20px;
+  height: @tag-search-height;
+  position: relative;
+  overflow: hidden;
+  margin: @infocard-margin;
+  padding-top: @tag-search-height / 4;
+  margin-bottom: 50px;
+  box-shadow: inset 4px 4px 16px #a3b1c6;
+  border-radius: 18px;
+
+  .tag {
+    font-size: @tags-height / 2;
+    background-color: #dfffff;
+    overflow: hidden;
+    padding: 6px;
+    margin: 5px;
+    padding-left: 10px;
+    border-radius: 14px;
+
+    &._2 {
+      background-color: #a0fbfb;
+    }
+
+    &._3 {
+      background-color: #00ffff;
+    }
+  }
+}
+
 .infocard {
   background-color: @infocard-background-color;
   width: @infocard-width;
@@ -26,11 +59,11 @@
   box-shadow: inset 2px 2px 8px #a3b1c6;
   border-radius: 18px;
 
-  @tags-height: 45px;
-
   .tags {
     overflow: hidden;
     height: @tags-height;
+    width: @infocard-width - 110px;
+    float: left;
     .tag {
       font-size: @tags-height / 2;
       background-color: #dfffff;
@@ -72,6 +105,7 @@
     .personal-info {
       height: @local-height;
       margin: 5px;
+      margin-left: 5px;
       padding: 10px;
       float: left;
       display: inline-block;
@@ -87,12 +121,12 @@
     }
 
     .comment {
-      font-size: 20px;
+      font-size: 18px;
       background-color: #dfdfdf;
       text-align: left;
       width: @infocard-width - 450px;
-      height: @local-height - 40px;
-      max-height: @local-height - 20px;
+      min-height: @local-height - 40px;
+      max-height: @local-height - 10px;
       position: relative;
       overflow: hidden;
       padding: 10px;
@@ -100,34 +134,42 @@
       border-radius: 14px;
       float: left;
     }
+  }
+  .trailer-section {
+    font-size: 20px;
+    width: 100px;
+    height: @infocard-height - 10px;
+    margin-right: 5px;
+    float: right;
 
-    .trailer-section {
+    button {
+      border-radius: 14px;
+      margin-top: 16px;
       font-size: 20px;
-      margin-top: 20px;
-      margin-right: 0;
-      height: 100px;
+      width: 105px;
+      height: 45px;
+      outline: none;
+      background: #a0ffff;
+    }
+
+    & ._accept-button {
+      background-color: #c3f4ff;
+    }
+
+    & ._deny-button {
+      background-color: #ffafaf;
+    }
+
+    .point-amount {
+      margin: auto;
       width: 100px;
-      float: right;
-      button {
-        outline: none;
-        border-radius: 14px;
-        width: 86px;
-        height: 40px;
-        background: #ffafaf;
-      }
+      height: 30px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 5px;
+      margin-top: 10px;
+      border-radius: 14px;
     }
   }
 }
 
-.add-button {
-  font-size: 25px;
-  background-color: @infocard-background-color;
-  width: @infocard-width + 20px;
-  height: 50px;
-  outline: none;
-  margin: @infocard-margin;
-  padding: @infocard-padding;
-  overflow: hidden;
-  box-shadow: 2px 2px 8px #a3b1c6;
-  border-radius: 18px;
-}

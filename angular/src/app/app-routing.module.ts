@@ -6,6 +6,7 @@ import {LearnTabComponent} from "./components/learn-tab/learn-tab.component";
 import {TagTreeComponent}  from './components/tag-tree/tag-tree.component';
 import {TeachTabComponent}  from './components/teach-tab/teach-tab.component';
 import {OutgoingRequestsComponent} from './components/outgoing-requests/outgoing-requests.component';
+import { IncomingRequestsComponent } from './components/incoming-requests/incoming-requests.component';
 import {SignInTabComponent} from './components/sign-in-tab/sign-in-tab.component';
 
 
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'learn', component: LearnTabComponent },
   { path: 'tags', component: TagTreeComponent },
   { path: 'teach', component: TeachTabComponent },
+  { path: 'incoming-requests', component: IncomingRequestsComponent },
   { path: 'outgoing-requests', component: OutgoingRequestsComponent },
   { path: 'login', component: SignInTabComponent },
   { path: 'registration', component: SignInTabComponent },
@@ -23,7 +25,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 

@@ -3,7 +3,7 @@ import {BaseService} from "../base-service/base.service";
 import {HttpClient} from "@angular/common/http";
 import {Tag} from "../../model/entity/tag";
 import {Observable} from "rxjs";
-import {catchError} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
 import {ErrorHandler} from "../error-handler";
 
 @Injectable({
@@ -20,6 +20,13 @@ export class TagService extends BaseService<Tag, Tag>{
     return this.http.get<Tag[]>(this.url + '/children/' + id, this.getAuthHttpHeaders())
       .pipe(
         catchError(ErrorHandler.handleError<Tag[]>('getChildren ' + `ById id=${id}`, []))
+      );
+  }
+  
+  getLastId(): Observable<number> {
+    return this.http.get<number>(this.url + '/lastTagId', this.getAuthHttpHeaders())
+      .pipe(
+        catchError(ErrorHandler.handleError<number>('getLastId', 0))
       );
   }
 

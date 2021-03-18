@@ -48,6 +48,10 @@ public class TagService {
     }
   }
 
+  public long getLastId() {
+    return tagRepository.getLastId();
+  }
+
   @Transactional
   public boolean deleteById(Long id) {
     if (id == null) {
