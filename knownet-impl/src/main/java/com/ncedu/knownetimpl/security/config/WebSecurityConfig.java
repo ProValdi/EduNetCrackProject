@@ -24,31 +24,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
 
     http
+      .cors().and()
       .csrf().disable()
       .authorizeRequests()
-          .antMatchers("/").permitAll()
-          .antMatchers("/auth/hello").permitAll()
-          .antMatchers("/users/user").permitAll()
-        .anyRequest()
-        .authenticated()
+      .antMatchers("/").permitAll()
+      .antMatchers("/auth/hello").permitAll()
+      .antMatchers("/auth/login").permitAll()
+      .antMatchers("/users").permitAll()
+      .anyRequest()
+      .authenticated()
       .and()
-        .formLogin()
-//          .loginProcessingUrl("/auth/login").permitAll()
-          .defaultSuccessUrl("/auth/success")
+      .httpBasic()
       .and()
-        .logout()
-          .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-          .invalidateHttpSession(true)
-          .deleteCookies("JSESSIONID")
-          .logoutSuccessUrl("/auth/hello").permitAll();
+      .logout()
+      .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+      .invalidateHttpSession(true)
+      .deleteCookies("JSESSIONID")
+      .logoutSuccessUrl("/auth/hello").permitAll();
   }
 
 
   @Autowired
   public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
     auth
-            .userDetailsService(userService)
-            .passwordEncoder(passwordEncoder);
+      .userDetailsService(userService)
+      .passwordEncoder(passwordEncoder);
   }
 
 }

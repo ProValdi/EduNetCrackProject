@@ -24,4 +24,11 @@ export class LessonService extends BaseService<Lesson, LessonBody>{
       );
   }
 
+  getByTeacherId(id: number): Observable<Lesson[]> {
+    return this.http.get<Lesson[]>(this.url + '/byTeacherId/' + id, this.getAuthHttpHeaders())
+      .pipe(
+        catchError(ErrorHandler.handleError<Lesson[]>('getLessons ' + `ByTeacherId id=${id}`, []))
+      );
+  }
+
 }

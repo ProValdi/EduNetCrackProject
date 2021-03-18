@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "newAng"
+  "defaultProject": "newAng",
+  "cli": {
+    "analytics": false
+  }
 }

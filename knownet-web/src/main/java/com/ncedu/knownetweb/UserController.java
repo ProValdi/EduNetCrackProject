@@ -49,7 +49,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.findByGroup(group));
     }
 
-    @RolesAllowed("ADMIN")
+//    @RolesAllowed("ADMIN")
     @GetMapping(value = "byId/{id}")
     public ResponseEntity<User> findById(@PathVariable("id") Long id) {
         log.debug("requested: user  get    (id = {})", id);

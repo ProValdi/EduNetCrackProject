@@ -2,17 +2,11 @@
   <button class="add-button">
     Add new class
   </button>
-  <div class="infocard">
+  <div class="infocard" *ngFor="let lesson of lessons">
     <div class="tags">
-          <span class="tag">
-            hello
-          </span>
-      <span class="tag _2">
-            world
-          </span>
-      <span class="tag _3">
-            howareugoingkek
-          </span>
+      <span class="tag" *ngFor="let tag of tags.get(lesson.id)">
+        {{tag.title}}
+      </span>
     </div>
     <div class="info">
       <div class="photo">
@@ -21,7 +15,7 @@
       <div class="personal-info">
             <span class="contacts">
               <div class="name">
-                Michael Ovchinkin
+                {{lesson.teacher.lastName}} {{lesson.teacher.firstName}}
               </div>
               <table>
                 <tr>
@@ -30,23 +24,23 @@
                 </tr>
                 <tr>
                   <td>rating:</td>
-                  <td id="rating">5.00</td>
+                  <td id="rating">{{lesson.teacher.rating}}</td>
                 </tr>
               </table>
             </span>
       </div>
       <div class="comment">
-        Hello this is comment inside comment block
+        Description: {{lesson.description}}
       </div>
       <div class="trailer-section">
         <table>
           <tr>
-            <td id="points">1</td>
+            <td id="points">{{lesson.pointsToGet}}</td>
             <td>points</td>
           </tr>
           <tr>
-            <td colspan="2">
-              <button> remove</button>
+            <td colspan="2" >
+              <button (click)="delete(lesson.id)"> remove</button>
             </td>
           </tr>
         </table>
@@ -54,55 +48,4 @@
     </div>
   </div>
 
-  <div class="infocard">
-    <div class="tags">
-          <span class="tag">
-            goodbye
-          </span>
-      <span class="tag _2">
-            world
-          </span>
-      <span class="tag _3">
-            miptkeklol
-          </span>
-    </div>
-    <div class="info">
-      <div class="photo">
-        <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
-      </div>
-      <div class="personal-info">
-            <span class="contacts">
-              <div class="name">
-                Osipov Blet
-              </div>
-              <table>
-                <tr>
-                  <td>status:</td>
-                  <td id="group">faker</td>
-                </tr>
-                <tr>
-                  <td>rating:</td>
-                  <td id="rating">2.19</td>
-                </tr>
-              </table>
-            </span>
-      </div>
-      <div class="comment">
-        Hello this is another comment inside comment block
-      </div>
-      <div class="trailer-section">
-        <table>
-          <tr>
-            <td id="points">6</td>
-            <td>points</td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              <button> remove</button>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
 </div>

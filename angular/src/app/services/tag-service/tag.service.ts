@@ -15,11 +15,18 @@ export class TagService extends BaseService<Tag, Tag>{
     super(http, Tag);
     this.url += '/tags';
   }
-  
+
   getChildren(id: number): Observable<Tag[]> {
     return this.http.get<Tag[]>(this.url + '/children/' + id, this.getAuthHttpHeaders())
       .pipe(
         catchError(ErrorHandler.handleError<Tag[]>('getChildren ' + `ById id=${id}`, []))
+      );
+  }
+
+  findWithParents(id: number): Observable<Tag[]> {
+    return this.http.get<Tag[]>(this.url + '/withParentsById/' + id, this.getAuthHttpHeaders())
+      .pipe(
+        catchError(ErrorHandler.handleError<Tag[]>('findWithParents ' + `ById id=${id}`, []))
       );
   }
 
