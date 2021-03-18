@@ -1,21 +1,16 @@
 <div id="content">
-  <div class="infocard">
-    <div class="tags">
+  <div class="infocard" *ngFor="let learn of learns">
+    <div class="tags" *ngFor="let tag of tags.get(learn.lesson.tag.id)">
           <span class="tag">
-            hello
-          </span>
-      <span class="tag _2">
-            world
-          </span>
-      <span class="tag _3">
-            howareugoingkek
+            {{tag.title}}
           </span>
     </div>
+<!--    <br>-->
     <div class="trailer-section">
-      <button class="_accept-button">
+      <button class="_accept-button" (click)="accept(learn)">
         accept
       </button>
-      <button class="_deny-button">
+      <button class="_deny-button" (click)="deny(learn)">
         deny
       </button>
     </div>
@@ -26,71 +21,23 @@
       <div class="personal-info">
             <span class="contacts">
               <div class="name">
-                Michael Ovchinkin
+                {{learn.student.firstName}} {{learn.student.lastName}}
               </div>
               <table>
                 <tr>
                   <td>status:</td>
-                  <td id="group">student</td>
+                  <td id="group">{{learn.student.group}}</td>
                 </tr>
                 <tr>
                   <td>rating:</td>
-                  <td id="rating">5.00</td>
+                  <td id="rating">{{learn.student.rating}}</td>
                 </tr>
               </table>
             </span>
       </div>
       <div class="comment">
-        Hello, I need help cause I know nothing about howareugoingkek
+        {{learn.lesson.description}}
       </div>
     </div>
-
-  </div>
-  <div class="infocard">
-    <div class="tags">
-          <span class="tag">
-            hello
-          </span>
-      <span class="tag _2">
-            world
-          </span>
-      <span class="tag _3">
-            howareugoingkek
-          </span>
-    </div>
-    <div class="trailer-section">
-      <button class="_accept-button">
-        accept
-      </button>
-      <button class="_deny-button">
-        deny
-      </button>
-    </div>
-    <div class="info">
-      <div class="photo">
-        <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
-      </div>
-      <div class="personal-info">
-            <span class="contacts">
-              <div class="name">
-                Michael Ovchinkin
-              </div>
-              <table>
-                <tr>
-                  <td>status:</td>
-                  <td id="group">student</td>
-                </tr>
-                <tr>
-                  <td>rating:</td>
-                  <td id="rating">5.00</td>
-                </tr>
-              </table>
-            </span>
-      </div>
-      <div class="comment">
-        Hello, I need help cause I know nothing about howareugoingkek
-      </div>
-    </div>
-
   </div>
 </div>

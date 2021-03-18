@@ -96,7 +96,7 @@ public class LearnRequestService {
         }
         return !exists;
     }
-    
+
     public boolean update(LearnRequest learnRequest) throws IllegalStateException {
         if (learnRequest.getId() == null) {
             log.warn("updating learnRequest with null id");
@@ -105,7 +105,7 @@ public class LearnRequestService {
         Optional<LearnRequest> oldLearnRequestOpt = findById(learnRequest.getId());
         if (oldLearnRequestOpt.isPresent()) {
             LearnRequest oldLearnRequest = oldLearnRequestOpt.get();
-            
+
             Status oldStatus = oldLearnRequest.getStatus();
             Status newStatus = learnRequest.getStatus();
 
@@ -199,4 +199,6 @@ public class LearnRequestService {
 
         return learnRequest;
     }
+
+
 }
