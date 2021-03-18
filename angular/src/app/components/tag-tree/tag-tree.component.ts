@@ -23,11 +23,10 @@ export class TagTreeComponent implements OnInit {
   }
 
   getWidth(): any {
-    if (document.body.offsetWidth < 250) {
+    if (document.body.offsetWidth < 260) {
       return '90%';
     }
-
-    return 200;
+    return 250;
   }
 
   tags: any[] = null;
@@ -63,10 +62,11 @@ export class TagTreeComponent implements OnInit {
       this.dataAdapter = new jqx.dataAdapter(this.getSource());
       this.dataAdapter.localData = this.tags;
     });
+    
+    
   }
 
   setExpandedChild(allTags: any[], tags: any): void {
-    console.log(tags);
     if(!tags.length)
       return;
     for (let node of tags) {
@@ -98,7 +98,7 @@ export class TagTreeComponent implements OnInit {
 
   columns =
     [
-      {text: 'tag tree view', dataField: 'title', minWidth: 100, width: 200},
+      {text: 'KnowNet tags base', dataField: 'title', minWidth: 100, width: this.getWidth()},
     ];
 
   ready = (): void => {
@@ -126,7 +126,6 @@ export class TagTreeComponent implements OnInit {
     let rowData = args.row; // all internal data of tag
     let value = args.value; // title of selected tag
     
-    
     console.log(value);
     
     if (this.oldCellName === value || value == "") {
@@ -134,17 +133,16 @@ export class TagTreeComponent implements OnInit {
       return;
     }
     
-    this.tagService.getById(rowKey).subscribe(tag => {
-      tag.title = value;
-      this.tagService.update(tag).subscribe(_ => {
-        console.log("item id=" + tag.id + " \'" +  this.oldCellName + "\' was renamed, new name is \'" + value + "\'");
-      });
-    });
-  }
 
-  myTreeGridOnContextmenu(): boolean {
-    return false;
-  };
+      this.tagService.getById(rowKey).subscribe(tag => {
+        tag.title = value;
+        this.tagService.update(tag).subscribe(_ => {
+          console.log("item id=" + tag.id + " \'" +  this.oldCellName + "\' was renamed, new name is \'" + value + "\'");
+        });
+      });
+
+  }
+  
 
   myTreeGridOnRowClick(event: any): boolean {
     let args = event.args;
@@ -174,6 +172,8 @@ export class TagTreeComponent implements OnInit {
 
     switch (args.innerHTML) { 
       case 'Delete Selected Row':
+        // todo Нельзя удалить тег, id которого используется в каком-нибудь реквесте. Нужно выводить сообщение о том,
+        // todo  что этот тег используется
         
         let selection = this.myTreeGrid.getSelection();
         
@@ -191,23 +191,40 @@ export class TagTreeComponent implements OnInit {
         
         break;
       case 'Add new Row':
-        
-        this.tagService.getLastId().subscribe( value => {
-          this.tagService.getById(rowid).subscribe(tag => {
-            
-            tag.parentId = rowid;
-            tag.id = parseInt(String(value)) + 1;
-            this.tagService.create(tag).subscribe();
+        let tag: Tag = new Tag();
+        tag.parentId = rowid;
+        tag.title = "TAGCREATED";
+        this.tagService.create(tag).subscribe(_=> {
+          this.tagService.getLastId().subscribe( value => {
             this.myTreeGrid.expandRow(rowid);
-            this.myTreeGrid.addRow(value + 1, {}, 'first', rowid);
+            this.myTreeGrid.addRow(value, {}, 'first', rowid);
             this.myTreeGrid.clearSelection();
-            this.myTreeGrid.selectRow(value + 1);
-            this.myTreeGrid.beginRowEdit(value + 1);
+            this.myTreeGrid.selectRow(value);
+            this.myTreeGrid.beginRowEdit(value);
           });
         });
-
         break;
     }
   };
-  
+
+  expandAll(): void {
+    this.myTreeGrid.expandAll();
+  }
+
+  collapseAll(): void {
+    this.myTreeGrid.collapseAll();
+  }
+
+  addRootTag(): void {
+    let tag: Tag = new Tag();
+    tag.parentId = 0;
+    tag.title = "ROOTCREATED";
+    this.tagService.create(tag).subscribe(_=>{
+      this.tagService.getLastId().subscribe( value => {
+        this.myTreeGrid.addRow(value, {}, 'first');
+        this.myTreeGrid.clearSelection();
+        this.myTreeGrid.selectRow(value);
+      });
+    });
+  }
 }
