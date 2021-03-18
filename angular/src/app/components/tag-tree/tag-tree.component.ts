@@ -58,22 +58,18 @@ export class TagTreeComponent implements OnInit {
       for (let tag of this.tags) {
         tag.children = allTags.filter(x => x.parentId === tag.id);
         tag.expanded = false;
-        for (let tag2 of tag.children) {
-          tag2.children = allTags.filter(x => x.parentId === tag2.id);
-          tag2.expanded = false;
-        }
+        this.setExpandedChild(allTags, tag.children);
       }
-      
       this.dataAdapter = new jqx.dataAdapter(this.getSource());
       this.dataAdapter.localData = this.tags;
     });
   }
 
-  setExpandedChild(allTags: any[], tags: any[]): void {
+  setExpandedChild(allTags: any[], tags: any): void {
     console.log(tags);
     if(!tags.length)
       return;
-    for (let node of this.tags) {
+    for (let node of tags) {
       node.children = allTags.filter(x => x.parentId === node.id);
       node.expanded = false;
       this.setExpandedChild(allTags, node.children);
