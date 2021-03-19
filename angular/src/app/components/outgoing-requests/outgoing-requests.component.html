@@ -1,57 +1,60 @@
 <div id="content">
-  <div class="infocard">
-    <div class="tags">
-          <span class="tag">
-            hello
-          </span>
-      <span class="tag _2">
-            world
-          </span>
-      <span class="tag _3">
-            howareugoingkek
-          </span>
-    </div>
-    <div class="trailer-section">
-      <div class="top">
-        <table>
-          <tr>
-            <td id="points">20</td>
-            <td>points</td>
-          </tr>
-        </table>
-      </div>
-      <div class="data">
-        22.10.2020
-      </div>
-      <button>
-        withdraw
-      </button>
-    </div>
-    <div class="info">
-      <div class="photo">
-        <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
-      </div>
-      <div class="personal-info">
-            <span class="contacts">
-              <div class="name">
-                Michael Ovchinkin
-              </div>
-              <table>
-                <tr>
-                  <td>status:</td>
-                  <td id="group">student</td>
-                </tr>
-                <tr>
-                  <td>rating:</td>
-                  <td id="rating">5.00</td>
-                </tr>
-              </table>
+  <div class="infocard" *ngFor="let learn of learns">
+    <ng-template [ngIf]="learn.status === 'MEETING_DISPROVED' || learn.status === 'MEETING_CANCELED' || learn.status === 'MEETING_CONFIRMED'">
+      <div class="tags" *ngFor="let tag of tags.get(learn.lesson.tag.id)">
+            <span class="tag">
+              {{tag.title}}
             </span>
       </div>
-      <div class="comment">
-        Hello, I need help cause I know nothing about howareugoingkek
+      <div class="trailer-section">
+        <div class="top">
+          <table>
+            <tr>
+              <td id="points">{{learn.lesson.pointsToGet}}</td>
+              <td>points</td>
+            </tr>
+          </table>
+        </div>
+          <button (click)="withdraw(learn)">
+            canceled
+          </button>
+        <ng-template [ngIf]="learn.status === 'MEETING_CONFIRMED'">
+          <button (click)="accept(learn)">
+            accept
+          </button>
+          <button (click)="deny(learn)">
+            deny
+          </button>
+        </ng-template>
+        <ng-template [ngIf]="learn.status === 'MEETING_CANCELED'">
+          MEETING_CANCELED
+        </ng-template>
       </div>
-    </div>
-
+      <div class="info">
+        <div class="photo">
+          <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
+        </div>
+        <div class="personal-info">
+              <span class="contacts">
+                <div class="name">
+                  {{learn.teacher.firstName}} {{learn.teacher.lastName}}
+                </div>
+                <table>
+                  <tr>
+                    <td>status:</td>
+                    <td id="group">{{learn.teacher.group}}</td>
+                  </tr>
+                  <tr>
+                    <td>rating:</td>
+                    <td id="rating">{{learn.teacher.rating}}</td>
+                  </tr>
+                </table>
+              </span>
+        </div>
+        <div class="comment">
+          {{learn.lesson.description}}
+        </div>
+      </div>
+    </ng-template>
   </div>
 </div>
