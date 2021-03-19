@@ -24,5 +24,12 @@ export class LearningRequestService extends BaseService<LearnRequest, LearnReque
         catchError(ErrorHandler.handleError<LearnRequest[]>('getLearnRequest ' + `ByTeacherId id=${id}`, []))
       );
   }
+
+  getByStudentId(id: number): Observable<LearnRequest[]> {
+    return this.http.get<LearnRequest[]>(this.url + '/byStudentId/' + id, this.getAuthHttpHeaders())
+      .pipe(
+        catchError(ErrorHandler.handleError<LearnRequest[]>('getLearnRequest ' + `ByTeacherId id=${id}`, []))
+      );
+  }
   
 }

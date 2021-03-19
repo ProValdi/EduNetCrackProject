@@ -1,18 +1,19 @@
 <div id="content">
   <div class="infocard" *ngFor="let learn of learns">
-    <div class="tags" *ngFor="let tag of tags.get(learn.lesson.tag.id)">
+    <span class="tags" *ngFor="let tag of tags.get(learn.lesson.tag.id)">
           <span class="tag">
             {{tag.title}}
           </span>
-    </div>
-<!--    <br>-->
+    </span>
     <div class="trailer-section">
+      <ng-template [ngIf]="learn.status !== 'LESSON_REQUEST_ACCEPTED' || learn.status !== 'LESSON_REQUEST_REJECTED'">
       <button class="_accept-button" (click)="accept(learn)">
         accept
       </button>
       <button class="_deny-button" (click)="deny(learn)">
         deny
       </button>
+      </ng-template>
     </div>
     <div class="info">
       <div class="photo">

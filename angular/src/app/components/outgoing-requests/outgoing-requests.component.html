@@ -1,11 +1,10 @@
 <div id="content">
   <div class="infocard" *ngFor="let learn of learns">
-    <ng-template [ngIf]="learn.status === 'MEETING_DISPROVED' || learn.status === 'MEETING_CANCELED' || learn.status === 'MEETING_CONFIRMED'">
-      <div class="tags" *ngFor="let tag of tags.get(learn.lesson.tag.id)">
-            <span class="tag">
-              {{tag.title}}
-            </span>
-      </div>
+    <div class="tags">
+      <span class="tag" *ngFor="let tag of tags.get(learn.lesson.tag.id)">
+        {{tag.title}}
+      </span>
+    </div>
       <div class="trailer-section">
         <div class="top">
           <table>
@@ -18,7 +17,7 @@
           <button (click)="withdraw(learn)">
             canceled
           </button>
-        <ng-template [ngIf]="learn.status === 'MEETING_CONFIRMED'">
+        <ng-template [ngIf]="learn.status === 'LESSON_REQUEST_ACCEPTED'">
           <button (click)="accept(learn)">
             accept
           </button>
@@ -26,8 +25,8 @@
             deny
           </button>
         </ng-template>
-        <ng-template [ngIf]="learn.status === 'MEETING_CANCELED'">
-          MEETING_CANCELED
+        <ng-template [ngIf]="learn.status === 'LESSON_REQUEST_REJECTED'">
+          NO lesson
         </ng-template>
       </div>
       <div class="info">
@@ -55,6 +54,5 @@
           {{learn.lesson.description}}
         </div>
       </div>
-    </ng-template>
   </div>
 </div>

@@ -138,6 +138,7 @@ public class LearnRequestService {
         switch (oldStatus) {
             case LESSON_REQUESTED:
                 if (
+                    newStatus == Status.MEETING_CANCELED ||
                     newStatus == Status.LESSON_REQUEST_REJECTED ||
                     newStatus == Status.LESSON_REQUEST_ACCEPTED
                 ) {

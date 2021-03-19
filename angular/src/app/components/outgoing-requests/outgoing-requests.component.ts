@@ -41,6 +41,8 @@ export class OutgoingRequestsComponent implements OnInit {
     body.hiddenForTeacher = learn.hiddenForTeacher;
     body.hiddenForStudent = learn.hiddenForStudent;
     this.learningRequestService.update(body).subscribe();
+    this.learningRequestService.delete(body.id).subscribe();
+    this.learns = this.learns.filter(lesson => lesson.id != body.id);
   }
   
   accept(learn: LearnRequest): void {
@@ -53,6 +55,8 @@ export class OutgoingRequestsComponent implements OnInit {
     body.hiddenForTeacher = learn.hiddenForTeacher;
     body.hiddenForStudent = learn.hiddenForStudent;
     this.learningRequestService.update(body).subscribe();
+    this.learningRequestService.delete(body.id).subscribe();
+    this.learns = this.learns.filter(lesson => lesson.id != body.id);
   }
 
   deny(learn: LearnRequest): void {
@@ -61,10 +65,12 @@ export class OutgoingRequestsComponent implements OnInit {
     body.teacherId = learn.teacher.id;
     body.studentId = learn.student.id;
     body.lessonId = learn.lesson.id;
-    body.status = Status.MEETING_CANCELED;
+    body.status = Status.MEETING_DISPROVED;
     body.hiddenForTeacher = learn.hiddenForTeacher;
     body.hiddenForStudent = learn.hiddenForStudent;
     this.learningRequestService.update(body).subscribe();
+    this.learningRequestService.delete(body.id).subscribe();
+    this.learns = this.learns.filter(lesson => lesson.id != body.id);
   }
 
 }
