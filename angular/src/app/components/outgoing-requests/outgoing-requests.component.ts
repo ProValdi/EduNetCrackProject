@@ -15,13 +15,14 @@ import {Status} from "../../model/entity/learn-request-status";
 export class OutgoingRequestsComponent implements OnInit {
   learns: LearnRequest[];
   tags: Map<number, Tag[]> = new Map<number, Tag[]>();
+  Status = Status;
 
   constructor(private tagService: TagService,
               private learningRequestService: LearningRequestService) {
   }
 
   ngOnInit(): void {
-    this.learningRequestService.getByTeacherId(AppComponent.currentUserId).subscribe(learns => {
+    this.learningRequestService.getByStudentId(AppComponent.currentUserId).subscribe(learns => {
       this.learns = learns;
       for (let learn of learns) {
         this.tagService.findWithParents(learn.lesson.tag.id).subscribe(tags => {
@@ -41,8 +42,7 @@ export class OutgoingRequestsComponent implements OnInit {
     body.hiddenForTeacher = learn.hiddenForTeacher;
     body.hiddenForStudent = learn.hiddenForStudent;
     this.learningRequestService.update(body).subscribe();
-    this.learningRequestService.delete(body.id).subscribe();
-    this.learns = this.learns.filter(lesson => lesson.id != body.id);
+    this.learns = this.learns.filter(lesson => lesson.id !== body.id);
   }
   
   accept(learn: LearnRequest): void {
@@ -55,8 +55,7 @@ export class OutgoingRequestsComponent implements OnInit {
     body.hiddenForTeacher = learn.hiddenForTeacher;
     body.hiddenForStudent = learn.hiddenForStudent;
     this.learningRequestService.update(body).subscribe();
-    this.learningRequestService.delete(body.id).subscribe();
-    this.learns = this.learns.filter(lesson => lesson.id != body.id);
+    this.learns = this.learns.filter(lesson => lesson.id !== body.id);
   }
 
   deny(learn: LearnRequest): void {
@@ -69,8 +68,7 @@ export class OutgoingRequestsComponent implements OnInit {
     body.hiddenForTeacher = learn.hiddenForTeacher;
     body.hiddenForStudent = learn.hiddenForStudent;
     this.learningRequestService.update(body).subscribe();
-    this.learningRequestService.delete(body.id).subscribe();
-    this.learns = this.learns.filter(lesson => lesson.id != body.id);
+    this.learns = this.learns.filter(lesson => lesson.id !== body.id);
   }
 
 }

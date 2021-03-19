@@ -8,8 +8,8 @@ import java.util.List;
 
 @Repository
 public interface LearnRequestRepository extends JpaRepository<LearnRequest, Long> {
-    List<LearnRequest> findByTeacherId(Long teacherId);
-    List<LearnRequest> findByStudentId(Long studentId);
-    List<LearnRequest> findByStudentIdAndHiddenForStudentFalse(Long studentId);
-    List<LearnRequest> findByTeacherIdAndHiddenForTeacherFalse(Long teacherId);
+    List<LearnRequest> findByTeacherIdAndIsFinishedFalse(Long teacherId);
+    List<LearnRequest> findByStudentIdAndIsFinishedFalse(Long studentId);
+    List<LearnRequest> findByStudentIdAndHiddenForStudentFalseAndIsFinishedFalse(Long studentId);
+    List<LearnRequest> findByTeacherIdAndHiddenForTeacherFalseAndIsFinishedFalse(Long teacherId);
 }

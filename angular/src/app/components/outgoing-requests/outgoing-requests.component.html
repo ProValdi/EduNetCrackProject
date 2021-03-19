@@ -15,19 +15,17 @@
           </table>
         </div>
           <button (click)="withdraw(learn)">
-            canceled
+            cancel
           </button>
-        <ng-template [ngIf]="learn.status === 'LESSON_REQUEST_ACCEPTED'">
-          <button (click)="accept(learn)">
-            accept
+          <button (click)="accept(learn)" *ngIf="learn.status === Status[Status.LESSON_REQUEST_ACCEPTED]">
+            confirm meeting
           </button>
-          <button (click)="deny(learn)">
-            deny
+          <button (click)="deny(learn)" *ngIf="learn.status === Status[Status.LESSON_REQUEST_ACCEPTED]">
+            disprove meeting
           </button>
-        </ng-template>
-        <ng-template [ngIf]="learn.status === 'LESSON_REQUEST_REJECTED'">
+        <div *ngIf="learn.status === Status[Status.LESSON_REQUEST_REJECTED]">
           NO lesson
-        </ng-template>
+        </div>
       </div>
       <div class="info">
         <div class="photo">

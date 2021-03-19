@@ -55,7 +55,7 @@ public class LearnRequestService {
 
     public List<LearnRequest> findByTeacherId(Long teacherId) {
         if (teacherId != null) {
-            return learnRequestRepository.findByTeacherId(teacherId);
+            return learnRequestRepository.findByTeacherIdAndIsFinishedFalse(teacherId);
         } else {
             log.warn("requested learnRequest with null teacherId");
             return new ArrayList<>();
@@ -64,7 +64,7 @@ public class LearnRequestService {
 
     public List<LearnRequest> findByStudentId(Long studentId) {
         if (studentId != null) {
-            return learnRequestRepository.findByStudentId(studentId);
+            return learnRequestRepository.findByStudentIdAndIsFinishedFalse(studentId);
         } else {
             log.warn("requested learnRequest with null studentId");
             return new ArrayList<>();
@@ -73,7 +73,7 @@ public class LearnRequestService {
 
     public List<LearnRequest> findActiveByTeacherId(Long teacherId) {
         if (teacherId != null) {
-            return learnRequestRepository.findByTeacherIdAndHiddenForTeacherFalse(teacherId);
+            return learnRequestRepository.findByTeacherIdAndHiddenForTeacherFalseAndIsFinishedFalse(teacherId);
         } else {
             log.warn("requested learnRequest with null teacherId");
             return new ArrayList<>();
@@ -82,7 +82,7 @@ public class LearnRequestService {
 
     public List<LearnRequest> findActiveByStudentId(Long studentId) {
         if (studentId != null) {
-            return learnRequestRepository.findByStudentIdAndHiddenForStudentFalse(studentId);
+            return learnRequestRepository.findByStudentIdAndHiddenForStudentFalseAndIsFinishedFalse(studentId);
         } else {
             log.warn("requested learnRequest with null studentId");
             return new ArrayList<>();
