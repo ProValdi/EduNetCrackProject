@@ -35,7 +35,7 @@ public class LearnRequestController {
         log.debug("requested: learnRequests get    (all)");
         return ResponseEntity.ok().body(learnRequestService.findAll());
     }
-    
+
     @GetMapping(value = "byId/{id}")
     public ResponseEntity<LearnRequest> findById(@PathVariable("id") Long id) {
         log.debug("requested: learnRequest  get    (id = {})", id);
@@ -43,7 +43,7 @@ public class LearnRequestController {
         return ResponseEntity.of(request);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "byId/{id}")
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
         log.debug("requested: learnRequest  delete (id = {})", id);
@@ -129,5 +129,5 @@ public class LearnRequestController {
                     .body("conflict in current and new status in learnRequest with id = " + id + ". " + e.getMessage());
         }
     }
-    
+
 }

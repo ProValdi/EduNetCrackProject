@@ -12,4 +12,5 @@ public interface LearnRequestRepository extends JpaRepository<LearnRequest, Long
     List<LearnRequest> findByStudentIdAndIsFinishedFalse(Long studentId);
     List<LearnRequest> findByStudentIdAndHiddenForStudentFalseAndIsFinishedFalse(Long studentId);
     List<LearnRequest> findByTeacherIdAndHiddenForTeacherFalseAndIsFinishedFalse(Long teacherId);
+    List<LearnRequest> findByLessonId(Long lessonId);
 }

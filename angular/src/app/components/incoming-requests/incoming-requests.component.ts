@@ -15,6 +15,7 @@ import {LearnRequestBody} from "../../model/entity/learn-request-body";
 export class IncomingRequestsComponent implements OnInit {
   learns: LearnRequest[];
   tags: Map<number, Tag[]> = new Map<number, Tag[]>();
+  Status = Status;
 
   constructor(private tagService: TagService, 
               private learningRequestService: LearningRequestService){ }
@@ -55,5 +56,4 @@ export class IncomingRequestsComponent implements OnInit {
     this.learningRequestService.update(body).subscribe();
     this.learns = this.learns.filter(lesson => lesson.id !== body.id);
   }
-
 }

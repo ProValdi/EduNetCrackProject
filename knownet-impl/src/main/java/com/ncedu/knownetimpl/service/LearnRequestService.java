@@ -32,6 +32,15 @@ public class LearnRequestService {
         return learnRequestRepository.findAll();
     }
 
+    public List<LearnRequest> findByLessonId(Long lessonId) {
+      if (lessonId != null) {
+        return learnRequestRepository.findByLessonId(lessonId);
+      } else {
+        log.warn("requested learnRequest with null lessonId");
+        return new ArrayList<>();
+      }
+    }
+
     public Optional<LearnRequest> findById(Long id) {
         if (id != null) {
             return learnRequestRepository.findById(id);

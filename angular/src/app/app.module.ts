@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
 
 import { AppComponent } from './components/app/app.component';
-import { UserListComponent } from './components/user-list/user-list.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UserPageComponent } from './components/user-page/user-page.component';
@@ -23,7 +22,6 @@ import { SignInTabComponent } from './components/sign-in-tab/sign-in-tab.compone
 @NgModule({
   declarations: [
     AppComponent,
-    UserListComponent,
     UserPageComponent,
     LearnTabComponent,
     TagTreeComponent,

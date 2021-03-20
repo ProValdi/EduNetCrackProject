@@ -1,14 +1,15 @@
 package com.ncedu.knownetimpl.service;
 import com.ncedu.knownetimpl.model.LessonBody;
+import com.ncedu.knownetimpl.model.entity.LearnRequest;
 import com.ncedu.knownetimpl.model.entity.Tag;
 import com.ncedu.knownetimpl.model.entity.Lesson;
 import com.ncedu.knownetimpl.model.entity.User;
+import com.ncedu.knownetimpl.repository.LearnRequestRepository;
 import com.ncedu.knownetimpl.repository.LessonRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,12 +21,14 @@ public class LessonService {
     private final UserService userService;
     private final TagService tagService;
     private final LessonRepository lessonRepository;
+    private final LearnRequestRepository learnRequestRepository;
 
     @Autowired
-    public LessonService(LessonRepository lessonRepository, UserService userService, TagService tagService) {
+    public LessonService(LessonRepository lessonRepository, UserService userService, TagService tagService, LearnRequestRepository learnRequestRepository) {
         this.lessonRepository = lessonRepository;
         this.userService = userService;
         this.tagService = tagService;
+        this.learnRequestRepository = learnRequestRepository;
     }
 
     public List<Lesson> findAll() {
@@ -70,6 +73,10 @@ public class LessonService {
         }
         boolean exists = lessonRepository.existsById(id);
         if (exists) {
+            List<LearnRequest> learnRequests = learnRequestRepository.findByLessonId(id);
+            for(LearnRequest k : learnRequests) {
+              learnRequestRepository.deleteById(k.getId());
+            }
             lessonRepository.deleteById(id);
         }
         return exists;

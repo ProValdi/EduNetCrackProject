@@ -40,7 +40,11 @@
           </tr>
           <tr>
             <td colspan="2" >
-              <button (click)="delete(lesson.id)"> remove</button>
+<!--              <div *ngFor="let learn of learnsRequest">-->
+<!--              <ng-template [ngIf]="learn.id === lesson.id">-->
+              <button (click)="delete(lesson.id)">remove</button>
+<!--              </ng-template>-->
+<!--              </div>-->
             </td>
           </tr>
         </table>
