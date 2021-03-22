@@ -14,10 +14,10 @@ import {LearnRequest} from "../../model/entity/learn-request";
   styleUrls: ['./learn-tab.component.less']
 })
 export class LearnTabComponent implements OnInit {
-
+  
   lessons: Lesson[];
   tags: Tag[];
-  possibleTags: Tag[];
+  possibleTags: Tag[] = [];
   selectedTag: Tag;
 
   constructor(private lessonService: LessonService,

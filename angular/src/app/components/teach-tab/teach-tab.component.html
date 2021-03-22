@@ -1,10 +1,10 @@
 <div id="content">
-  <button class="add-button">
+  <button class="add-button" (click)="openModal('new-lesson-modal')" >
     Add new lesson
   </button>
   <div class="infocard" *ngFor="let lesson of lessons">
     <div class="tags">
-      <span class="tag" *ngFor="let tag of tags.get(lesson.id)">
+      <span class="tag _{{i+1}}" *ngFor="let tag of tags.get(lesson.id); let i = index">
         {{tag.title}}
       </span>
     </div>
@@ -40,11 +40,7 @@
           </tr>
           <tr>
             <td colspan="2" >
-<!--              <div *ngFor="let learn of learnsRequest">-->
-<!--              <ng-template [ngIf]="learn.id === lesson.id">-->
               <button (click)="delete(lesson.id)">remove</button>
-<!--              </ng-template>-->
-<!--              </div>-->
             </td>
           </tr>
         </table>
@@ -53,3 +49,51 @@
   </div>
 
 </div>
+
+<jw-modal id="new-lesson-modal">
+  <div class="dialog-menu">
+
+    <div class="tag-search">
+         <span class="tag _{{i+1}}" *ngFor="let tag of allTags; let i = index">
+      {{tag.title}}
+    </span>
+
+      <span class="tag" *ngIf="possibleTags.length != 0">
+<!--todo я не понимаю как блин обработать выбор тэга нормально без кнопки-->
+      <select [(ngModel)]="selectedTag">
+<!--        <option selected hidden>chose tag</option>-->
+        <option *ngFor="let tag of possibleTags" [ngValue]="tag">
+          {{tag.title}}
+        </option>
+      </select>
+    </span>
+
+      <button *ngIf="possibleTags.length != 0" (click)="choseTag()">
+        confirm
+      </button>
+      <button (click)="back()">
+        back
+      </button>
+    </div>
+    <div class="description">
+      Describe your lesson
+    </div>
+    <label>
+<textarea [(ngModel)]="descriptionText">
+</textarea>
+    </label>
+    <div class="points">
+      cost:
+      <label>
+        <input type="number" required="true" max="100" [(ngModel)]="costNumber">
+      </label>
+      <button (click)="addLesson()">
+        Add
+      </button>
+      <button style="background: #ffafaf" (click)="closeModal('new-lesson-modal');">
+        Cancel
+      </button>
+    </div>
+
+  </div>
+</jw-modal>

@@ -7,10 +7,10 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  public static currentUserId: number = 2;
-  public static currentUserLogin: string = "admin";
-  public static currentUserPassword: string = "user";
-  public static isAdmin: boolean = false;
+  public static currentUserId: number = 1;
+  public static currentUserLogin: string = "kekich";
+  public static currentUserPassword: string = "0000";
+  public static isAdmin: boolean = true;
   _isAdmin: boolean = AppComponent.isAdmin;
 
   constructor(public router: Router ) {}

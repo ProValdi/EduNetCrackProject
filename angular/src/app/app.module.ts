@@ -18,6 +18,7 @@ import { TeachTabComponent } from './components/teach-tab/teach-tab.component';
 import { OutgoingRequestsComponent } from './components/outgoing-requests/outgoing-requests.component';
 import { IncomingRequestsComponent } from './components/incoming-requests/incoming-requests.component';
 import { SignInTabComponent } from './components/sign-in-tab/sign-in-tab.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { SignInTabComponent } from './components/sign-in-tab/sign-in-tab.compone
     OutgoingRequestsComponent,
     IncomingRequestsComponent,
     SignInTabComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
