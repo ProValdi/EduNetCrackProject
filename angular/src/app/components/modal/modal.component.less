@@ -41,7 +41,7 @@ body.jw-modal-open {
   overflow: hidden;
 }
 
-
+/* Add new lesson menu */
 
 @dialog-menu-width: 800px;
 @dialog-menu-height: 500px;
@@ -114,12 +114,62 @@ body.jw-modal-open {
     padding-left: 10px;
     border-radius: 14px;
 
-    &._2 {
-      background-color: #a0fbfb;
-    }
-
-    &._3 {
-      background-color: #00ffff;
-    }
+    &._0 {background-color: #dfffff;}
+    &._1 {background-color: #a0fbfb;}
+    &._2 {background-color: #00ffff;}
+    &._3 {background-color: #87CEFA;}
+    &._4 {background-color: #00e5ff;}
+    &._5 {background-color: #00CcFf;}
+    &._6 {background-color: #00BFFF;}
   }
 }
+
+/* profile changer */
+
+.profile-changer {
+  @dialog-menu-width: 600px;
+  @dialog-menu-height: 450px;
+  @dialog-menu-padding: 20px;
+
+  font: 400 25px "Roboto";
+  width: @dialog-menu-width;
+  height: @dialog-menu-height;
+  margin: 100px;
+  padding: @dialog-menu-padding;
+  background-color: #ffe4b5;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 50px;
+  border-radius: 18px;
+  box-shadow: 4px 4px 8px #a9a9a9;
+
+  button {
+    border-radius: 14px;
+    font-size: 20px;
+    margin-top: 10px;
+    width: 105px;
+    height: 45px;
+    outline: none;
+    background: #dfffff;
+    float: right;
+  }
+  input {
+    width: 300px;
+    &.personal {
+      width: 230px;
+    }
+  }
+
+  .tab {
+    padding-left: 40px;
+  }
+
+  .highlight {
+    content: "";
+    position: absolute;
+    width: 465px;
+    height: 0.11em;
+    background: black linear-gradient(to right, #5e42a6, #b74e91);
+  }
+}
+

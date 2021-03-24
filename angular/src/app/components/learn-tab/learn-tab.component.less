@@ -29,26 +29,37 @@
   margin-bottom: 50px;
   box-shadow: inset 4px 4px 16px #a3b1c6;
   border-radius: 18px;
-
-  .tag {
-    font-size: @tags-height / 2;
-    background-color: #dfffff;
-    overflow: hidden;
-    padding: 6px;
-    margin: 5px;
-    padding-left: 10px;
-    border-radius: 14px;
-
-    &._2 {
-      background-color: #a0fbfb;
-    }
-
-    &._3 {
-      background-color: #00ffff;
-    }
-  }
 }
 
+.tag {
+  font-size: @tags-height / 2;
+  background-color: #dfffff;
+  overflow: hidden;
+  padding: 6px;
+  margin: 5px;
+  padding-left: 10px;
+  border-radius: 14px;
+
+  &._0 {
+    background-color: #dfffff;
+  }
+
+  &._1 {
+    background-color: #a0fbfb;
+  }
+
+  &._2 {
+    background-color: #00ffff;
+  }
+
+  &._3 {
+    background-color: #87CEFA;
+  }
+
+  &._4 {
+    background-color: #00BFFF;
+  }
+}
 .infocard {
   background-color: @infocard-background-color;
   width: @infocard-width;
@@ -64,30 +75,6 @@
     height: @tags-height;
     width: @infocard-width - 110px;
     float: left;
-    .tag {
-      font-size: @tags-height / 2;
-      background-color: #dfffff;
-      overflow: hidden;
-      padding: 6px;
-      margin: 5px;
-      padding-left: 10px;
-      border-radius: 14px;
-
-      &._0 {
-        background-color: #dfffff;
-      }
-      &._1 {
-        background-color: #a0fbfb;
-      }
-      &._2 {
-        background-color: #00ffff;
-      }
-      &._3 {
-        background-color: #87CEFA;
-      }
-      &._4 {
-        background-color: #00BFFF;
-      }
     }
   }
 
@@ -152,7 +139,6 @@
     float: right;
 
     button {
-      border: 1px;
       outline: none;
       border-radius: 14px;
       margin-top: @infocard-height / 5;
@@ -173,5 +159,5 @@
       border-radius: 14px;
     }
   }
-}
+
 

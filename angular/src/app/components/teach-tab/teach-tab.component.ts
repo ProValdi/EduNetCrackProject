@@ -42,7 +42,7 @@ export class TeachTabComponent implements OnInit{
       this.lessons = lessons;
       for (let lesson of lessons) {
         this.tagService.findWithParents(lesson.tag.id).subscribe(tags => {
-          this.tags.set(lesson.id, tags);
+          this.tags.set(lesson.id, tags.reverse());
         })
       }
     });
@@ -97,11 +97,8 @@ export class TeachTabComponent implements OnInit{
     lessonBody.pointsToGet = this.costNumber;
     lessonBody.tagId = this.selectedTag.id;
     lessonBody.teacherId = AppComponent.currentUserId;
-    lessonBody.topic = "kek_topic";
-    lessonBody.name = "lolkek_name";
     this.lessonService.create(lessonBody).subscribe();
     this.closeModal(this.modalName);
-
   }
   
 }

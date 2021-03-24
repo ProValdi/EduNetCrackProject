@@ -16,39 +16,6 @@
 
 @tags-height: 45px;
 
-.tag-search {
-  @tag-search-height: 60px;
-
-  background-color: #ffe4b5;
-  width: @infocard-width + 20px;
-  height: @tag-search-height;
-  position: relative;
-  overflow: hidden;
-  margin: @infocard-margin;
-  padding-top: @tag-search-height / 4;
-  margin-bottom: 50px;
-  box-shadow: inset 4px 4px 16px #a3b1c6;
-  border-radius: 18px;
-
-  .tag {
-    font-size: @tags-height / 2;
-    background-color: #dfffff;
-    overflow: hidden;
-    padding: 6px;
-    margin: 5px;
-    padding-left: 10px;
-    border-radius: 14px;
-
-    &._2 {
-      background-color: #a0fbfb;
-    }
-
-    &._3 {
-      background-color: #00ffff;
-    }
-  }
-}
-
 .infocard {
   background-color: @infocard-background-color;
   width: @infocard-width;
@@ -72,15 +39,17 @@
       overflow: hidden;
       padding: 6px;
       margin: 5px;
+      float: left;
       padding-left: 10px;
       border-radius: 14px;
-      &._2 {
-        background-color: #a0fbfb;
-      }
 
-      &._3 {
-        background-color: #00ffff;
-      }
+      &._0 {background-color: #dfffff;}
+      &._1 {background-color: #a0fbfb;}
+      &._2 {background-color: #00ffff;}
+      &._3 {background-color: #87CEFA;}
+      &._4 {background-color: #00e5ff;}
+      &._5 {background-color: #00CcFf;}
+      &._6 {background-color: #00BFFF;}
     }
   }
 

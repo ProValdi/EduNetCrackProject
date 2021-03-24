@@ -4,7 +4,7 @@
   </button>
   <div class="infocard" *ngFor="let lesson of lessons">
     <div class="tags">
-      <span class="tag _{{i+1}}" *ngFor="let tag of tags.get(lesson.id); let i = index">
+      <span class="tag _{{i}}" *ngFor="let tag of tags.get(lesson.id); let i = index">
         {{tag.title}}
       </span>
     </div>
@@ -54,7 +54,7 @@
   <div class="dialog-menu">
 
     <div class="tag-search">
-         <span class="tag _{{i+1}}" *ngFor="let tag of allTags; let i = index">
+         <span class="tag _{{i}}" *ngFor="let tag of allTags; let i = index">
       {{tag.title}}
     </span>
 

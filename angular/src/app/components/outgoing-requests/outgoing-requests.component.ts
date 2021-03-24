@@ -26,7 +26,7 @@ export class OutgoingRequestsComponent implements OnInit {
       this.learns = learns;
       for (let learn of learns) {
         this.tagService.findWithParents(learn.lesson.tag.id).subscribe(tags => {
-          this.tags.set(learn.lesson.tag.id, tags);
+          this.tags.set(learn.lesson.tag.id, tags.reverse());
         })
       }
     });

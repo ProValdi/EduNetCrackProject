@@ -5,9 +5,16 @@
     </div>
 
     <div id="personal-info">
+
+      <button (click)="openModal('profile-changer')">
+        Change
+      </button>
       <div id="name">
         {{user.firstName}} {{user.lastName}}
       </div>
+
+
+
       <div class="highlight"></div>
       <div id="contacts">
         <table cellspacing="10px">
@@ -20,44 +27,76 @@
             <td id="rating">{{user.rating}}</td>
           </tr>
           <tr>
-            <td>status:</td>
-            <td id="status">Professor</td>
-          </tr>
-          <tr>
             <td colspan="2">contact information:</td>
           </tr>
           <tr>
             <td class="tab">email:</td>
-            <td id="email"><a href="#">{{user.email}}</a></td>
+            <td id="email">{{user.email}}</td>
           </tr>
           <tr>
             <td class="tab">VK:</td>
-            <td id="vkLink"><a href="#">{{user.vkLink}}</a></td>
+            <td id="vkLink">{{user.vkLink}}</td>
           </tr>
           <tr>
             <td class="tab">telegram:</td>
-            <td id="telegramLink"><a href="#">{{user.telegramLink}}</a></td>
+            <td id="telegramLink">{{user.telegramLink}}</td>
           </tr>
           <tr>
             <td class="tab">phone:</td>
-              <td id="phoneNumber"><a href="#">{{user.phoneNumber}}</a></td>
+              <td id="phoneNumber">{{user.phoneNumber}}</td>
           </tr>
         </table>
       </div>
     </div>
-    <div id="lessons-info">
-<!--      <table cellspacing="10px">-->
-<!--        <tr>-->
-<!--          <td>Lessons conducted:</td>-->
-<!--          <td id="conductedCount">{{user.conductedCount}}</td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--          <td>Lessons attended:</td>-->
-<!--          <td id="attendedCount">{{user.attendedCount}}</td>-->
-<!--        </tr>-->
-<!--      </table>-->
-    </div>
 
   </div>
-  <hr />
 </div>
+
+<jw-modal id="profile-changer">
+  <div class="profile-changer">
+
+    <div class="description">
+      Update your personal information:
+    </div>
+    <div class="highlight"></div>
+    <table cellspacing="10px">
+      <tr>
+        <td width="200px">Name:</td>
+        <td><input class="personal" [(ngModel)]="nameText"></td>
+      </tr>
+      <tr>
+        <td width="200px">Surname:</td>
+        <td><input class="personal" [(ngModel)]="surnameText"></td>
+      </tr>
+      <tr>
+        <td width="200px">Group:</td>
+        <td><input class="personal" [(ngModel)]="groupText"></td>
+      </tr>
+      <tr>
+        <td colspan="2">contact information:</td>
+      </tr>
+      <tr>
+        <td class="tab">Email:</td>
+        <td><input [(ngModel)]="emailText"></td>
+      </tr>
+      <tr>
+        <td class="tab">VK:</td>
+        <td><input [(ngModel)]="vkText"></td>
+      </tr>
+      <tr>
+        <td class="tab">Telegram:</td>
+        <td><input [(ngModel)]="telegramText"></td>
+      </tr>
+      <tr>
+        <td class="tab">Phone:</td>
+        <td><input [(ngModel)]="phoneText"></td>
+      </tr>
+    </table>
+    <button (click)="save()" >
+      Save
+    </button>
+    <button style="background: #ffafaf" (click)="closeModal('profile-changer');">
+      Cancel
+    </button>
+  </div>
+</jw-modal>
