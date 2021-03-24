@@ -17,16 +17,28 @@ export class LearnTabComponent implements OnInit {
   
   lessons: Lesson[];
   tags: Tag[];
+  allTags: Map<number, Tag[]> = new Map<number, Tag[]>();
   possibleTags: Tag[] = [];
   selectedTag: Tag;
+  
+  variance: boolean = true;
 
   constructor(private lessonService: LessonService,
               private tagService: TagService,
               private learningRequestService: LearningRequestService) { }
 
   ngOnInit(): void {
-    this.lessonService.getAll().subscribe(lessons => this.lessons = lessons);
-    this.tagService.getChildren(0).subscribe(tags => this.possibleTags = tags);
+    this.lessonService.getAll().subscribe(lessons => {
+      this.lessons = lessons;
+      for (let lesson of lessons) {
+        this.tagService.findWithParents(lesson.tag.id).subscribe(tags => {
+          this.allTags.set(lesson.id, tags.reverse());
+        })
+      }
+    });
+    this.tagService.getChildren(0).subscribe(tags => {
+      this.possibleTags = tags;
+    });
     this.tags = [];
   }
 
@@ -35,6 +47,7 @@ export class LearnTabComponent implements OnInit {
   }
 
   choseTag(): void {
+    this.variance = false;
     if (this.selectedTag != null) {
       this.tags.push(this.selectedTag);
       this.tagService.getChildren(this.selectedTag.id).subscribe(tags => {

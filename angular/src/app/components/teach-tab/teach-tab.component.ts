@@ -23,8 +23,8 @@ export class TeachTabComponent implements OnInit{
   tags: Map<number, Tag[]> = new Map<number, Tag[]>();
   learnsRequest: LearnRequest[];
 
-  allTags: Tag[];
-  possibleTags: Tag[];
+  allTags: Tag[] = [];
+  possibleTags: Tag[] = [];
   selectedTag: Tag;
 
   descriptionText: string;
@@ -97,7 +97,15 @@ export class TeachTabComponent implements OnInit{
     lessonBody.pointsToGet = this.costNumber;
     lessonBody.tagId = this.selectedTag.id;
     lessonBody.teacherId = AppComponent.currentUserId;
-    this.lessonService.create(lessonBody).subscribe();
+    this.lessonService.create(lessonBody).subscribe(_ => {
+      this.lessonService.getByTeacherId(lessonBody.teacherId).subscribe(lessons => {
+        this.lessons = lessons;
+        const currentLesson = lessons[lessons.length - 1];
+        this.tagService.findWithParents(currentLesson.tag.id).subscribe(tags => {
+          this.tags.set(currentLesson.id, tags.reverse());
+        })
+      });
+    });
     this.closeModal(this.modalName);
   }
   
