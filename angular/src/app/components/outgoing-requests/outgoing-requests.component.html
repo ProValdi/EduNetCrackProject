@@ -5,50 +5,43 @@
         {{tag.title}}
       </span>
     </div>
-      <div class="trailer-section">
-        <div class="top">
-          <table>
-            <tr>
-              <td id="points">{{learn.lesson.pointsToGet}}</td>
-              <td>points</td>
-            </tr>
-          </table>
-        </div>
-          <button (click)="withdraw(learn)">
-            cancel
-          </button>
-          <button (click)="accept(learn)" *ngIf="learn.status === Status[Status.LESSON_REQUEST_ACCEPTED]">
-            confirm meeting
-          </button>
-          <button (click)="deny(learn)" *ngIf="learn.status === Status[Status.LESSON_REQUEST_ACCEPTED]">
-            disprove meeting
-          </button>
-        <div *ngIf="learn.status === Status[Status.LESSON_REQUEST_REJECTED]">
-          Nо lesson
-        </div>
+    <div class="trailer-section">
+      <div class="point-amount">{{learn.lesson.pointsToGet}} points</div>
+        <button (click)="withdraw(learn)">
+          cancel
+        </button>
+        <button (click)="accept(learn)" *ngIf="learn.status === Status[Status.LESSON_REQUEST_ACCEPTED]">
+          confirm meeting
+        </button>
+        <button (click)="deny(learn)" *ngIf="learn.status === Status[Status.LESSON_REQUEST_ACCEPTED]">
+          disprove meeting
+        </button>
+      <div *ngIf="learn.status === Status[Status.LESSON_REQUEST_REJECTED]">
+        Nо lesson
       </div>
-      <div class="info">
-        <div class="photo">
-          <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
-        </div>
-        <div class="personal-info">
-              <span class="contacts">
-                <div class="name">
-                  {{learn.teacher.firstName}} {{learn.teacher.lastName}}
-                </div>
-                <table>
-                  <tr>
-                    <td id>group:</td>
-                    <td id="group">{{learn.teacher.group}}</td>
-                  </tr>
-                  <tr>
-                    <td>rating:</td>
-                    <td id="rating">{{learn.teacher.rating}}</td>
-                  </tr>
-                </table>
-              </span>
-        </div>
-        <textarea readonly>{{learn.lesson.description}}</textarea>
+    </div>
+    <div class="info">
+      <div class="photo">
+        <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
       </div>
+      <div class="personal-info">
+          <span class="contacts">
+            <div class="name">
+              {{learn.teacher.firstName}} {{learn.teacher.lastName}}
+            </div>
+            <table>
+              <tr>
+                <td id>group:</td>
+                <td id="group">{{learn.teacher.group}}</td>
+              </tr>
+              <tr>
+                <td>rating:</td>
+                <td id="rating">{{learn.teacher.rating}}</td>
+              </tr>
+            </table>
+          </span>
+      </div>
+      <textarea readonly>{{learn.lesson.description}}</textarea>
+    </div>
   </div>
 </div>

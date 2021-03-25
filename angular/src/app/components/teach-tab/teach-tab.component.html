@@ -9,38 +9,31 @@
       </span>
     </div>
     <div class="trailer-section">
-      <table>
-        <tr>
-          <td id="points">{{lesson.pointsToGet}}</td>
-          <td>points</td>
-        </tr>
-        <tr>
-          <td colspan="2" >
-            <button (click)="delete(lesson.id)" class="remove-button" >remove</button>
-          </td>
-        </tr>
-      </table>
+      <div class="point-amount">
+        {{lesson.pointsToGet}} points
+      </div>
+      <button (click)="delete(lesson.id)" class="remove-button" >remove</button>
     </div>
     <div class="info">
       <div class="photo">
         <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
       </div>
       <div class="personal-info">
-            <span class="contacts">
-              <div class="name">
-                {{lesson.teacher.lastName}} {{lesson.teacher.firstName}}
-              </div>
-              <table>
-                <tr>
-                  <td>status:</td>
-                  <td id="group">student</td>
-                </tr>
-                <tr>
-                  <td>rating:</td>
-                  <td id="rating">{{lesson.teacher.rating}}</td>
-                </tr>
-              </table>
-            </span>
+          <span class="contacts">
+            <div class="name">
+              {{lesson.teacher.lastName}} {{lesson.teacher.firstName}}
+            </div>
+            <table>
+              <tr>
+                <td>status:</td>
+                <td id="group">student</td>
+              </tr>
+              <tr>
+                <td>rating:</td>
+                <td id="rating">{{lesson.teacher.rating}}</td>
+              </tr>
+            </table>
+          </span>
       </div>
       <textarea readonly>{{lesson.description}}</textarea>
     </div>

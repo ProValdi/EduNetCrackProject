@@ -2,114 +2,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300&display=swap");
 
-/* Global variables */
-
-@width: 1300px;
-@navbar-width: 300px;
-@content-width: @width - @navbar-width;
-
-/* Infocard */
-
-@infocard-width: 900px;
 @infocard-height: 140px;
-@infocard-margin: 20px;
-@infocard-padding: 10px;
-@infocard-background-color: #ffefd5;
 
 .infocard {
-  background-color: @infocard-background-color;
-  width: @infocard-width;
-  height: @infocard-height;
-  margin: @infocard-margin;
-  padding: @infocard-padding;
-  overflow: hidden;
-  box-shadow: inset 2px 2px 8px #a3b1c6;
-  border-radius: 18px;
-
-  @tags-height: 45px;
-
-  .tags {
-    overflow: hidden;
-    height: @tags-height;
-    width: @infocard-width - 110px;
-    float: left;
-    .tag {
-      font-size: @tags-height / 2;
-      background-color: #dfffff;
-      overflow: hidden;
-      padding: 6px;
-      margin: 5px;
-      padding-left: 10px;
-      border-radius: 14px;
-
-      &._0 {background-color: #dfffff;}
-      &._1 {background-color: #a0fbfb;}
-      &._2 {background-color: #00ffff;}
-      &._3 {background-color: #87CEFA;}
-      &._4 {background-color: #00e5ff;}
-      &._5 {background-color: #00CcFf;}
-      &._6 {background-color: #00BFFF;}
-    }
-  }
-
-  .info {
-    @local-height: @infocard-height - @tags-height - @infocard-padding;
-    .photo {
-      width: @local-height;
-      height: @local-height;
-      border-radius: 50%;
-      margin-right: 5px;
-      float: left;
-      overflow: hidden;
-      display: inline-block;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-      }
-    }
-
-    .personal-info {
-      height: @local-height;
-      margin: 5px;
-      margin-left: 5px;
-      padding: 10px;
-      float: left;
-      display: inline-block;
-
-      .contacts {
-        font: 400 0.6em "Roboto";
-        .name {
-          min-width: 170px;
-          max-width: 190px;
-          margin-bottom: 5px;
-        }
-        #group {
-          width: 110px;
-          overflow: hidden;
-          white-space: nowrap;
-        }
-      }
-    }
-
-    textarea {
-      font-size: 18px;
-      background-color: #dfdfdf;
-      text-align: left;
-      width: @infocard-width - 450px;
-      min-height: @local-height - 20px;
-      max-height: @local-height - 10px;
-      position: relative;
-      padding: 5px;
-      margin: 15px 15px 15px 0px;
-      border-radius: 14px;
-      float: left;
-      outline: none;
-      resize: none;
-    }
-  }
   .trailer-section {
     font-size: 20px;
     width: 100px;
@@ -117,18 +12,6 @@
     margin-top: 0px;
     margin-right: 5px;
     float: right;
-
-    .top {
-      margin: auto;
-      width: 100px;
-      height: 30px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      padding-left: 5px;
-      margin-bottom: 10px;
-      background-color: #dfdfdf;
-      border-radius: 14px;
-    }
 
     .data {
       font-size: 17px;
