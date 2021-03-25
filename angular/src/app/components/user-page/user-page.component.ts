@@ -28,6 +28,7 @@ export class UserPageComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getById(AppComponent.currentUserId).subscribe(user => {
       this.user = user;
+      // todo я хз как это нормально сделать
       this.user.password = user.password == null ? "-" : user.password;
       this.user.group = user.group == null ? "-" : user.group;
       this.user.lastName = user.lastName == null ? "-" : user.lastName;
@@ -50,17 +51,21 @@ export class UserPageComponent implements OnInit {
   
   save(): void {
     const user: User = new User();
-    if(this.emailText) user.email = this.emailText;
-    if(this.vkText) user.vkLink = this.vkText;
-    if(this.telegramText) user.telegramLink = this.telegramText;
-    if(this.phoneText) user.phoneNumber = this.phoneText;
-    if(this.nameText) user.firstName = this.nameText;
-    if(this.surnameText) user.lastName = this.surnameText;
-    if(this.groupText) user.group = this.groupText;
+    // todo я хз как это нормально сделать
+    if(this.emailText) user.email = this.emailText; else user.email = this.user.email;
+    if(this.vkText) user.vkLink = this.vkText; else user.vkLink = this.user.vkLink;
+    if(this.telegramText) user.telegramLink = this.telegramText; else user.telegramLink = this.user.telegramLink;
+    if(this.phoneText) user.phoneNumber = this.phoneText; else user.phoneNumber = this.user.phoneNumber;
+    if(this.nameText) user.firstName = this.nameText; else user.firstName = this.user.firstName;
+    if(this.surnameText) user.lastName = this.surnameText; else user.lastName = this.user.lastName;
+    if(this.groupText) user.group = this.groupText; else user.group = this.user.group;
+    
+    user.rating = this.user.rating;
     user.id = AppComponent.currentUserId;
     user.login = AppComponent.currentUserLogin;
     user.password = AppComponent.currentUserPassword;
-    this.userService.update(user).subscribe();
+    
+    this.userService.update(user).subscribe(_ => this.user = user);
     this.closeModal(this.modalName);
   }
 }
