@@ -13,4 +13,6 @@ export class User {
   phoneNumber: string;
   attendedCount: number;
   conductedCount: number;
+  enabled: boolean;
+  role: string;
 }

@@ -29,7 +29,10 @@ export class LearnTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.lessonService.getAll().subscribe(lessons => {
-      this.lessons = lessons;
+      this.lessons = lessons.filter( lesson => {
+        return lesson.teacher.id != AppComponent.currentUserId;
+      })
+      
       for (let lesson of lessons) {
         this.tagService.findWithParents(lesson.tag.id).subscribe(tags => {
           this.allTags.set(lesson.id, tags.reverse());

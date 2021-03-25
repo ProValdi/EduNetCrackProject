@@ -86,22 +86,28 @@
           max-width: 190px;
           margin-bottom: 5px;
         }
+        #group {
+          width: 110px;
+          overflow: hidden;
+          white-space: nowrap;
+        }
       }
     }
 
-    .comment {
+    textarea {
       font-size: 18px;
       background-color: #dfdfdf;
       text-align: left;
       width: @infocard-width - 450px;
-      min-height: @local-height - 40px;
+      min-height: @local-height - 20px;
       max-height: @local-height - 10px;
       position: relative;
-      overflow: hidden;
-      padding: 10px;
-      margin: 15px;
+      padding: 5px;
+      margin: 15px 15px 15px 0px;
       border-radius: 14px;
       float: left;
+      outline: none;
+      resize: none;
     }
   }
   .trailer-section {

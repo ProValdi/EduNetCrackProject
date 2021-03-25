@@ -8,6 +8,19 @@
         {{tag.title}}
       </span>
     </div>
+    <div class="trailer-section">
+      <table>
+        <tr>
+          <td id="points">{{lesson.pointsToGet}}</td>
+          <td>points</td>
+        </tr>
+        <tr>
+          <td colspan="2" >
+            <button (click)="delete(lesson.id)" class="remove-button" >remove</button>
+          </td>
+        </tr>
+      </table>
+    </div>
     <div class="info">
       <div class="photo">
         <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
@@ -29,22 +42,7 @@
               </table>
             </span>
       </div>
-      <div class="comment">
-        Description: {{lesson.description}}
-      </div>
-      <div class="trailer-section">
-        <table>
-          <tr>
-            <td id="points">{{lesson.pointsToGet}}</td>
-            <td>points</td>
-          </tr>
-          <tr>
-            <td colspan="2" >
-              <button (click)="delete(lesson.id)">remove</button>
-            </td>
-          </tr>
-        </table>
-      </div>
+      <textarea readonly>{{lesson.description}}</textarea>
     </div>
   </div>
 

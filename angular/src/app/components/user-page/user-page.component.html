@@ -4,6 +4,7 @@
       <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="profile photo">
     </div>
 
+
     <div id="personal-info">
 
       <button (click)="openModal('profile-changer')">
@@ -68,7 +69,7 @@
       </tr>
       <tr>
         <td width="200px">Group:</td>
-        <td><input class="personal" [(ngModel)]="groupText"></td>
+        <td><input class="personal" maxlength="13" [(ngModel)]="groupText"></td>
       </tr>
       <tr>
         <td colspan="2">contact information:</td>
