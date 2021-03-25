@@ -44,7 +44,7 @@
 <jw-modal id="new-lesson-modal">
   <div class="dialog-menu">
 
-    <div class="tag-search">
+    <div class="tag-search-modified">
          <span class="tag _{{i}}" *ngFor="let tag of allTags; let i = index">
       {{tag.title}}
     </span>
@@ -70,8 +70,7 @@
       Describe your lesson
     </div>
     <label>
-<textarea [(ngModel)]="descriptionText">
-</textarea>
+      <textarea [(ngModel)]="descriptionText"></textarea>
     </label>
     <div class="points">
       cost:
