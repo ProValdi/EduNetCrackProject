@@ -40,10 +40,16 @@
       </ng-template>
 
     </div>
+
     <div class="trailer-section">
-      <button (click)="requestLesson(lesson)">
-        request
-      </button>
+      <ng-template [ngIf]="!requestedLessons.get(lesson.id)">
+        <button (click)="requestLesson(lesson)">
+          request
+        </button>
+      </ng-template>
+      <div *ngIf="requestedLessons.get(lesson.id)">
+        Already requested
+      </div>
       <div class="point-amount">
         {{lesson.pointsToGet}} points
       </div>

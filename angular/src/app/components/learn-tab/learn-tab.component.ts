@@ -20,7 +20,7 @@ export class LearnTabComponent implements OnInit {
   allTags: Map<number, Tag[]> = new Map<number, Tag[]>();
   possibleTags: Tag[] = [];
   selectedTag: Tag;
-  
+  requestedLessons: Map<number, boolean> = new Map<number, boolean>();
   variance: boolean = true;
 
   constructor(private lessonService: LessonService,
@@ -31,7 +31,17 @@ export class LearnTabComponent implements OnInit {
     this.lessonService.getAll().subscribe(lessons => {
       this.lessons = lessons.filter( lesson => {
         return lesson.teacher.id != AppComponent.currentUserId;
-      })
+      });
+      
+      this.learningRequestService.getByStudentId(AppComponent.currentUserId).subscribe(requests => {
+        for (let i = 0; i < this.lessons.length; i++) {
+          for (let k = 0; k < requests.length; k++) {
+            if (requests[k].lesson.id == this.lessons[i].id) {
+              this.requestedLessons.set(requests[k].lesson.id, true);
+            }
+          }
+        }
+      });
       
       for (let lesson of lessons) {
         this.tagService.findWithParents(lesson.tag.id).subscribe(tags => {
@@ -73,6 +83,7 @@ export class LearnTabComponent implements OnInit {
     const request: LearnRequestBody = new LearnRequestBody();
     request.lessonId = lesson.id;
     request.studentId = AppComponent.currentUserId;
+    this.requestedLessons.set(lesson.id, true);
     this.learningRequestService.create(request).subscribe();
   }
 
