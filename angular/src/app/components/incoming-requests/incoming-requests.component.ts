@@ -40,7 +40,11 @@ export class IncomingRequestsComponent implements OnInit {
     body.status = Status.LESSON_REQUEST_ACCEPTED;
     body.hiddenForTeacher = learn.hiddenForTeacher;
     body.hiddenForStudent = learn.hiddenForStudent;
-    this.learningRequestService.update(body).subscribe();
+    this.learningRequestService.update(body).subscribe(_ => {
+      this.learningRequestService.getById(learn.id).subscribe(learn => {
+        this.learns.push(learn);
+      });
+    });
   }
   
   deny(learn: LearnRequest): void {

@@ -61,34 +61,34 @@
     <table cellspacing="10px">
       <tr>
         <td width="200px">Name:</td>
-        <td><input class="personal" [(ngModel)]="nameText"></td>
+        <td><input class="personal" [(ngModel)]="nameText" value="{{user.firstName}}"></td>
       </tr>
       <tr>
         <td width="200px">Surname:</td>
-        <td><input class="personal" [(ngModel)]="surnameText"></td>
+        <td><input class="personal" [(ngModel)]="surnameText" value="{{user.lastName}}"></td>
       </tr>
       <tr>
         <td width="200px">Group:</td>
-        <td><input class="personal" maxlength="13" [(ngModel)]="groupText"></td>
+        <td><input class="personal" maxlength="13" [(ngModel)]="groupText" value="{{user.group}}"></td>
       </tr>
       <tr>
         <td colspan="2">contact information:</td>
       </tr>
       <tr>
         <td class="tab">Email:</td>
-        <td><input [(ngModel)]="emailText"></td>
+        <td><input [(ngModel)]="emailText" value="{{user.email}}"></td>
       </tr>
       <tr>
         <td class="tab">VK:</td>
-        <td><input [(ngModel)]="vkText"></td>
+        <td><input [(ngModel)]="vkText" value="{{user.vkLink}}"></td>
       </tr>
       <tr>
         <td class="tab">Telegram:</td>
-        <td><input [(ngModel)]="telegramText"></td>
+        <td><input [(ngModel)]="telegramText" value="{{user.telegramLink}}"></td>
       </tr>
       <tr>
         <td class="tab">Phone:</td>
-        <td><input [(ngModel)]="phoneText"></td>
+        <td><input [(ngModel)]="phoneText" value="{{user.phoneNumber}}"></td>
       </tr>
     </table>
     <button (click)="save()" >

@@ -71,4 +71,8 @@ export class OutgoingRequestsComponent implements OnInit {
     this.learns = this.learns.filter(lesson => lesson.id !== body.id);
   }
 
+  takeAction(learn): void {
+    
+  }
+
 }
