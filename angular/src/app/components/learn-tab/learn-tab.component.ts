@@ -22,7 +22,8 @@ export class LearnTabComponent implements OnInit {
   selectedTag: Tag;
   requestedLessons: Map<number, boolean> = new Map<number, boolean>();
   variance: boolean = true;
-
+  points: number;
+  
   constructor(private lessonService: LessonService,
               private tagService: TagService,
               private learningRequestService: LearningRequestService) { }
@@ -32,6 +33,8 @@ export class LearnTabComponent implements OnInit {
       this.lessons = lessons.filter( lesson => {
         return lesson.teacher.id != AppComponent.currentUserId;
       });
+
+      this.points = AppComponent.currentUserPoints;
       
       this.learningRequestService.getByStudentId(AppComponent.currentUserId).subscribe(requests => {
         for (let i = 0; i < this.lessons.length; i++) {

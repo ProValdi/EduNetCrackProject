@@ -5,6 +5,7 @@
         {{tag.title}}
       </span>
     </div>
+
     <div class="trailer-section">
       <ng-template [ngIf]="learn.status !== Status[Status.LESSON_REQUEST_ACCEPTED] && learn.status !== Status[Status.LESSON_REQUEST_REJECTED]">
       <button class="_accept-button" (click)="accept(learn)">

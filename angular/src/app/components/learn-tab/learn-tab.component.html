@@ -21,7 +21,12 @@
       back
     </button>
   </div>
-
+  <div class="current-points">
+    You have
+    <span class="point-amount">
+      {{this.points}} points
+    </span>
+  </div>
   <div class="infocard" *ngFor="let lesson of lessons">
     <div class="tags">
 
@@ -43,7 +48,7 @@
 
     <div class="trailer-section">
       <ng-template [ngIf]="!requestedLessons.get(lesson.id)">
-        <button (click)="requestLesson(lesson)">
+        <button (click)="requestLesson(lesson)" [ngClass]="points < lesson.pointsToGet? 'not-enough-points':''" [disabled]="points < lesson.pointsToGet" >
           request
         </button>
       </ng-template>

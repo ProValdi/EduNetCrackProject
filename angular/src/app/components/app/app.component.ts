@@ -11,14 +11,19 @@ export class AppComponent implements OnInit{
   public static currentUserId: number = 2;
   public static currentUserLogin: string = "masha";
   public static currentUserPassword: string = "0000";
+  public static currentUserPoints: number;
   public static isAdmin: boolean = false;
   _isAdmin: boolean = AppComponent.isAdmin;
+  
 
   constructor(public router: Router,
               private userService: UserService) {}
 
   ngOnInit(): void {
-    this.userService.getById(AppComponent.currentUserId).subscribe(user => this._isAdmin = (user.role == "ADMIN"));
+    this.userService.getById(AppComponent.currentUserId).subscribe(user => {
+      this._isAdmin = (user.role == "ADMIN");
+      AppComponent.currentUserPoints = user.points;
+    });
   }
   
 }

@@ -4,6 +4,15 @@
 
 @infocard-height: 140px;
 
+.current-points {
+  margin-top: 15px;
+  margin-left: 10px;
+  .point-amount {
+    padding-right: 10px;
+    background-color: #E6E6FA;
+  }
+}
+
 .infocard {
   .trailer-section {
     font-size: 20px;
@@ -20,6 +29,11 @@
       width: 105px;
       height: 45px;
       background: #a0ffff;
+
+      &.not-enough-points {
+        border: none;
+        background: #dfdfdf;
+      }
     }
   }
 }
