@@ -27,6 +27,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   UserService userService;
 
   @Autowired
+  PasswordEncoder encoder;
+
+  @Autowired
   private AuthEntryPointJwt unauthorizedHandler;
 
   @Bean
@@ -36,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-    authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(passwordEncoder());
+    authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(encoder);
   }
 
   @Bean
@@ -45,10 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return super.authenticationManagerBean();
   }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
