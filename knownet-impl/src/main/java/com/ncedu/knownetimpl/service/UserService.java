@@ -2,15 +2,15 @@ package com.ncedu.knownetimpl.service;
 
 import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -20,11 +20,11 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
-    
+
     public Optional<User> findByLogin(String login) {
         if (login == null) {
             log.warn("requested user with null login");
@@ -37,11 +37,11 @@ public class UserService implements UserDetailsService {
             return Optional.of(users.get(0));
         }
     }
-    
+
     public List<User> findByGroup(String group) {
         return userRepository.findByGroup(group);
     }
-    
+
     public Optional<User> findById(Long id) {
         if (id != null) {
             return userRepository.findById(id);
@@ -50,7 +50,7 @@ public class UserService implements UserDetailsService {
             return Optional.empty();
         }
     }
-    
+
     @Transactional
     public boolean deleteByLogin(String login) {
         if (login == null) {
@@ -59,7 +59,7 @@ public class UserService implements UserDetailsService {
         }
         return userRepository.deleteByLogin(login) != 0;
     }
-    
+
     public boolean deleteById(Long id) {
         if (id == null) {
             log.warn("deleting user with null id");
@@ -71,7 +71,7 @@ public class UserService implements UserDetailsService {
         }
         return exists;
     }
-    
+
     public boolean create(User user) {
         if (user.getLogin() == null) {
             throw new IllegalArgumentException("user mustn't have null login");
@@ -95,7 +95,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
         return true;
     }
-    
+
     public boolean update(User user) {
         if (user.getLogin() == null) {
             log.warn("updating user with null login");
@@ -122,5 +122,4 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         return findByLogin(login).orElseThrow(() -> new UsernameNotFoundException(String.format("user with login \"%s\" not found", login)));
     }
-    
 }
