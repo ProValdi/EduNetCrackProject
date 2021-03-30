@@ -5,7 +5,7 @@ import {BaseService} from "../base-service/base.service";
 import {Observable} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {ErrorHandler} from '../error-handler';
-import {AppComponent} from '../../components/app/app.component';
+import {AppComponent} from '../../components/app.component';
 
 @Injectable({
   providedIn: 'root'

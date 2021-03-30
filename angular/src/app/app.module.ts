@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
 
-import { AppComponent } from './components/app/app.component';
+import { AppComponent } from './components/app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UserPageComponent } from './components/user-page/user-page.component';

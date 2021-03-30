@@ -33,6 +33,7 @@
       <div *ngIf="variance;then content else other_content"></div>
 
       <ng-template #content>
+
         <span class="tag _{{i}}" *ngFor="let tag of allTags.get(lesson.id); let i = index">
           {{tag.title}}
         </span>

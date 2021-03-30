@@ -3,7 +3,7 @@ import {Lesson} from "../../model/entity/lesson";
 import {LessonService} from "../../services/lesson-service/lesson.service";
 import {Tag} from "../../model/entity/tag";
 import {TagService} from "../../services/tag-service/tag.service";
-import {AppComponent} from "../app/app.component";
+import {AppComponent} from "../app.component";
 import {LearnRequest} from "../../model/entity/learn-request";
 import {ModalService} from "../../services/modal-service/modal.service";
 import {LessonBody} from "../../model/entity/lesson-body";

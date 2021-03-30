@@ -33,11 +33,13 @@
 <!--      <a class="a-nav" routerLink="manage" [class.picked]="this.router.url === '/manage'">-->
 <!--        Manage organization-->
 <!--      </a>-->
-      <div *ngIf="_isAdmin">
+<!--      <div *ngIf="user$ | async as user; else loading">-->
+
         <a class="a-nav" routerLink="tags" [class.picked]="this.router.url === '/tags'">
           Manage Tag tree
         </a>
-      </div>
+<!--      </div>-->
+
 <!--      <a class="a-nav" routerLink="" [class.picked]="this.router.url === '/'">-->
 <!--        Manage add-lesson requests-->
 <!--      </a>-->

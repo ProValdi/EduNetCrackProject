@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Lesson} from "../../model/entity/lesson";
 import {LessonService} from "../../services/lesson-service/lesson.service";
 import {Tag} from "../../model/entity/tag";
 import {TagService} from "../../services/tag-service/tag.service";
 import {LearningRequestService} from "../../services/learning-request-service/learning-request.service";
-import {AppComponent} from "../app/app.component";
+import {AppComponent} from "../app.component";
 import {LearnRequestBody} from "../../model/entity/learn-request-body";
-import {LearnRequest} from "../../model/entity/learn-request";
 import {UserService} from "../../services/user-service/user.service";
 import {User} from "../../model/entity/user";
 
@@ -37,7 +36,9 @@ export class LearnTabComponent implements OnInit {
         return lesson.teacher.id != AppComponent.currentUserId;
       });
 
-      this.points = AppComponent.currentUserPoints;
+      this.userService.getById(AppComponent.currentUserId).subscribe(user => {
+        this.points = user.points;
+      });
       
       this.learningRequestService.getByStudentId(AppComponent.currentUserId).subscribe(requests => {
         for (let i = 0; i < this.lessons.length; i++) {
@@ -83,6 +84,38 @@ export class LearnTabComponent implements OnInit {
     this.tags.pop();
     this.tagService.getChildren(this.tags.length > 0 ? this.tags[this.tags.length - 1].id : 0)
       .subscribe(tags => this.possibleTags = tags);
+    if(this.tags.length == 0) {
+      this.variance = true;
+      this.lessonService.getAll().subscribe(lessons => {
+        this.lessons = lessons.filter( lesson => {
+          return lesson.teacher.id != AppComponent.currentUserId;
+        });
+
+        this.userService.getById(AppComponent.currentUserId).subscribe(user => {
+          this.points = user.points;
+        });
+
+        this.learningRequestService.getByStudentId(AppComponent.currentUserId).subscribe(requests => {
+          for (let i = 0; i < this.lessons.length; i++) {
+            for (let k = 0; k < requests.length; k++) {
+              if (requests[k].lesson.id == this.lessons[i].id) {
+                this.requestedLessons.set(requests[k].lesson.id, true);
+              }
+            }
+          }
+        });
+
+        for (let lesson of lessons) {
+          this.tagService.findWithParents(lesson.tag.id).subscribe(tags => {
+            this.allTags.set(lesson.id, tags.reverse());
+          })
+        }
+      });
+      this.tagService.getChildren(0).subscribe(tags => {
+        this.possibleTags = tags;
+      });
+      this.tags = [];
+    }
   }
 
   requestLesson(lesson: Lesson): void {

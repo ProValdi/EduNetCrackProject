@@ -6,7 +6,7 @@ import {jqxMenuComponent} from 'jqwidgets-ng/jqxmenu';
 import {TagService} from "../../services/tag-service/tag.service";
 import {Tag} from "../../model/entity/tag";
 import {LearnRequestBody} from "../../model/entity/learn-request-body";
-import {AppComponent} from "../app/app.component";
+import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-tag-tree',

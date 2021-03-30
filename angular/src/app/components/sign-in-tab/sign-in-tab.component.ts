@@ -1,13 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import {catchError, tap} from 'rxjs/operators';
-import {ErrorHandler} from '../../services/error-handler';
-
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Router} from '@angular/router';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {User} from '../../model/entity/user';
 import {UserService} from '../../services/user-service/user.service';
-import {AppComponent} from '../app/app.component';
+import {AppComponent} from '../app.component';
 
 @Component({
   selector: 'app-sign-in-tab',
@@ -15,12 +11,18 @@ import {AppComponent} from '../app/app.component';
   styleUrls: ['./sign-in-tab.component.less']
 })
 export class SignInTabComponent implements OnInit {
-
+  @Output() notify = new EventEmitter();
+  
+  public static currentUserId: number;
+  public static currentUserLogin: string;
+  public static currentUserPassword: string;
+  public static currentUserPoints: number;
+  
   protected url = 'http://localhost:8083';
-
-  constructor(
-    public router: Router, private http: HttpClient, private userService: UserService
-  ) {}
+  
+  constructor(public router: Router, 
+              private http: HttpClient, 
+              private userService: UserService) {}
 
   ngOnInit(): void {
   }
@@ -34,10 +36,18 @@ export class SignInTabComponent implements OnInit {
           case 200:
             const user = response.body;
             user.password = password;
+            console.log(response);
+
             AppComponent.currentUserId = user.id;
             AppComponent.currentUserLogin = login;
             AppComponent.currentUserPassword = password;
-            AppComponent.isAdmin = true;
+            
+            let comp: AppComponent = new AppComponent(this.router, this.userService);
+            //comp._isAdmin.
+            
+            this.notify.emit(true);
+            this.router.navigate(['/profile']);
+            
             console.log('auth');
             break;
           case 401:
