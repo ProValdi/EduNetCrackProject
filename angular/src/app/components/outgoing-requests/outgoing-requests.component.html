@@ -45,6 +45,9 @@
             </table>
           </span>
       </div>
+      <div class="topic">
+        {{learn.lesson.topic}}
+      </div>
       <textarea readonly>{{learn.lesson.description}}</textarea>
       <div style = "display: inline-block" *ngIf="learn.status === Status[Status.LESSON_REQUEST_ACCEPTED]">
         <div style = "display: grid">

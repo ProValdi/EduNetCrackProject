@@ -96,41 +96,14 @@ export class LearnTabComponent implements OnInit {
       return;
     }
     AppComponent.currentUserPoints -= lesson.pointsToGet;
-    
-    this.userService.getById(AppComponent.currentUserId).subscribe( student => {
+
+    this.userService.getById(AppComponent.currentUserId).subscribe(student => {
       let user: User = new User();
       user.id = student.id;
       user.points = AppComponent.currentUserPoints;
       this.userService.updateByPoints(user).subscribe();
     });
-    
-  }
 
-  // private updateUser(learn: LearnRequest, body: LearnRequestBody, id: number): void {
-  //   this.userService.getById(id).subscribe( teacher => {
-  //     let user: User = new User();
-  //     user.id = teacher.id;
-  //     user.login = teacher.login;
-  //     user.lastName = teacher.lastName;
-  //     user.firstName = teacher.firstName;
-  //     user.points = teacher.points + learn.lesson.pointsToGet;
-  //     user.phoneNumber = teacher.phoneNumber;
-  //     user.telegramLink = teacher.telegramLink;
-  //     user.enabled = teacher.enabled;
-  //     user.role = teacher.role;
-  //     user.password = teacher.password;
-  //     user.rating = teacher.rating;
-  //     user.email = teacher.email;
-  //     user.conductedCount = teacher.conductedCount;
-  //     user.attendedCount = teacher.attendedCount;
-  //     user.vkLink = teacher.vkLink;
-  //     user.group = teacher.group;
-  //
-  //     this.userService.updateByPoints(user).subscribe(_ => {
-  //       this.learningRequestService.update(body).subscribe();
-  //       this.learns = this.learns.filter(lesson => lesson.id !== body.id);
-  //     });
-  //   });
-  // }
+  }
 
 }

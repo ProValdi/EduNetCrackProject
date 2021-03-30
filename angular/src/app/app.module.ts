@@ -19,6 +19,7 @@ import { OutgoingRequestsComponent } from './components/outgoing-requests/outgoi
 import { IncomingRequestsComponent } from './components/incoming-requests/incoming-requests.component';
 import { SignInTabComponent } from './components/sign-in-tab/sign-in-tab.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { UserCatalogComponent } from './components/user-catalog/user-catalog.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ModalComponent } from './components/modal/modal.component';
     IncomingRequestsComponent,
     SignInTabComponent,
     ModalComponent,
+    UserCatalogComponent,
   ],
   imports: [
     BrowserModule,

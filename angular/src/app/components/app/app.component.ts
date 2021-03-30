@@ -15,16 +15,6 @@ export class AppComponent implements OnInit{
   public static isAdmin: boolean = true;
   _isAdmin: boolean = AppComponent.isAdmin;
   
-
-  
-  
-  /*
-  todo
-    каталог пользователей: удаление (удалить, прочекать, что удалился)  
-    3) новые значения БД
-    2) свитчинг поинтов
-   */
-  
   constructor(public router: Router,
               private userService: UserService) {}
 

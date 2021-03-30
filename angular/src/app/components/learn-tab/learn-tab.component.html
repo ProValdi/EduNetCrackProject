@@ -48,7 +48,7 @@
 
     <div class="trailer-section">
       <ng-template [ngIf]="!requestedLessons.get(lesson.id)">
-        <button (click)="requestLesson(lesson)" [ngClass]="points < lesson.pointsToGet? 'not-enough-points':''" [disabled]="points < lesson.pointsToGet" >
+        <button (click)="requestLesson(lesson)" [ngClass]="points < lesson.pointsToGet? 'not-enough-points':''" [disabled]="points < lesson.pointsToGet" title="{{points < lesson.pointsToGet? 'Not enough points!':''}} ">
           request
         </button>
       </ng-template>
@@ -80,6 +80,9 @@
                 </tr>
               </table>
             </span>
+      </div>
+      <div class="topic">
+        {{lesson.topic}}
       </div>
       <textarea readonly>{{lesson.description}}</textarea>
     </div>
