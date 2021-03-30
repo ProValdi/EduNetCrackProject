@@ -55,25 +55,10 @@
   <div class="profile-changer">
 
     <div class="description">
-      Update your personal information:
+      Update your contact information:
     </div>
     <div class="highlight"></div>
     <table cellspacing="10px">
-      <tr>
-        <td width="200px">Name:</td>
-        <td><input class="personal" [(ngModel)]="nameText" value="{{user.firstName}}"></td>
-      </tr>
-      <tr>
-        <td width="200px">Surname:</td>
-        <td><input class="personal" [(ngModel)]="surnameText" value="{{user.lastName}}"></td>
-      </tr>
-      <tr>
-        <td width="200px">Group:</td>
-        <td><input class="personal" maxlength="13" [(ngModel)]="groupText" value="{{user.group}}"></td>
-      </tr>
-      <tr>
-        <td colspan="2">contact information:</td>
-      </tr>
       <tr>
         <td class="tab">Email:</td>
         <td><input [(ngModel)]="emailText" value="{{user.email}}"></td>

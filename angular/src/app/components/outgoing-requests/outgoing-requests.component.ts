@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LearnRequest} from "../../model/entity/learn-request";
 import {Tag} from "../../model/entity/tag";
 import {AppComponent} from "../app/app.component";
@@ -6,6 +6,9 @@ import {TagService} from "../../services/tag-service/tag.service";
 import {LearningRequestService} from "../../services/learning-request-service/learning-request.service";
 import {LearnRequestBody} from "../../model/entity/learn-request-body";
 import {Status} from "../../model/entity/learn-request-status";
+import {User} from "../../model/entity/user";
+import {UserService} from "../../services/user-service/user.service";
+import {updateSuperClassAbstractMembersContext} from "@angular/core/schematics/migrations/static-queries/strategies/usage_strategy/super_class_context";
 
 @Component({
   selector: 'app-outgoing-requests',
@@ -18,7 +21,8 @@ export class OutgoingRequestsComponent implements OnInit {
   Status = Status;
 
   constructor(private tagService: TagService,
-              private learningRequestService: LearningRequestService) {
+              private learningRequestService: LearningRequestService,
+              private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -41,11 +45,22 @@ export class OutgoingRequestsComponent implements OnInit {
     body.status = Status.MEETING_CANCELED;
     body.hiddenForTeacher = learn.hiddenForTeacher;
     body.hiddenForStudent = learn.hiddenForStudent;
-    this.learningRequestService.update(body).subscribe();
-    this.learns = this.learns.filter(lesson => lesson.id !== body.id);
+
+    this.userService.getById(learn.student.id).subscribe( teacher => {
+      let user: User = new User();
+      user.id = teacher.id;
+      user.points = teacher.points + learn.lesson.pointsToGet;
+
+      this.userService.updateByPoints(user).subscribe(_ => {
+        this.learningRequestService.update(body).subscribe();
+        this.learns = this.learns.filter(lesson => lesson.id !== body.id);
+        AppComponent.currentUserPoints = user.points;
+      });
+    });
   }
   
   accept(learn: LearnRequest): void {
+    // todo действия ниже только после всплывающей менюшки
     let body: LearnRequestBody = new LearnRequestBody();
     body.id = learn.id;
     body.teacherId = learn.teacher.id;
@@ -54,11 +69,21 @@ export class OutgoingRequestsComponent implements OnInit {
     body.status = Status.MEETING_CONFIRMED;
     body.hiddenForTeacher = learn.hiddenForTeacher;
     body.hiddenForStudent = learn.hiddenForStudent;
-    this.learningRequestService.update(body).subscribe();
-    this.learns = this.learns.filter(lesson => lesson.id !== body.id);
+
+    this.userService.getById(learn.teacher.id).subscribe( teacher => {
+      let user: User = new User();
+      user.id = teacher.id;
+      user.points = teacher.points + learn.lesson.pointsToGet;
+
+      this.userService.updateByPoints(user).subscribe(_ => {
+        this.learningRequestService.update(body).subscribe();
+        this.learns = this.learns.filter(lesson => lesson.id !== body.id);
+      });
+    });
   }
 
   deny(learn: LearnRequest): void {
+    // todo действия ниже только после всплывающей менюшки
     let body: LearnRequestBody = new LearnRequestBody();
     body.id = learn.id;
     body.teacherId = learn.teacher.id;
@@ -67,12 +92,19 @@ export class OutgoingRequestsComponent implements OnInit {
     body.status = Status.MEETING_DISPROVED;
     body.hiddenForTeacher = learn.hiddenForTeacher;
     body.hiddenForStudent = learn.hiddenForStudent;
-    this.learningRequestService.update(body).subscribe();
-    this.learns = this.learns.filter(lesson => lesson.id !== body.id);
-  }
 
-  takeAction(learn): void {
-    
-  }
+    this.userService.getById(learn.student.id).subscribe( teacher => {
+      let user: User = new User();
+      user.id = teacher.id;
+      user.points = teacher.points + learn.lesson.pointsToGet;
 
+      this.userService.updateByPoints(user).subscribe(_ => {
+        this.learningRequestService.update(body).subscribe();
+        this.learns = this.learns.filter(lesson => lesson.id !== body.id);
+        AppComponent.currentUserPoints = user.points;
+      });
+    });
+  }
+  
+  
 }

@@ -42,6 +42,7 @@ export class IncomingRequestsComponent implements OnInit {
     body.hiddenForStudent = learn.hiddenForStudent;
     this.learningRequestService.update(body).subscribe(_ => {
       this.learningRequestService.getById(learn.id).subscribe(learn => {
+        this.learns = this.learns.filter(obj => obj.id !== learn.id);
         this.learns.push(learn);
       });
     });

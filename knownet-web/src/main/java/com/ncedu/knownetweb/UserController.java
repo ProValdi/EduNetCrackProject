@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 @RestController
@@ -112,5 +113,22 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("user with login = " + login + " does not exist");
         }
+    }
+
+    @PutMapping(value = "byPointsChanging")
+    public ResponseEntity<String> updatePoints(@RequestBody User user) {
+        Optional<User> oldUser = userService.findById(user.getId());
+        String login = user.getLogin();
+        log.debug("requested: user  update (login = {})", login);
+        if (oldUser.isPresent()) {
+            User newUser = oldUser.get();
+            newUser.setPoints(user.getPoints());
+            boolean updated = userService.update(newUser);
+            if (updated) {
+                return ResponseEntity.ok().body("user with login = " + login + " was updated");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("user with login = " + login + " does not exist");
     }
 }

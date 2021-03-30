@@ -40,4 +40,11 @@ export class UserService extends BaseService<User, User>{
     });
   }
 
+  updateByPoints(user: User): Observable<any> {
+    return this.http.put(this.url + '/byPointsChanging', user, this.getAuthHttpHeaders()).pipe(
+      tap(_ => this.log('updated points of user' + this.TName + ` id=${user.id}`)),
+      catchError(ErrorHandler.handleError<any>('update ' + this.TName))
+    );
+  }
+
 }

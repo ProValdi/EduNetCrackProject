@@ -1,16 +1,12 @@
-import {Component, EventEmitter, Inject, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Lesson} from "../../model/entity/lesson";
 import {LessonService} from "../../services/lesson-service/lesson.service";
 import {Tag} from "../../model/entity/tag";
 import {TagService} from "../../services/tag-service/tag.service";
-import {flatMap} from "rxjs/internal/operators";
 import {AppComponent} from "../app/app.component";
 import {LearnRequest} from "../../model/entity/learn-request";
 import {ModalService} from "../../services/modal-service/modal.service";
-import {LearnRequestBody} from "../../model/entity/learn-request-body";
 import {LessonBody} from "../../model/entity/lesson-body";
-import {DOCUMENT} from "@angular/common";
-
 
 @Component({
   selector: 'app-teach-tab',
@@ -30,6 +26,7 @@ export class TeachTabComponent implements OnInit{
   descriptionText: string;
   costNumber: number;
   modalName: string;
+  topic: string;
 
   constructor(private lessonService: LessonService,
               private tagService: TagService,
@@ -96,6 +93,7 @@ export class TeachTabComponent implements OnInit{
     lessonBody.description = this.descriptionText;
     lessonBody.pointsToGet = this.costNumber;
     lessonBody.tagId = this.selectedTag.id;
+    lessonBody.topic = this.topic;
     lessonBody.teacherId = AppComponent.currentUserId;
     this.lessonService.create(lessonBody).subscribe(_ => {
       this.lessonService.getByTeacherId(lessonBody.teacherId).subscribe(lessons => {

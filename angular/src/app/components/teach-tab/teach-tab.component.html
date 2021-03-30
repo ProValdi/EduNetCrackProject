@@ -12,7 +12,7 @@
       <div class="point-amount">
         {{lesson.pointsToGet}} points
       </div>
-      <button (click)="delete(lesson.id)" class="remove-button" >remove</button>
+      <button (click)="delete(lesson.id)" class="remove-button">remove</button>
     </div>
     <div class="info">
       <div class="photo">
@@ -35,6 +35,9 @@
               </tr>
             </table>
           </span>
+      </div>
+      <div class="topic">
+        {{lesson.topic}}
       </div>
       <textarea readonly>{{lesson.description}}</textarea>
     </div>
@@ -67,6 +70,13 @@
         back
       </button>
     </div>
+
+    <div class="description">
+      Lesson name:
+    </div>
+
+    <input class="topic" type="text" maxlength="60" [(ngModel)]="topic">
+
     <div class="description">
       Describe your lesson
     </div>

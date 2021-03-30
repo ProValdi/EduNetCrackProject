@@ -12,10 +12,19 @@ export class AppComponent implements OnInit{
   public static currentUserLogin: string = "masha";
   public static currentUserPassword: string = "0000";
   public static currentUserPoints: number;
-  public static isAdmin: boolean = false;
+  public static isAdmin: boolean = true;
   _isAdmin: boolean = AppComponent.isAdmin;
   
 
+  
+  
+  /*
+  todo
+    каталог пользователей: удаление (удалить, прочекать, что удалился)  
+    3) новые значения БД
+    2) свитчинг поинтов
+   */
+  
   constructor(public router: Router,
               private userService: UserService) {}
 

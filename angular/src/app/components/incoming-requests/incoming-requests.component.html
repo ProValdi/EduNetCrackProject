@@ -1,5 +1,6 @@
 <div id="content">
   <div class="infocard" *ngFor="let learn of learns">
+
     <div class="tags">
       <span class="tag _{{i}}" *ngFor="let tag of tags.get(learn.lesson.tag.id); let i = index">
         {{tag.title}}
@@ -43,5 +44,6 @@
       </div>
       <textarea readonly>{{learn.lesson.description}}</textarea>
     </div>
+
   </div>
 </div>
