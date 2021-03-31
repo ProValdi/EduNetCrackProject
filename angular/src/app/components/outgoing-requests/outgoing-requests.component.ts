@@ -50,7 +50,7 @@ export class OutgoingRequestsComponent implements OnInit {
       let user: User = new User();
       user.id = teacher.id;
       user.points = teacher.points + learn.lesson.pointsToGet;
-
+      
       this.userService.updateByPoints(user).subscribe(_ => {
         this.learningRequestService.update(body).subscribe();
         this.learns = this.learns.filter(lesson => lesson.id !== body.id);

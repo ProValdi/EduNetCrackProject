@@ -24,7 +24,7 @@
   <div class="current-points">
     You have
     <span class="point-amount">
-      {{this.points}} points
+      {{this.points == 0? 0: this.points}} points
     </span>
   </div>
   <div class="infocard" *ngFor="let lesson of lessons">

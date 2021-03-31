@@ -86,7 +86,7 @@
     <div class="points">
       cost:
       <label>
-        <input type="number" required="true" max="100" [(ngModel)]="costNumber">
+        <input type="number" required="true" min="0" max="999" [(ngModel)]="costNumber">
       </label>
       <button (click)="addLesson()">
         Add

@@ -72,6 +72,7 @@ export class TeachTabComponent implements OnInit{
   
   delete(id: number): void {
     this.lessonService.delete(id).subscribe();
+    this.tags.delete(id);
     this.lessons = this.lessons.filter(lesson => lesson.id != id);
   }
   
@@ -98,7 +99,7 @@ export class TeachTabComponent implements OnInit{
     this.lessonService.create(lessonBody).subscribe(_ => {
       this.lessonService.getByTeacherId(lessonBody.teacherId).subscribe(lessons => {
         this.lessons = lessons;
-        const currentLesson = lessons[lessons.length - 1];
+        const currentLesson = lessons[0];
         this.tagService.findWithParents(currentLesson.tag.id).subscribe(tags => {
           this.tags.set(currentLesson.id, tags.reverse());
         })

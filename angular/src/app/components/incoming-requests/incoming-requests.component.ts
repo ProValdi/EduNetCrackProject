@@ -6,6 +6,8 @@ import {LearningRequestService} from "../../services/learning-request-service/le
 import {AppComponent} from "../app.component";
 import {Status} from "../../model/entity/learn-request-status";
 import {LearnRequestBody} from "../../model/entity/learn-request-body";
+import {User} from "../../model/entity/user";
+import {UserService} from "../../services/user-service/user.service";
 
 @Component({
   selector: 'app-incoming-requests',
@@ -18,7 +20,8 @@ export class IncomingRequestsComponent implements OnInit {
   Status = Status;
 
   constructor(private tagService: TagService, 
-              private learningRequestService: LearningRequestService){ }
+              private learningRequestService: LearningRequestService,
+              private userService: UserService){ }
 
   ngOnInit(): void {
     this.learningRequestService.getByTeacherId(AppComponent.currentUserId).subscribe(learns => {
@@ -57,7 +60,17 @@ export class IncomingRequestsComponent implements OnInit {
     body.status = Status.LESSON_REQUEST_REJECTED;
     body.hiddenForTeacher = learn.hiddenForTeacher;
     body.hiddenForStudent = learn.hiddenForStudent;
-    this.learningRequestService.update(body).subscribe();
-    this.learns = this.learns.filter(lesson => lesson.id !== body.id);
+
+    this.userService.getById(learn.student.id).subscribe( student => {
+      let user: User = new User();
+      user.id = student.id;
+      user.points = student.points + learn.lesson.pointsToGet;
+      
+      this.userService.updateByPoints(user).subscribe(_ => {
+        this.learningRequestService.update(body).subscribe();
+        this.learns = this.learns.filter(lesson => lesson.id !== body.id);
+      });
+    });
+    
   }
 }

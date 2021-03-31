@@ -63,7 +63,11 @@ export class LearnTabComponent implements OnInit {
   }
 
   getByTagId(): void {
-    this.lessonService.getByTagId(this.tags[this.tags.length - 1].id).subscribe(lessons => this.lessons = lessons);
+    this.lessonService.getByTagId(this.tags[this.tags.length - 1].id).subscribe(lessons => {
+      this.lessons = lessons.filter( lesson => {
+        return lesson.teacher.id != AppComponent.currentUserId;
+      });
+    });
   }
 
   choseTag(): void {
@@ -133,8 +137,12 @@ export class LearnTabComponent implements OnInit {
     this.userService.getById(AppComponent.currentUserId).subscribe(student => {
       let user: User = new User();
       user.id = student.id;
-      user.points = AppComponent.currentUserPoints;
-      this.userService.updateByPoints(user).subscribe();
+      user.points = student.points -= lesson.pointsToGet;
+      this.userService.updateByPoints(user).subscribe(_ => {
+        this.userService.getById(user.id).subscribe(usr => {
+          this.points = usr.points;
+        });
+      });
     });
 
   }
