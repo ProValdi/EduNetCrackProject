@@ -1,0 +1,100 @@
+<div id="content">
+  <button class="add-button" (click)="openModal('new-lesson-modal')" >
+    Add new lesson
+  </button>
+  <div class="infocard" *ngFor="let lesson of lessons">
+    <div class="tags">
+      <span class="tag _{{i}}" *ngFor="let tag of tags.get(lesson.id); let i = index">
+        {{tag.title}}
+      </span>
+    </div>
+    <div class="trailer-section">
+      <div class="point-amount">
+        {{lesson.pointsToGet}} points
+      </div>
+      <button (click)="delete(lesson.id)" class="remove-button">remove</button>
+    </div>
+    <div class="info">
+      <div class="photo">
+        <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
+      </div>
+      <div class="personal-info">
+          <span class="contacts">
+            <div class="name">
+              {{lesson.teacher.lastName}} {{lesson.teacher.firstName}}
+            </div>
+            <div class="highlight"> </div>
+            <table>
+              <tr>
+                <td>status:</td>
+                <td id="group">student</td>
+              </tr>
+              <tr>
+                <td>rating:</td>
+                <td id="rating">{{lesson.teacher.rating}}</td>
+              </tr>
+            </table>
+          </span>
+      </div>
+      <div class="topic">
+        {{lesson.topic}}
+      </div>
+      <textarea readonly>{{lesson.description}}</textarea>
+    </div>
+  </div>
+
+</div>
+
+<jw-modal id="new-lesson-modal">
+  <div class="dialog-menu">
+
+    <div class="tag-search-modified">
+         <span class="tag _{{i}}" *ngFor="let tag of allTags; let i = index">
+      {{tag.title}}
+    </span>
+
+      <span class="tag" *ngIf="possibleTags.length != 0">
+<!--todo я не понимаю как блин обработать выбор тэга нормально без кнопки-->
+      <select [(ngModel)]="selectedTag">
+<!--        <option selected hidden>chose tag</option>-->
+        <option *ngFor="let tag of possibleTags" [ngValue]="tag">
+          {{tag.title}}
+        </option>
+      </select>
+    </span>
+
+      <button *ngIf="possibleTags.length != 0" (click)="choseTag()">
+        confirm
+      </button>
+      <button (click)="back()">
+        back
+      </button>
+    </div>
+
+    <div class="description">
+      Lesson name:
+    </div>
+
+    <input class="topic" type="text" maxlength="50" [(ngModel)]="topic">
+
+    <div class="description">
+      Describe your lesson
+    </div>
+    <label>
+      <textarea [(ngModel)]="descriptionText"></textarea>
+    </label>
+    <div class="points">
+      cost:
+      <label>
+        <input type="number" required="true" min="0" max="999" [(ngModel)]="costNumber">
+      </label>
+      <button (click)="addLesson()">
+        Add
+      </button>
+      <button style="background: #ffafaf" (click)="closeModal('new-lesson-modal');">
+        Cancel
+      </button>
+    </div>
+
+  </div>
+</jw-modal>

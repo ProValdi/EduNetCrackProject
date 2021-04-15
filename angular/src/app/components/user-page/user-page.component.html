@@ -1,0 +1,86 @@
+<div id="content">
+  <div id="profile">
+    <div id="photo">
+      <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="profile photo">
+    </div>
+
+
+    <div id="personal-info">
+
+      <button (click)="openModal('profile-changer')">
+        Change
+      </button>
+      <div id="name">
+        {{user.firstName}} {{user.lastName}}
+      </div>
+
+      <div class="highlight"></div>
+      <div id="contacts">
+        <table cellspacing="10px">
+          <tr>
+            <td width="200px">group:</td>
+            <td id="group" >{{user.group}}</td>
+          </tr>
+          <tr>
+            <td>rating:</td>
+            <td id="rating">{{user.rating}}</td>
+          </tr>
+          <tr>
+            <td colspan="2">contact information:</td>
+          </tr>
+          <tr>
+            <td class="tab">email:</td>
+            <td id="email">{{user.email}}</td>
+          </tr>
+          <tr>
+            <td class="tab">VK:</td>
+            <td id="vkLink">{{user.vkLink}}</td>
+          </tr>
+          <tr>
+            <td class="tab">telegram:</td>
+            <td id="telegramLink">{{user.telegramLink}}</td>
+          </tr>
+          <tr>
+            <td class="tab">phone:</td>
+              <td id="phoneNumber">{{user.phoneNumber}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<jw-modal id="profile-changer">
+  <div class="profile-changer">
+
+    <div class="description">
+      Update your contact information:
+    </div>
+    <div class="highlight"></div>
+    <table cellspacing="10px">
+      <tr>
+        <td class="tab">Email:</td>
+        <td><input [(ngModel)]="emailText" value="{{user.email}}"></td>
+      </tr>
+      <tr>
+        <td class="tab">VK:</td>
+        <td><input [(ngModel)]="vkText" value="{{user.vkLink}}"></td>
+      </tr>
+      <tr>
+        <td class="tab">Telegram:</td>
+        <td><input [(ngModel)]="telegramText" value="{{user.telegramLink}}"></td>
+      </tr>
+      <tr>
+        <td class="tab">Phone:</td>
+        <td><input [(ngModel)]="phoneText" value="{{user.phoneNumber}}"></td>
+      </tr>
+    </table>
+    <button (click)="save()" >
+      Save
+    </button>
+    <button style="background: #ffafaf" (click)="closeModal('profile-changer');">
+      Cancel
+    </button>
+  </div>
+</jw-modal>

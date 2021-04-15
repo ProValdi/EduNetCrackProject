@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300&display=swap");
+
+@infocard-height: 160px;
+@infocard-width: 900px;
+
+.infocard {
+
+  input {
+    font-size: 18px;
+    background-color: #dfdfdf;
+    text-align: left;
+    width: @infocard-width - 450px;
+    color: #3f5efb;
+    min-height: 20px;
+    max-height: 40px;
+    position: relative;
+    border-radius: 10px;
+    padding-left: 5px;
+    margin: 2px;
+    float: left;
+    outline: none;
+    resize: none;
+  }
+
+  &.extended {
+    height: @infocard-height + 90px;
+  }
+
+  .trailer-section {
+    font-size: 20px;
+    width: 100px;
+    height: @infocard-height - 10px;
+    margin-right: 5px;
+    float: right;
+
+    button {
+      border-radius: 14px;
+      font-size: 20px;
+      width: 105px;
+      height: 45px;
+      outline: none;
+      background: #ffafaf;
+      margin-bottom: 5px;
+    }
+
+    .cancel-accepted {
+      border-radius: 14px;
+      font-size: 20px;
+      width: 105px;
+      height: 45px;
+      outline: none;
+      background: #ffafaf;
+    }
+
+    .confirm-meeting {
+      border-radius: 14px;
+      font-size: 20px;
+      width: 105px;
+      height: 60px;
+      outline: none;
+      background: #c3f4ff;
+    }
+
+    .disprove-meeting {
+      border-radius: 14px;
+      font-size: 20px;
+      width: 105px;
+      height: 60px;
+      outline: none;
+      background: #ffafaf;
+    }
+  }
+}

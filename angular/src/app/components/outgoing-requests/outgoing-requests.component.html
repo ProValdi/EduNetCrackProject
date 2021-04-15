@@ -1,0 +1,61 @@
+<div id="content">
+  <div [ngClass]="learn.status !== Status[Status.LESSON_REQUEST_ACCEPTED] ? 'infocard': 'infocard extended'" *ngFor="let learn of learns">
+    <div class="tags">
+      <span class="tag _{{i}}" *ngFor="let tag of tags.get(learn.lesson.tag.id); let i = index">
+        {{tag.title}}
+      </span>
+    </div>
+    <div class="trailer-section">
+      <div class="point-amount">{{learn.lesson.pointsToGet}} points</div>
+      <button (click)="withdraw(learn)" *ngIf="learn.status !== Status[Status.LESSON_REQUEST_ACCEPTED]">
+        cancel
+      </button>
+      <button class="cancel-accepted" (click)="withdraw(learn)" *ngIf="learn.status === Status[Status.LESSON_REQUEST_ACCEPTED]">
+        cancel
+      </button>
+      <button class="confirm-meeting" (click)="accept(learn)" *ngIf="learn.status === Status[Status.LESSON_REQUEST_ACCEPTED]">
+        confirm meeting
+      </button>
+      <button class="disprove-meeting" (click)="deny(learn)" *ngIf="learn.status === Status[Status.LESSON_REQUEST_ACCEPTED]">
+        disprove meeting
+      </button>
+      <div *ngIf="learn.status === Status[Status.LESSON_REQUEST_REJECTED]">
+        Nо lesson
+      </div>
+    </div>
+    <div class="info">
+      <div class="photo">
+        <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
+      </div>
+      <div class="personal-info">
+          <span class="contacts">
+            <div class="name">
+              {{learn.teacher.firstName}} {{learn.teacher.lastName}}
+            </div>
+            <div class="highlight"> </div>
+            <table>
+              <tr>
+                <td id>group:</td>
+                <td id="group">{{learn.teacher.group}}</td>
+              </tr>
+              <tr>
+                <td>rating:</td>
+                <td id="rating">{{learn.teacher.rating}}</td>
+              </tr>
+            </table>
+          </span>
+      </div>
+      <div class="topic">
+        {{learn.lesson.topic}}
+      </div>
+      <textarea readonly>{{learn.lesson.description}}</textarea>
+      <div style = "display: inline-block" *ngIf="learn.status === Status[Status.LESSON_REQUEST_ACCEPTED]">
+        <div style = "display: grid">
+          <input type="text" max="100" value="{{learn.teacher.email}}" readonly>
+          <input type="text" max="100" value="{{learn.teacher.vkLink}}" readonly>
+          <input type="text" max="100" value="{{learn.teacher.phoneNumber}}" readonly>
+        </div>
+    </div>
+      </div>
+  </div>
+</div>

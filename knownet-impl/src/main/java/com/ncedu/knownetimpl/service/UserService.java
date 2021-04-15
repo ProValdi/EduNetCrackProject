@@ -2,22 +2,24 @@ package com.ncedu.knownetimpl.service;
 
 import com.ncedu.knownetimpl.model.entity.User;
 import com.ncedu.knownetimpl.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @Service
-public class UserService {
+@AllArgsConstructor
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final PasswordEncoder passwordEncoder;
     
     public List<User> findAll() {
         return userRepository.findAll();
@@ -72,14 +74,26 @@ public class UserService {
     
     public boolean create(User user) {
         if (user.getLogin() == null) {
-            log.warn("creating user with null login");
+            throw new IllegalArgumentException("user mustn't have null login");
+        }
+        if (user.getLogin().length() < 4) {
+            throw new IllegalArgumentException("login must have at least 4 symbols");
+        }
+
+        if (userRepository.existsByLogin(user.getLogin())) {
             return false;
         }
-        boolean exists = userRepository.existsByLogin(user.getLogin());
-        if (!exists) {
-            userRepository.save(user);
+
+        if (user.getPassword() == null) {
+            throw new IllegalArgumentException("user mustn't have null password");
         }
-        return !exists;
+        if (user.getPassword().length() < 4) {
+            throw new IllegalArgumentException("password must have at least 4 symbols");
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return true;
     }
     
     public boolean update(User user) {
@@ -87,11 +101,11 @@ public class UserService {
             log.warn("updating user with null login");
             return false;
         }
-    
+
         Optional<User> oldUserOpt = findByLogin(user.getLogin());
         if (oldUserOpt.isPresent()) {
             User oldUser = oldUserOpt.get();
-            
+
             oldUser.setFirstName(user.getFirstName());
             oldUser.setLastName(user.getLastName());
             oldUser.setGroup(user.getGroup());
@@ -103,6 +117,10 @@ public class UserService {
         }
         return oldUserOpt.isPresent();
     }
-    
+
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        return findByLogin(login).orElseThrow(() -> new UsernameNotFoundException(String.format("user with login \"%s\" not found", login)));
+    }
     
 }

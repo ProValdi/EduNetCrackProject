@@ -3,6 +3,7 @@ package com.ncedu.knownetimpl.model.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Data
@@ -30,10 +31,10 @@ public class Lesson {
     private String topic;
 
     @Column(name = "difficulty")
-    private Double difficulty;
+    private Double difficulty = 0.0;
 
     @Column(name = "points_to_get")
-    private Integer pointsToGet;
+    private Integer pointsToGet = 0;
 
     @Column(name = "description", length = 2000)
     private String description;

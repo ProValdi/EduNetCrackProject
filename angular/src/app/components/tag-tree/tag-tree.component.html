@@ -1,0 +1,32 @@
+<div id="content">
+
+  <div id="buttons">
+    <button (click)="expandAll()">
+      Expand all
+    </button>
+    <button (click)="collapseAll()">
+      Collapse all
+    </button>
+    <button (click)="addRootTag()">
+      Add root tag
+    </button>
+  </div>
+
+  <div id="tag-tree-view">
+    <jqxTreeGrid #myTreeGrid
+                 (onCellBeginEdit)="treeGridOnCellBeginEdit($event)" (onCellEndEdit)="treeGridOnCellEndEdit($event)"
+                 (onRowClick)="myTreeGridOnRowClick($event)"
+                 [width]="getWidth()" [source]="dataAdapter" [columns]="columns" [editable]="true"
+                 [columnsResize]="false" [ready]="ready" [editSettings]="editSettings">
+    </jqxTreeGrid>
+    <jqxMenu #myMenu (onItemclick)="myMenuOnItemClick($event)"
+             [width]="200" [height]="56" [autoOpenPopup]="false" [mode]="'popup'">
+      <ul>
+        <li>Add new Row</li>
+        <li>Delete Selected Row</li>
+
+      </ul>
+    </jqxMenu>
+
+  </div>
+</div>

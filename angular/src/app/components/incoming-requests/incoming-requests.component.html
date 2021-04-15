@@ -1,0 +1,52 @@
+<div id="content">
+  <div class="infocard" *ngFor="let learn of learns">
+
+    <div class="tags">
+      <span class="tag _{{i}}" *ngFor="let tag of tags.get(learn.lesson.tag.id); let i = index">
+        {{tag.title}}
+      </span>
+    </div>
+
+    <div class="trailer-section">
+      <ng-template [ngIf]="learn.status !== Status[Status.LESSON_REQUEST_ACCEPTED] && learn.status !== Status[Status.LESSON_REQUEST_REJECTED]">
+      <button class="_accept-button" (click)="accept(learn)">
+        accept
+      </button>
+      <button class="_deny-button" (click)="deny(learn)">
+        deny
+      </button>
+      </ng-template>
+      <div *ngIf="learn.status === Status[Status.LESSON_REQUEST_ACCEPTED]">
+        Lesson request accepted
+      </div>
+    </div>
+    <div class="info">
+      <div class="photo">
+        <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
+      </div>
+      <div class="personal-info">
+            <span class="contacts">
+              <div class="name">
+                {{learn.student.firstName}} {{learn.student.lastName}}
+              </div>
+              <div class="highlight"> </div>
+              <table>
+                <tr>
+                  <td>group:</td>
+                  <td id="group">{{learn.student.group}}</td>
+                </tr>
+                <tr>
+                  <td>rating:</td>
+                  <td id="rating">{{learn.student.rating}}</td>
+                </tr>
+              </table>
+            </span>
+      </div>
+      <div class="topic">
+        {{learn.lesson.topic}}
+      </div>
+      <textarea readonly>{{learn.lesson.description}}</textarea>
+    </div>
+
+  </div>
+</div>

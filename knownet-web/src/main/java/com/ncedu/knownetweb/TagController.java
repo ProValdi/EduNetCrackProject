@@ -7,20 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/tags")
 public class TagController {
   private final TagService tagService;
 
   @Autowired
-  private TagController(TagService tagService) {
+  public TagController(TagService tagService) {
     this.tagService = tagService;
   }
 
+  @RolesAllowed("ADMIN")
   @GetMapping("/all")
   public ResponseEntity<List<Tag>> findAll() {
     log.debug("requested: tag get     (all)");
@@ -33,6 +37,7 @@ public class TagController {
     return ResponseEntity.ok().body(tagService.findByTitle(title));
   }
 
+  @RolesAllowed("ADMIN")
   @GetMapping("byId/{id}")
   public ResponseEntity<Tag> findById(@PathVariable("id") Long id) {
     log.debug("requested: tag get      (id = {})", id);
@@ -54,6 +59,7 @@ public class TagController {
     return ResponseEntity.ok(tags);
   }
 
+  @RolesAllowed("ADMIN")
   @DeleteMapping(value = "byId/{id}")
   public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
     log.debug("requested: tag  delete (id = {})", id);
@@ -66,7 +72,8 @@ public class TagController {
     }
   }
 
-  @PostMapping(value = "tag")
+  @RolesAllowed("ADMIN")
+  @PostMapping(value = "")
   public ResponseEntity<String> create(@RequestBody Tag tag) {
     log.debug("requested: tag  create (title = {}, parentId = {})", tag.getParentId(), tag.getParentId());
     boolean created = tagService.create(tag);
@@ -78,7 +85,8 @@ public class TagController {
     }
   }
 
-  @PutMapping(value = "tag")
+  @RolesAllowed("ADMIN")
+  @PutMapping(value = "")
   public ResponseEntity<String> update(@RequestBody Tag tag) {
     Long id = tag.getId();
     log.debug("requested: tag  update (id = {})", id);
@@ -89,5 +97,11 @@ public class TagController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
         .body("tag with id = " + id + " does not exist");
     }
+  }
+  @RolesAllowed("ADMIN")
+  @GetMapping("/lastTagId")
+  public ResponseEntity<Long> getLastId() {
+    log.debug("requested: last tag id");
+    return ResponseEntity.ok(tagService.getLastId());
   }
 }

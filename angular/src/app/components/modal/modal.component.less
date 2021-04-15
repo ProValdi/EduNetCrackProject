@@ -1,0 +1,181 @@
+/* MODAL STYLES
+-------------------------------*/
+jw-modal {
+  /* modals are hidden by default */
+  display: none;
+
+  .jw-modal {
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 10%;
+    right: 0;
+    bottom: 0;
+    left: 20%;
+
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  }
+
+  .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.1;
+
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+  }
+}
+
+body.jw-modal-open {
+  /* body overflow is hidden to hide main scrollbar when modal window is open */
+  overflow: hidden;
+}
+
+/* Add new lesson menu */
+
+@dialog-menu-width: 800px;
+@dialog-menu-height: 500px;
+@dialog-menu-padding: 20px;
+
+.dialog-menu {
+  font: 400 25px "Roboto";
+  width: @dialog-menu-width;
+  height: @dialog-menu-height;
+  margin: 100px;
+  padding: @dialog-menu-padding;
+  background-color: #ffe4b5;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 50px;
+  border-radius: 18px;
+  box-shadow: 4px 4px 8px #A9A9A9;
+
+  textarea {
+    width: @dialog-menu-width - @dialog-menu-padding;
+    height: @dialog-menu-height - 250px;
+    background-color: #FFF5EE;
+    resize: none;
+  }
+
+  .topic {
+    width: @dialog-menu-width - @dialog-menu-padding;
+    font-size: 23px;
+    height: 30px;
+  }
+
+  .points {
+    margin-top: 20px;
+    input {
+      width: 40px;
+    }
+    button {
+      border-radius: 14px;
+      font-size: 20px;
+      width: 105px;
+      height: 45px;
+      outline: none;
+      background: #dfffff;
+      float: right;
+    }
+  }
+}
+
+@infocard-width: @dialog-menu-width;
+@infocard-height: 140px;
+@infocard-padding: 10px;
+@infocard-margin: 20px;
+@infocard-background-color: #ffefd5;
+
+@tags-height: 45px;
+
+.tag-search-modified {
+  @tag-search-height: 50px;
+
+  background-color: #ffe4bF;
+  width: @infocard-width - @infocard-padding;
+  height: @tag-search-height;
+  position: relative;
+  overflow: hidden;
+  padding-top: @tag-search-height / 4;
+  margin-bottom: 10px;
+  box-shadow: inset 2px 2px 12px #A9A9A9;
+  border-radius: 18px;
+
+  .tag {
+    font-size: @tags-height / 2;
+    background-color: #dfffff;
+    overflow: hidden;
+    padding: 6px;
+    margin: 5px;
+    padding-left: 10px;
+    border-radius: 14px;
+
+    &._0 {background-color: #dfffff;}
+    &._1 {background-color: #a0fbfb;}
+    &._2 {background-color: #00ffff;}
+    &._3 {background-color: #87CEFA;}
+    &._4 {background-color: #00e5ff;}
+    &._5 {background-color: #00CcFf;}
+    &._6 {background-color: #00BFFF;}
+  }
+}
+
+/* profile changer */
+
+.profile-changer {
+  @dialog-menu-width: 600px;
+  @dialog-menu-height: 280px;
+  @dialog-menu-padding: 20px;
+
+  font: 400 25px "Roboto";
+  width: @dialog-menu-width;
+  height: @dialog-menu-height;
+  margin: 100px;
+  padding: @dialog-menu-padding;
+  background-color: #ffe4b5;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 50px;
+  border-radius: 18px;
+  box-shadow: 4px 4px 8px #a9a9a9;
+
+  button {
+    border-radius: 14px;
+    font-size: 20px;
+    margin-top: 10px;
+    width: 105px;
+    height: 45px;
+    outline: none;
+    background: #dfffff;
+    float: right;
+  }
+  input {
+    width: 300px;
+    &.personal {
+      width: 230px;
+    }
+  }
+
+  .tab {
+    padding-left: 40px;
+  }
+
+  .highlight {
+    content: "";
+    position: absolute;
+    width: 465px;
+    height: 0.11em;
+    background: black linear-gradient(to right, #5e42a6, #b74e91);
+  }
+}
+

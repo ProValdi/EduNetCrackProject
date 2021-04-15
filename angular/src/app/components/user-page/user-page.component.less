@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300&display=swap");
+
+/* Global variables */
+
+@width: 1300px;
+@navbar-width: 300px;
+@content-width: @width - @navbar-width;
+
+/* Profile */
+
+@photo-size: 300px;
+@photo-margin: 20px;
+@profile-width: @content-width - @photo-margin;
+
+.highlight {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 0.11em;
+  background: black;
+  background-image: linear-gradient(to right, #5e42a6, #b74e91);
+}
+
+.tab {
+  padding-left: 40px;
+}
+
+#profile {
+  margin-left: 10px;
+  margin-top: 10px;
+  width: @profile-width;
+  min-height: 400px;
+
+  button {
+    border-radius: 14px;
+    font-size: 20px;
+    margin-top: 10px;
+    width: 105px;
+    height: 45px;
+    outline: none;
+    background: #dfffff;
+    float: right;
+  }
+
+  #lessons-info {
+    font: 300 0.65em "Roboto", sans-serif;
+    float: left;
+  }
+
+  #personal-info {
+    @local-width: @profile-width - @photo-size - @photo-margin * 3;
+    margin-top: @photo-margin;
+    margin-right: @photo-margin;
+    width: @local-width;
+    height: @photo-size;
+    float: right;
+
+    #name {
+      font: 300 40px "Josefin Sans", sans-serif;
+      width: @local-width;
+      height: 40px;
+    }
+
+    #contacts {
+      text-decoration: none;
+      font: 300 0.65em "Roboto", sans-serif;
+      width: @local-width;
+      height: @photo-size - 40px;
+    }
+  }
+
+  #photo {
+    box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px rgba(255, 255, 255, 0.5);
+    margin-top: @photo-margin;
+    margin-left: @photo-margin;
+    width: @photo-size;
+    height: @photo-size;
+    overflow: hidden;
+    border-radius: 25px;
+    position: relative;
+    float: top;
+    display: inline-block;
+
+    img {
+      width: 100%;
+      height: 100%;
+      -o-object-fit: cover;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+}

@@ -1,0 +1,91 @@
+<div id="content">
+  <div class="tag-search">
+    <span class="tag _{{i}}" *ngFor="let tag of tags; let i = index">
+      {{tag.title}}
+    </span>
+
+    <span class="tag" *ngIf="possibleTags.length != 0">
+<!--todo я не понимаю как блин обработать выбор тэга нормально без кнопки-->
+      <select [(ngModel)]="selectedTag">
+<!--        <option selected hidden>chose tag</option>-->
+        <option *ngFor="let tag of possibleTags" [ngValue]="tag">
+          {{tag.title}}
+        </option>
+      </select>
+    </span>
+
+    <button *ngIf="possibleTags.length != 0" (click)="choseTag()">
+      confirm
+    </button>
+    <button (click)="back()">
+      back
+    </button>
+  </div>
+  <div class="current-points">
+    You have
+    <span class="point-amount">
+      {{this.points == 0? 0: this.points}} points
+    </span>
+  </div>
+  <div class="infocard" *ngFor="let lesson of lessons">
+    <div class="tags">
+
+      <div *ngIf="variance;then content else other_content"></div>
+
+      <ng-template #content>
+
+        <span class="tag _{{i}}" *ngFor="let tag of allTags.get(lesson.id); let i = index">
+          {{tag.title}}
+        </span>
+      </ng-template>
+
+      <ng-template #other_content>
+        <span class="tag _{{i}}" *ngFor="let tag of tags; let i = index">
+          {{tag.title}}
+        </span>
+      </ng-template>
+
+    </div>
+
+    <div class="trailer-section">
+      <ng-template [ngIf]="!requestedLessons.get(lesson.id)">
+        <button (click)="requestLesson(lesson)" [ngClass]="points < lesson.pointsToGet? 'not-enough-points':''" [disabled]="points < lesson.pointsToGet" title="{{points < lesson.pointsToGet? 'Not enough points!':''}} ">
+          request
+        </button>
+      </ng-template>
+      <div *ngIf="requestedLessons.get(lesson.id)">
+        Already requested
+      </div>
+      <div class="point-amount">
+        {{lesson.pointsToGet}} points
+      </div>
+    </div>
+    <div class="info">
+      <div class="photo">
+        <Img src="https://i03.fotocdn.net/s119/f083067e73751fa5/public_pin_l/2723540425.jpg" alt="request icon">
+      </div>
+      <div class="personal-info">
+            <span class="contacts">
+              <div class="name">
+                {{lesson.teacher.lastName}} {{lesson.teacher.firstName}}
+              </div>
+              <div class="highlight"> </div>
+              <table>
+                <tr>
+                  <td>status:</td>
+                  <td id="group">student</td>
+                </tr>
+                <tr>
+                  <td>rating:</td>
+                  <td id="rating">{{lesson.teacher.rating}}</td>
+                </tr>
+              </table>
+            </span>
+      </div>
+      <div class="topic">
+        {{lesson.topic}}
+      </div>
+      <textarea readonly>{{lesson.description}}</textarea>
+    </div>
+  </div>
+</div>
