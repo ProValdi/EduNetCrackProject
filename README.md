@@ -19,3 +19,5 @@ List of all available lessons created by other users (no tag filters)
 
 List of all available lessons filtered by tags (tag filters: Physics -> Mechanics -> Free motion) 
 ![login page](https://github.com/ProValdi/EduNetCrackProject/blob/new_pages_v2/FOURTH.jpg)
+
+At the moment, the application is in the process of containerization (Docker) and placement on the AWS
